@@ -1,3 +1,18 @@
 <resources>
+
     <string name="app_name">Roadeo</string>
+
+    <!-- Nom pages -->
+    <string name="nom_page_connexion">Connexion</string>
+
+    <!-- Lié aux informations du compte -->
+    <string name="label_compte_motdepasse">Mot de passe</string>
+    <string name="label_compte_identifiant">Identifiant</string>
+    <string name="label_compte_email">Adresse mail</string>
+
+    <!-- Labels boutons -->
+    <string name="label_btn_creercompte">Créer un compte</string>
+    <string name="label_btn_se_connecter">Se connecter</string>
+    <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
+
 </resources>

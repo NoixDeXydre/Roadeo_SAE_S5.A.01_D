@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+
+    <ImageView
+        android:id="@+id/imageRoadeo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/nomPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:gravity="center"
+        android:text="@string/nom_page_connexion"
+        android:textSize="@dimen/taille_titre_page" />
+
+    <TableRow
+        android:id="@+id/ligneLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/labelLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_identifiant" />
+
+        <EditText
+            android:id="@+id/champLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/description_identifiant"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/ligneMotDePasse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/labelMotDePasse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_motdepasse" />
+
+        <EditText
+            android:id="@+id/champMotDePasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/description_motdepasse"
+            android:inputType="textPassword" />
+
+    </TableRow>
+
+    <Button
+        android:id="@+id/btnSeConnecter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/vert_pomme"
+        android:text="@string/label_btn_se_connecter"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnCreerUnCompte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:backgroundTint="@color/white"
+        android:text="@string/label_btn_creercompte"
+        android:textColor="@color/marron_noisette" />
+
+</LinearLayout>

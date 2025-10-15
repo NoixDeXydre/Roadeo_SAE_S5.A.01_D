@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="taille_titre_page">20sp</dimen>
+
+    <!-- Page de connexion -->
+    <dimen name="dist_page_connexion_logo_contenu">20dp</dimen>
+    <dimen name="dist_page_connexion_labels_champs">10dp</dimen>
+
+</resources>

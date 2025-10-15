@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <!-- Couleurs de base -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Charte graphique de Roadeo -->
+    <color name="vert_pomme">#C7E787</color>
+    <color name="vert_gazon">#B3CA85</color>
+    <color name="vert_kaki">#93915C</color>
+    <color name="marron_noisette">#816747</color>
+    <color name="marron_boue">#60523F</color>
+
 </resources>

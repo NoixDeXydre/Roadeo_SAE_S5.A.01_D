@@ -1,5 +1,5 @@
 // initialisation d'une base de données mongo_db
-db = db.getSiblingDB("Rodeo-db");
+db = db.getSiblingDB("Roadeo-db");
 
 // TODO Création de la collection utilisateur
 

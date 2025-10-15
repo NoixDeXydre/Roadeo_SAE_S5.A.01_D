@@ -9,12 +9,12 @@ services :
 
 
   ports:
-   - "27017:27017" # TOOD revoir le port
+   - "27017:27017" # TODO revoir le port
 
   environment :
     MONGO_INITDB_ROOT_USERNAME: admin
     MONGO_INITDB_ROOT_PASSWORD: juste1234
-    MONGO_INITDB_DATABASE: Rodeo-db
+    MONGO_INITDB_DATABASE: Roadeo-db
 
   volumes:
     - mongodb_data:/data/db 

@@ -9,15 +9,16 @@ services :
 
 
   ports:
-   - "27017:27017" # TOOD revoir le port
+   - "27017:27017" # TODO revoir le port
 
   environment :
     MONGO_INITDB_ROOT_USERNAME: admin
     MONGO_INITDB_ROOT_PASSWORD: juste1234
-    MONGO_INITDB_DATABASE: projet
+    MONGO_INITDB_DATABASE: Roadeo-db
 
   volumes:
-    - mongodb_data:/data/db
+    - mongodb_data:/data/db 
+    - ./init:docker-entrypoint-initdb.d:ro # ./init -> dans le dossier init on récupère tous les fichiers script et on les lance dans le dossier spécial de l'image mongo
 
 volumes :
   mongodb_data:

@@ -1,24 +1,32 @@
-version : "3.8"
+version: "3.8"
 
-services :
- mongodb :
-  # image automatiquement chargé par docker
-  image: mongo:7.0
-  container_name : randoDB # nom du conteneur
-  restart: always
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: randoDB
+    restart: always
 
+    ports:
+      - "27017:27017"
 
-  ports:
-   - "27017:27017" # TOOD revoir le port
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: juste1234
+      MONGO_INITDB_DATABASE: projet
 
-  environment :
-    MONGO_INITDB_ROOT_USERNAME: admin
-    MONGO_INITDB_ROOT_PASSWORD: juste1234
-    MONGO_INITDB_DATABASE: projet
+    volumes:
+      - mongodb_data:/data/db
 
-  volumes:
-    - mongodb_data:/data/db
+  springBoot:
+    image: jelastic/springboot:temurinjdk-21.0.8-almalinux-9
+    container_name: randoSpring
+    restart: always
 
-volumes :
+    ports:
+      - "8080:8080"  # ou un autre port si ton app écoute ailleurs
+
+    depends_on:
+      - mongodb   # attend que MongoDB soit prêt avant de démarrer
+
+volumes:
   mongodb_data:
-  

@@ -9,6 +9,8 @@
     <string name="label_compte_motdepasse">Mot de passe</string>
     <string name="label_compte_identifiant">Identifiant</string>
     <string name="label_compte_email">Adresse mail</string>
+    <string name="label_compte_domicile">Domicile</string>
+    <string name="label_niveau">Niveau physique</string>
 
     <!-- Labels boutons -->
     <string name="label_btn_creercompte">Créer un compte</string>

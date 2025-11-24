@@ -3,7 +3,7 @@ name: CI/CD Java + Docker
 # Déclenchement sur push vers main et integration
 on:
   push:
-    branches: [ main, integration ]
+    branches: [ main, api ]
 
 jobs:
   build-and-test:

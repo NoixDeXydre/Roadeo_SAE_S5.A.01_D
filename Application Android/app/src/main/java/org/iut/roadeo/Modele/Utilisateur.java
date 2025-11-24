@@ -9,5 +9,13 @@ package org.iut.roadeo.Modele;
  * @author VIGUE Adrien
  */
 public class Utilisateur extends Randonneur {
-    // TODO classe
+
+    /**
+     * Crée un nouvel utilisateur.
+     * @param nom
+     * @param prenom
+     */
+    public Utilisateur(String nom, String prenom) {
+        super(nom, prenom);
+    }
 }

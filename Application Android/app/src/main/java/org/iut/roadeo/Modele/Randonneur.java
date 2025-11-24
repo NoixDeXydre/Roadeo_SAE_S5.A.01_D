@@ -8,5 +8,61 @@ package org.iut.roadeo.Modele;
  * @author VIGUE Adrien
  */
 public class Randonneur {
-    // TODO classe
+
+    protected String nom;
+    protected String prenom;
+
+
+    /**
+     * Crée un nouveau randonneur.
+     * @param nom
+     * @param prenom
+     * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
+     */
+    public Randonneur(String nom, String prenom) {
+
+        if (nom == null || nom.isEmpty()) {
+            throw new IllegalArgumentException
+                    ("Le nom du randonneur ne devrait pas être vide ou null.");
+        }
+        else if (prenom == null || prenom.isEmpty()) {
+            throw new IllegalArgumentException
+                    ("Le prénom du randonneur ne devrait pas être vide ou null.");
+        }
+
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    /**
+     * @param nom
+     * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
+     */
+    public void setNom(String nom) {
+        if (nom == null || nom.isEmpty()) {
+            throw new IllegalArgumentException
+                    ("Le nom du randonneur ne devrait pas être vide ou null.");
+        }
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return this.prenom;
+    }
+
+    /**
+     * @param prenom
+     * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
+     */
+    public void setPrenom(String prenom) {
+        if (prenom == null || prenom.isEmpty()) {
+            throw new IllegalArgumentException
+                    ("Le prénom du randonneur ne devrait pas être vide ou null.");
+        }
+        this.prenom = prenom;
+    }
 }

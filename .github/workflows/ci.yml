@@ -24,6 +24,7 @@ jobs:
       # Générer les rapports qualité
       - name: Maven build and tests
         run: mvn clean verify
+        working-directory: roadeo_api 
 
       # Générer le rapport de couverture (JaCoCo)
       - name: Generate code coverage

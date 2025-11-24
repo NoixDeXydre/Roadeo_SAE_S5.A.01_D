@@ -23,11 +23,12 @@ jobs:
 
       # Générer les rapports qualité
       - name: Maven build and tests
+        working-directory: roadeo_api
         run: mvn clean verify
-        working-directory: roadeo_api 
 
       # Générer le rapport de couverture (JaCoCo)
       - name: Generate code coverage
+        working-directory: roadeo_api
         run: mvn jacoco:report
 
   docker-build-push:

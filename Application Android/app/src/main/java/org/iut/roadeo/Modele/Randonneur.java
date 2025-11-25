@@ -19,19 +19,9 @@ public class Randonneur {
      * @param prenom
      * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
      */
-    public Randonneur(String nom, String prenom) {
-
-        if (nom == null || nom.isEmpty()) {
-            throw new IllegalArgumentException
-                    ("Le nom du randonneur ne devrait pas être vide ou null.");
-        }
-        else if (prenom == null || prenom.isEmpty()) {
-            throw new IllegalArgumentException
-                    ("Le prénom du randonneur ne devrait pas être vide ou null.");
-        }
-
-        this.nom = nom;
-        this.prenom = prenom;
+    public Randonneur(String nom, String prenom) throws IllegalArgumentException {
+        setNom(nom);
+        setPrenom(prenom);
     }
 
     public String getNom() {

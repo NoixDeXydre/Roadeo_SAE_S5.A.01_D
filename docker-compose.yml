@@ -9,7 +9,6 @@ services:
     ports:
       - "27017:27017"
 
-<<<<<<< HEAD
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: juste1234
@@ -22,25 +21,12 @@ services:
     image: jelastic/springboot:temurinjdk-21.0.8-almalinux-9
     container_name: randoSpring
     restart: always
-=======
-  ports:
-   - "27017:27017" # TODO revoir le port
-
-  environment :
-    MONGO_INITDB_ROOT_USERNAME: admin
-    MONGO_INITDB_ROOT_PASSWORD: juste1234
-    MONGO_INITDB_DATABASE: Roadeo-db
-
-  volumes:
-    - mongodb_data:/data/db 
-    - ./init:docker-entrypoint-initdb.d:ro # ./init -> dans le dossier init on récupère tous les fichiers script et on les lance dans le dossier spécial de l'image mongo
->>>>>>> 241fdf97e279f96d65a19a3690cb5e66c75d41ea
 
     ports:
-      - "8080:8080"  # ou un autre port si ton app écoute ailleurs
+      - "8080:8080"  
 
     depends_on:
-      - mongodb   # attend que MongoDB soit prêt avant de démarrer
+      - mongodb   
 
 volumes:
   mongodb_data:

@@ -73,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="@color/vert_pomme"
+        android:onClick="seConnecter"
         android:text="@string/label_btn_se_connecter"
         android:textColor="@color/black" />
 

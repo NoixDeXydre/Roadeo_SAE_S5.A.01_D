@@ -1,26 +1,23 @@
-/*
- * 07 octobre 2025
- * IUT de Rodez, pas de droits réservés
- */
-
-package org.iut.roadeo;
-
-import androidx.appcompat.app.AppCompatActivity;
+package org.iut.roadeo.Controleurs;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.iut.roadeo.R;
+
 /**
- * Point d'entrée de notre application.
+ * Gère la création du compte.
  *
  * @author BOYER Djedline
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class Roadeo extends AppCompatActivity {
+public class ControleurCreationCompte extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page_connexion);
+        setContentView(R.layout.creation_compte);
     }
 }

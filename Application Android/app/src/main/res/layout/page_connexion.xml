@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/description_email"
-            android:inputType="text" />
+            android:inputType="textEmailAddress" />
     </TableRow>
 
     <TableRow
@@ -64,7 +64,6 @@
             android:ems="10"
             android:hint="@string/description_motdepasse"
             android:inputType="textPassword" />
-
     </TableRow>
 
     <Button

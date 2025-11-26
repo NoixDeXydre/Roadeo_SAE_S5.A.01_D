@@ -4,21 +4,27 @@
 
     <!-- Nom pages -->
     <string name="nom_page_connexion">Connexion</string>
+    <string name="nom_page_creation_compte">"Création d'un compte"</string>
 
     <!-- Lié aux informations du compte -->
     <string name="label_compte_motdepasse">Mot de passe</string>
+    <string name="label_compte_conf_motdepasse">Confirmation du mot de passe</string>
     <string name="label_compte_email">Adresse mail</string>
-    <string name="label_compte_domicile">Domicile</string>
-    <string name="label_niveau">Niveau physique</string>
+    <string name="label_compte_age">Âge</string>
+    <string name="label_compte_domicile">Adresse Personnelle</string>
+    <string name="label_compte_niveau">Niveau physique</string>
+    <string name="label_compte_morphologie">Morphologie</string>
 
     <!-- Labels boutons -->
     <string name="label_btn_creercompte">Créer un compte</string>
+    <string name="label_btn_confirmation_creation_compte">Confirmer la création du compte</string>
     <string name="label_btn_se_connecter">Se connecter</string>
     <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
 
     <!-- Descriptions edit text -->
     <string name="description_email">M-Marcenac@dmail.com</string>
     <string name="description_motdepasse">mdp_secure1234</string>
-    <string name="description_domicile">Votre adresse</string>
+    <string name="description_age">20</string>
+    <string name="description_domicile">7 rue du Citron</string>
 
 </resources>

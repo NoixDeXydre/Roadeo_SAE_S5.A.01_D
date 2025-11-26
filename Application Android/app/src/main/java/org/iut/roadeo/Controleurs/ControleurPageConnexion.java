@@ -64,6 +64,17 @@ public class ControleurPageConnexion extends AppCompatActivity {
         }
     }
 
+    /**
+     * Mène l'utilisateur vers la page de connexion d'un compte.
+     * @param view
+     */
+    public void creerCompte(View view) {
+
+        Intent intention = new Intent(ControleurPageConnexion.this,
+                ControleurCreationCompte.class);
+        startActivity(intention);
+    }
+
     private boolean isChampCorrect(String texteChamp) {
         return texteChamp != null && !texteChamp.isBlank();
     }

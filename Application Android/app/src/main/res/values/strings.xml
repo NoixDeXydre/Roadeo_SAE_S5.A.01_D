@@ -7,7 +7,6 @@
 
     <!-- Lié aux informations du compte -->
     <string name="label_compte_motdepasse">Mot de passe</string>
-    <string name="label_compte_identifiant">Identifiant</string>
     <string name="label_compte_email">Adresse mail</string>
     <string name="label_compte_domicile">Domicile</string>
     <string name="label_niveau">Niveau physique</string>
@@ -18,9 +17,8 @@
     <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
 
     <!-- Descriptions edit text -->
-    <string name="description_identifiant">Marcel Marcenac</string>
-    <string name="description_email">Votre email ici</string>
-    <string name="description_motdepasse">Votre mot de passe ici</string>
+    <string name="description_email">M-Marcenac@dmail.com</string>
+    <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_domicile">Votre adresse</string>
 
 </resources>

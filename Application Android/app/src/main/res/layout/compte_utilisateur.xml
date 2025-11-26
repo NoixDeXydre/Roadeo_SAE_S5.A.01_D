@@ -30,26 +30,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_compte_email"
-            android:layout_column="2"/>
-        <EditText
-            android:id="@+id/emailUtilisateur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/description_email"
-            android:layout_column="3"/>
-        <ImageButton
-            android:id="@+id/modifEmail"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
-            android:layout_column="3"/>
-    </TableRow>
-    <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/label_compte_motdepasse"
             android:layout_column="2"/>
         <EditText
@@ -61,6 +41,26 @@
             android:layout_column="3"/>
         <ImageButton
             android:id="@+id/modifMotDePasse"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/vert_pomme"
+            android:src="@drawable/crayon"
+            android:layout_column="3"/>
+    </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_compte_email"
+            android:layout_column="2"/>
+        <EditText
+            android:id="@+id/emailUtilisateur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/description_email"
+            android:layout_column="3"/>
+        <ImageButton
+            android:id="@+id/modifEmail"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"

@@ -32,7 +32,7 @@
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurCreationCompte"
+            android:name=".Controleurs.ControleurGestionCompte"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>

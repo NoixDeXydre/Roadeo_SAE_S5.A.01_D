@@ -71,7 +71,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
     public void creerCompte(View view) {
 
         Intent intention = new Intent(ControleurPageConnexion.this,
-                ControleurCreationCompte.class);
+                ControleurGestionCompte.class);
         startActivity(intention);
     }
 

@@ -1,35 +1,22 @@
-version : "3.8"
+version: "3.8"
 
-services :
-  mongodb :
-    # image automatiquement chargé par docker
+services:
+  mongodb:
     image: mongo:7.0
-    container_name : randoDB # nom du conteneur
+    container_name: randoDB
     restart: always
 
     ports:
-    - "27017:27017" # TODO revoir le port
+      - "27017:27017"
 
-    environment :
+    environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: juste1234
       MONGO_INITDB_DATABASE: Roadeo-db
 
     volumes:
       - mongodb_data:/data/db 
-      - ./init:docker-entrypoint-initdb.d:ro # ./init -> dans le dossier init on récupère tous les fichiers script et on les lance dans le dossier spécial de l'image mongo
+      - ./init:/docker-entrypoint-initdb.d:ro
 
-  api:
-      build:
-        context: ./roadeo_api
-        dockerfile: Dockerfile
-      image: roadeo-api:latest
-      ports:
-        - "8080:8080"
-      environment:
-        SPRING_DATA_MONGODB_URI: mongodb://admin:juste1234@mongodb:27017/Roadeo-db
-      depends_on:
-        - mongodb
-
-volumes :
+volumes:
   mongodb_data:

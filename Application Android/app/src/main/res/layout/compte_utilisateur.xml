@@ -12,12 +12,13 @@
             android:layout_height="50dp"
             android:src="@drawable/crayon"
             android:layout_column="1"/>
+
         <EditText
             android:id="@+id/nomUtilisateur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/description_identifiant"
-            android:layout_column="2"/>
+            android:layout_column="2"
+            android:text="TODO A ENLEVER" />
         <ImageButton
             android:id="@+id/modifNom"
             android:layout_width="50dp"

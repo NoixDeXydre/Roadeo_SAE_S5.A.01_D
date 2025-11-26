@@ -33,14 +33,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_identifiant" />
+            android:text="@string/label_compte_email" />
 
         <EditText
             android:id="@+id/champLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="@string/description_identifiant"
+            android:hint="@string/description_email"
             android:inputType="text" />
     </TableRow>
 

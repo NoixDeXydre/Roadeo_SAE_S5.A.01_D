@@ -1,6 +1,8 @@
 package org.iut.roadeo.Controleurs;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,5 +24,22 @@ public class ControleurCreationCompte extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
+    }
+
+    /**
+     * Confirme les données,
+     * ferme l'activité et mène vers le menu principal.
+     * @param view
+     */
+    public void confirmerCreationCompte(View view) {
+
+        // TODO vérification données
+        // TODO appel API
+
+        Intent intention = new Intent(this, ControleurMenuPrincipal.class);
+        startActivity(intention);
+
+        // Comme ça, le bouton retour ne mènera plus à cette activité.
+        finish();
     }
 }

@@ -35,17 +35,16 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         setContentView(R.layout.compte_utilisateur);
 
         /** Récupération des identifiants */
-        nomUtilisateur.findViewById(R.id.nomUtilisateur);
-        motDePasseUtilisateur.findViewById(R.id.motDePasseUtilisateur);
-        emailUtilisateur.findViewById(R.id.emailUtilisateur);
-        domicileUtilisateur.findViewById(R.id.domicileUtilisateur);
-        niveauUtilisateur.findViewById(R.id.niveauUtilisateur);
+        nomUtilisateur = findViewById(R.id.nomUtilisateur);
+        motDePasseUtilisateur = findViewById(R.id.motDePasseUtilisateur);
+        emailUtilisateur = findViewById(R.id.emailUtilisateur);
+        domicileUtilisateur = findViewById(R.id.domicileUtilisateur);
+        niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
 
         /** Ecriture des données du compte */
-        nomUtilisateur.setText("Marcel Marcenac");
+        nomUtilisateur.setText(R.string.description_nom);
         motDePasseUtilisateur.setText(R.string.description_motdepasse);
         emailUtilisateur.setText(R.string.description_motdepasse);
         domicileUtilisateur.setText(R.string.description_domicile);
-        niveauUtilisateur.setText("moyen");
     }
 }

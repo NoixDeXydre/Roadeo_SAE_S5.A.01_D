@@ -26,5 +26,6 @@
     <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_age">20</string>
     <string name="description_domicile">7 rue du Citron</string>
+    <string name="description_nom">Marcel Marcenac</string>
 
 </resources>

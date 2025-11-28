@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"
-            android:text="TODO A ENLEVER" />
+            android:hint="Marcel Marcenac" />
         <ImageButton
             android:id="@+id/modifNom"
             android:layout_width="50dp"

@@ -17,7 +17,7 @@
     <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
 
     <!-- Descriptions edit text -->
-    <string name="description_email">M-Marcenac@dmail.com</string>
+    <string name="description_email">M-Marcenac@email.com</string>
     <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_domicile">Votre adresse</string>
 

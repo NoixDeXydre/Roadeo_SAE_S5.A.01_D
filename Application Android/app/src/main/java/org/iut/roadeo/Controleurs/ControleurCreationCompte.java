@@ -1,7 +1,8 @@
 package org.iut.roadeo.Controleurs;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.EditText;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,33 +17,29 @@ import org.iut.roadeo.R;
  */
 public class ControleurCreationCompte extends AppCompatActivity {
 
-    private EditText nomUtilisateur;
-
-    private EditText motDePasseUtilisateur;
-
-    private EditText emailUtilisateur;
-
-    private EditText domicileUtilisateur;
-
-    private EditText niveauUtilisateur;
+    // TODO faire classe
+    // TODO remplir les spinners.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
+    }
 
-        /** Récupération des identifiants */
-        nomUtilisateur.findViewById(R.id.nomUtilisateur);
-        motDePasseUtilisateur.findViewById(R.id.motDePasseUtilisateur);
-        emailUtilisateur.findViewById(R.id.emailUtilisateur);
-        domicileUtilisateur.findViewById(R.id.domicileUtilisateur);
-        niveauUtilisateur.findViewById(R.id.niveauUtilisateur);
+    /**
+     * Confirme les données,
+     * ferme l'activité et mène vers le menu principal.
+     * @param view
+     */
+    public void confirmerCreationCompte(View view) {
 
-        /** Ecriture des données du compte */
-        nomUtilisateur.setText("Marcel Marcenac");
-        motDePasseUtilisateur.setText(R.string.description_motdepasse);
-        emailUtilisateur.setText(R.string.description_motdepasse);
-        domicileUtilisateur.setText(R.string.description_domicile);
-        niveauUtilisateur.setText("moyen");
+        // TODO vérification données
+        // TODO appel API
+
+        Intent intention = new Intent(this, ControleurMenuPrincipal.class);
+        startActivity(intention);
+
+        // Comme ça, le bouton retour ne mènera plus à cette activité.
+        finish();
     }
 }

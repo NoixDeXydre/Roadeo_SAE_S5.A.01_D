@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/label_niveau"
+            android:text="@string/label_compte_niveau"
             android:layout_column="2"/>
         <EditText
             android:id="@+id/niveauUtilisateur"

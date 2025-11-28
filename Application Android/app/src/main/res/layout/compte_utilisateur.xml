@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:text="@string/label_compte_niveau"
             android:layout_column="1"/>
-        <EditText
+        <Spinner
             android:id="@+id/niveauUtilisateur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

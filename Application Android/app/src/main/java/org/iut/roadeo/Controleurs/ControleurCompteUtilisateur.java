@@ -3,6 +3,7 @@ package org.iut.roadeo.Controleurs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -27,7 +28,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     private EditText domicileUtilisateur;
 
-    private EditText niveauUtilisateur;
+    private Spinner niveauUtilisateur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -12,7 +12,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: juste1234
-      MONGO_INITDB_DATABASE: projet
+      MONGO_INITDB_DATABASE: Roadeo-db
 
     volumes:
       - mongodb_data:/data/db

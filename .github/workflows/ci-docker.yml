@@ -2,6 +2,7 @@ name: Docker
 
 # Déclenchement sur push vers main et integration
 on:
+  workflow_dispatch:
   push:
     branches: [ main, api ]
 

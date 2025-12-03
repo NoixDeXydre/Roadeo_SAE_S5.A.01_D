@@ -13,8 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Roadeo"
         tools:targetApi="31">
+
         <activity
-            android:name=".Roadeo"
+            android:name=".Controleurs.ControleurPageConnexion"
+            android:screenOrientation="landscape"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +24,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".Controleurs.ControleurMenuPrincipal"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Controleurs.ControleurCreationCompte"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".Controleurs.ControleurCompteUtilisateur"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

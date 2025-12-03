@@ -57,6 +57,6 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Run unit tests
+      - name: Tests 
         working-directory: "Application Android"
         run: chmod +x gradlew && ./gradlew test --stacktrace

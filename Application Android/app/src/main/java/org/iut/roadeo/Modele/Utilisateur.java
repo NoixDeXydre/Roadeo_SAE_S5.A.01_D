@@ -27,6 +27,9 @@ public class Utilisateur extends Randonneur {
     public Utilisateur(String nom, String prenom, String mDP, String email,
                        String domicile) {
         super(nom, prenom);
+        if (mDP.trim().equals("") || email.trim().equals("") || domicile.trim().equals("")) {
+            throw new IllegalArgumentException("L'un des paramètres entrés est incorrect");
+        }
         this.motDePasse = mDP;
         this.email = email;
         this.domicile = domicile;

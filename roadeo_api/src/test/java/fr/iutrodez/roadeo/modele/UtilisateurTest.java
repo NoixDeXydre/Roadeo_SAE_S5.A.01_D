@@ -11,7 +11,7 @@ public class UtilisateurTest {
     @Test
     @DisplayName("Test du constructeur avec valeur correcte")
     public void utilisateurTest(){
-        Utilisateur util = new Utilisateur(1,"nom prenom","test","nomprenom@test.com","test");
-        assertEquals(1, util.getId());
+        Utilisateur util = new Utilisateur("1","nom prenom","test","nomprenom@test.com","test");
+        assertEquals("1", util.getId());
     }
 }

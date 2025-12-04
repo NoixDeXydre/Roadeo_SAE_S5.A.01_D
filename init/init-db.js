@@ -2,7 +2,7 @@
 db = db.getSiblingDB("Roadeo-db");
 
 // TODO Création de la collection utilisateur
-db.createCollection.utilisateur
+db.createCollection("utilisateur");
 
 // TODO Ajout de quelque données tests
 db.utilisateur.insertOne({_id:'1', patronime:'Marcel Marcenac', mdp:'0123', adresse_mail:'marcel.marcenaac@le-goat.fr', domicile:'72 rue de la BD, Trifoullis-les-oies'})

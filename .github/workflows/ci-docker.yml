@@ -4,7 +4,7 @@ name: Docker
 on:
   workflow_dispatch:
   push:
-    branches: [ main, api ]
+    branches: [ main, dev ]
 
 jobs:
   build-test:

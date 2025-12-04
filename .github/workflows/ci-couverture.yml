@@ -4,7 +4,7 @@ name: Couverture API et application Android
 on:
   workflow_dispatch:
   push:
-    branches: [ main, api, actions-tests ]
+    branches: [ main, dev ]
 
 jobs:
   

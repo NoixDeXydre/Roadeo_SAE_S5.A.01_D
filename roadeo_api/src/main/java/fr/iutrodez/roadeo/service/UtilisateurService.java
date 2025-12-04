@@ -5,6 +5,7 @@ import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UtilisateurService {
@@ -16,5 +17,12 @@ public class UtilisateurService {
 
     public List<Utilisateur> getAllUtilisateurs() {
         return repository.findAll();
+    }
+
+    public Utilisateur getUtilisateur(String id) {
+
+        Optional<Utilisateur> result = repository.findById(id);
+        //Objet Utilisateur
+        return result.orElse(null);
     }
 }

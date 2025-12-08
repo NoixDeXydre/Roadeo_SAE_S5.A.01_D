@@ -25,25 +25,22 @@ public class ControleurMenuPrincipal extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu_principal);
-
-       /*
         // FIXME
-        // C'est temporaire, dans une version avancée on aura dashboard
-        // avec les parcours et les randonnées.
-        Intent intention = new Intent(this,
-                ControleurCompteUtilisateur.class);
-        startActivity(intention);
-        */
+        // on aura dashboard avec les parcours et les randonnées.
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // On affiche le menu burger
         new MenuInflater(this).inflate(R.menu.menu_activite, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        /* On envoi la vue choisie et le contexte à la méthode
+         * permettant de changer de vue
+         */
         ChangeVue.changeurVue(item, ControleurMenuPrincipal.this);
 
         return super.onOptionsItemSelected(item);

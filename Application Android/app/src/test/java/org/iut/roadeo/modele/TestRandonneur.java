@@ -19,7 +19,7 @@ public class TestRandonneur {
     public void testRandonneurCorrect() {
 
         try {
-            new Randonneur("Marcel", "Marcenac", 20, NiveauEntrainement.SPORTIF,
+            new Randonneur("Marcenac", "Marcel", 20, NiveauEntrainement.SPORTIF,
                             Morphologie.FORT);
         } catch (IllegalArgumentException e) {
             // Pas de comportement par défaut.
@@ -69,12 +69,12 @@ public class TestRandonneur {
     @Test
     public void testGetters() {
 
-        Randonneur r = new Randonneur("Marcel", "Marcenac", 20,
+        Randonneur r = new Randonneur("Marcenac", "Marcel", 20,
                                       NiveauEntrainement.SPORTIF,
                                       Morphologie.FORT);
 
-        assertEquals("Marcel", r.getNom());
-        assertEquals("Marcenac", r.getPrenom());
+        assertEquals("Marcenac", r.getNom());
+        assertEquals("Marcel", r.getPrenom());
         assertEquals(20, r.getAge());
         assertEquals(NiveauEntrainement.SPORTIF, r.getNiveauEntrainement());
         assertEquals(Morphologie.FORT, r.getMorphologie());
@@ -83,7 +83,7 @@ public class TestRandonneur {
     @Test
     public void testSetterNomValide() {
 
-        Randonneur r = new Randonneur("Marcel", "Marcenac", 20,
+        Randonneur r = new Randonneur("Marcenac", "Marcel", 20,
                                       NiveauEntrainement.SPORTIF,
                                       Morphologie.FORT);
 
@@ -94,7 +94,7 @@ public class TestRandonneur {
     @Test
     public void testSetterNomInvalide() {
 
-        Randonneur r = new Randonneur("Marcel", "Marcenac", 20,
+        Randonneur r = new Randonneur("Marcenac", "Marcel", 20,
                                       NiveauEntrainement.SPORTIF,
                                       Morphologie.FORT);
 
@@ -116,7 +116,7 @@ public class TestRandonneur {
     @Test
     public void testSetterPrenomValide() {
 
-        Randonneur r = new Randonneur("Marcel", "Marcenac", 20,
+        Randonneur r = new Randonneur("Marcenac", "Marcel", 20,
                                       NiveauEntrainement.SPORTIF,
                                       Morphologie.FORT);
 
@@ -127,7 +127,7 @@ public class TestRandonneur {
     @Test
     public void testSetterPrenomInvalide() {
 
-        Randonneur r = new Randonneur("Marcel", "Marcenac", 20,
+        Randonneur r = new Randonneur("Marcenac", "Marcel", 20,
                                       NiveauEntrainement.SPORTIF,
                                       Morphologie.FORT);
 
@@ -150,13 +150,13 @@ public class TestRandonneur {
     public void testAgeInvalide() {
 
         try {
-            new Randonneur("Marcel", "Marcenac", 0, NiveauEntrainement.DEBUTANT,
+            new Randonneur("Marcenac", "Marcel", 0, NiveauEntrainement.DEBUTANT,
                             Morphologie.LEGER);
             fail("L'âge ne devrait pas être inférieur à 1.");
         } catch (IllegalArgumentException e) {}
 
         try {
-            new Randonneur("Marcel", "Marcenac", 121, NiveauEntrainement.DEBUTANT,
+            new Randonneur("Marcenac", "Marcel", 121, NiveauEntrainement.DEBUTANT,
                             Morphologie.LEGER);
             fail("L'âge ne devrait pas être supérieur à 120.");
         } catch (IllegalArgumentException e) {}
@@ -166,7 +166,7 @@ public class TestRandonneur {
     public void testNiveauEntrainementInvalide() {
 
         try {
-            new Randonneur("Marcel", "Marcenac", 25, null, Morphologie.FORT);
+            new Randonneur("Marcenac", "Marcel", 25, null, Morphologie.FORT);
             fail("Le niveau d'entraînement ne devrait pas être null.");
         } catch (IllegalArgumentException e) {}
     }
@@ -175,7 +175,7 @@ public class TestRandonneur {
     public void testMorphologieInvalide() {
 
         try {
-            new Randonneur("Marcel", "Marcenac", 25, NiveauEntrainement.DEBUTANT,
+            new Randonneur("Marcenac", "Marcel", 25, NiveauEntrainement.DEBUTANT,
                         null);
             fail("La morphologie ne devrait pas être null.");
         } catch (IllegalArgumentException e) {}
@@ -185,7 +185,7 @@ public class TestRandonneur {
     public void testSettersAge() {
 
         Randonneur r =
-                new Randonneur("Marcel", "Marcenac", 40,
+                new Randonneur("Marcenac", "Marcel", 40,
                                NiveauEntrainement.ENTRAINE, Morphologie.MOYEN);
 
         r.setAge(20);
@@ -206,7 +206,7 @@ public class TestRandonneur {
     public void testSettersNiveau() {
 
         Randonneur r =
-                new Randonneur("Marcel", "Marcenac", 30,
+                new Randonneur("Marcenac", "Marcel", 30,
                                NiveauEntrainement.ENTRAINE, Morphologie.LEGER);
 
         r.setNiveauEntrainement(NiveauEntrainement.SPORTIF);
@@ -222,7 +222,7 @@ public class TestRandonneur {
     public void testSettersMorphologie() {
 
         Randonneur r =
-                new Randonneur("Marcel", "Marcenac", 30,
+                new Randonneur("Marcenac", "Marcel", 30,
                                NiveauEntrainement.ENTRAINE, Morphologie.LEGER);
 
         r.setMorphologie(Morphologie.FORT);
@@ -232,5 +232,14 @@ public class TestRandonneur {
             r.setMorphologie(null);
             fail("La morphologie ne doit pas être null.");
         } catch (IllegalArgumentException e) {}
+    }
+
+    @Test
+    public void testToString(){
+        Randonneur r =
+                new Randonneur("Marcenac", "Marcel", 30,
+                        NiveauEntrainement.ENTRAINE, Morphologie.LEGER);
+        assertEquals("Patronime : Marcel Marcenac, age : 30 ans,"
+                     +" niveau : entraine, morphologie : leger", r.toString());
     }
 }

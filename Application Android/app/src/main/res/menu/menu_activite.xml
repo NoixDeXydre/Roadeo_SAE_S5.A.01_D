@@ -2,8 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/afficheMenu"
-        android:title="Menu principal"/>
+        android:title="@string/option_menu_dashboard"/>
     <item
         android:id="@+id/afficheCompte"
-        android:title="Compte utilisateur"/>
+        android:title="@string/option_menu_compte_utilisateur"/>
+    <item
+        android:id="@+id/afficheListeParticipants"
+        android:title="@string/liste_participants_rando"/>
 </menu>

@@ -127,4 +127,12 @@ public class Randonneur {
         }
         this.morphologie = morphologie;
     }
+
+    @Override
+    public String toString() {
+        return "Patronime : "+getPrenom()+" "+getNom()+", age : "+getAge()
+                +" ans, niveau : "
+                +getNiveauEntrainement().toString().toLowerCase()
+                +", morphologie : "+getMorphologie().toString().toLowerCase();
+    }
 }

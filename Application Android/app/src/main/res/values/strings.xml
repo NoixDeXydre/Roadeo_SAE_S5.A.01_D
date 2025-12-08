@@ -28,5 +28,8 @@
     <string name="description_domicile">7 rue du Citron</string>
     <string name="description_nom">Marcel Marcenac</string>
     <string name="texte_participants">Liste des participants</string>
+    <string name="option_menu_dashboard">Menu principal</string>
+    <string name="option_menu_compte_utilisateur">Compte utilisateur</string>
+    <string name="liste_participants_rando">Liste des participants</string>
 
 </resources>

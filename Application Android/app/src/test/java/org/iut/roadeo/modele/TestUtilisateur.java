@@ -44,21 +44,21 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infoNull, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                        "motDePasse", infoNull, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infoNull));
@@ -76,21 +76,21 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infosVide, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", infosVide, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosVide));
@@ -108,21 +108,21 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infosBlanc, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", infosBlanc, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac", 20,
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosBlanc));

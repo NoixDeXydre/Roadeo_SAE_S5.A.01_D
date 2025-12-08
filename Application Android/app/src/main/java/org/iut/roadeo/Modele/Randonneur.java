@@ -33,7 +33,7 @@ public class Randonneur {
      * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
      */
     public void setNom(String nom) {
-        if (nom.trim().equals("")) {
+        if (nom == null || nom.trim().equals("")) {
             throw new IllegalArgumentException
                     ("Le nom du randonneur ne devrait pas être vide ou null.");
         }
@@ -49,7 +49,7 @@ public class Randonneur {
      * @throws IllegalArgumentException si le nom ou prénom est vide ou null.
      */
     public void setPrenom(String prenom) {
-        if (prenom.trim().equals("")) {
+        if (prenom == null || prenom.trim().equals("")) {
             throw new IllegalArgumentException
                     ("Le prénom du randonneur ne devrait pas être vide ou null.");
         }

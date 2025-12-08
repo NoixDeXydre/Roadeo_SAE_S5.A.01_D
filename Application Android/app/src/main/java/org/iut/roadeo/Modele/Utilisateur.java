@@ -21,18 +21,18 @@ public class Utilisateur extends Randonneur {
 
     /**
      * Crée un nouvel utilisateur.
-     * @param nom le nom du randonneur
-     * @param prenom le prénom du randonneur
+     * @param nom le nom de l'utilisateur
+     * @param prenom le prénom de l'utilisateur
+     * @param domicile le domicile de l'utilisateur
+     * @param email l'email de l'utiliteur
+     * @param mDP le mot de passe de l'utilisateur
      */
     public Utilisateur(String nom, String prenom, String mDP, String email,
                        String domicile) {
         super(nom, prenom);
-        if (mDP.trim().equals("") || email.trim().equals("") || domicile.trim().equals("")) {
-            throw new IllegalArgumentException("L'un des paramètres entrés est incorrect");
-        }
-        this.motDePasse = mDP;
-        this.email = email;
-        this.domicile = domicile;
+        setMotDePasse(mDP);
+        setEmail(email);
+        setDomicile(domicile);
     }
 
     /**
@@ -48,6 +48,9 @@ public class Utilisateur extends Randonneur {
      * @param motDePasse le nouveau mot de passe
      */
     public void setMotDePasse(String motDePasse) {
+        if (motDePasse == null || motDePasse.trim().equals("")) {
+            throw new IllegalArgumentException("Le mot de passe incorrect");
+        }
         this.motDePasse = motDePasse;
     }
 
@@ -64,6 +67,9 @@ public class Utilisateur extends Randonneur {
      * @param email le nouvel email utilisateur
      */
     public void setEmail(String email) {
+        if (email == null || email.trim().equals("")) {
+            throw new IllegalArgumentException("L'email est incorrect");
+        }
         this.email = email;
     }
 
@@ -80,6 +86,9 @@ public class Utilisateur extends Randonneur {
      * @param domicile le domicile de l'utilisateur
      */
     public void setDomicile(String domicile) {
+        if (domicile == null || domicile.trim().equals("")) {
+            throw new IllegalArgumentException("Le domicile incorrect");
+        }
         this.domicile = domicile;
     }
 }

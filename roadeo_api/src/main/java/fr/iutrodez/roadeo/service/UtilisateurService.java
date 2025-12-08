@@ -1,6 +1,6 @@
 package fr.iutrodez.roadeo.service;
 
-import fr.iutrodez.roadeo.UtilisateurInterfaceMongoDB;
+import fr.iutrodez.roadeo.dao.UtilisateurInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.stereotype.Service;
 

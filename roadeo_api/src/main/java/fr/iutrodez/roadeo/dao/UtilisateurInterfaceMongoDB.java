@@ -1,4 +1,4 @@
-package fr.iutrodez.roadeo;
+package fr.iutrodez.roadeo.dao;
 
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.data.mongodb.repository.MongoRepository;

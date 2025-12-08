@@ -1,6 +1,6 @@
 package fr.iutrodez.roadeo.TestService;
 
-import fr.iutrodez.roadeo.UtilisateurInterfaceMongoDB;
+import fr.iutrodez.roadeo.dao.UtilisateurInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.UtilisateurService;
 import org.junit.jupiter.api.BeforeEach;

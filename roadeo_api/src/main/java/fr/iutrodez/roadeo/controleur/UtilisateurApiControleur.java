@@ -20,6 +20,19 @@ public class UtilisateurApiControleur {
         this.utilisateurService = utilisateurService;
     }
 
+    // TODO dans les versions supérieures, devrait renvoyer la clé API.
+    @PostMapping("seConnecter")
+    public ResponseEntity<Utilisateur> seConnecter(@RequestBody Utilisateur request) {
+
+        var utilisateur = utilisateurService.validerConnexion
+                (request.getAdresse_mail(), request.getMdp());
+        if (utilisateur != null) {
+            return ResponseEntity.ok(utilisateur);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @RequestMapping("/liste")
     public List<Utilisateur> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
@@ -35,5 +48,4 @@ public class UtilisateurApiControleur {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

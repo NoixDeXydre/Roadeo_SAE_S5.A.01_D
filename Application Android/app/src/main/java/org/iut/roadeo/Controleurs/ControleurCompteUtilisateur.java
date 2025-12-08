@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.iut.roadeo.Modele.Utilitaire.ChangeVue;
 import org.iut.roadeo.R;
+
+import java.util.ArrayList;
 
 /**
  * Affiche les informations du compte utilisateur
@@ -23,6 +27,10 @@ import org.iut.roadeo.R;
  * @author VIGUE Adrien
  */
 public class ControleurCompteUtilisateur extends AppCompatActivity {
+
+    private ArrayList<String> niveauPhysique;
+
+    private ArrayAdapter<String> adaptateur;
 
     private EditText nomUtilisateur;
 
@@ -51,6 +59,17 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         motDePasseUtilisateur.setText(R.string.description_motdepasse);
         emailUtilisateur.setText(R.string.description_motdepasse);
         domicileUtilisateur.setText(R.string.description_domicile);
+
+        /* Remplissage spinner */
+        niveauPhysique = new ArrayList<>();
+        niveauPhysique.add(NiveauEntrainement.SPORTIF.toString());
+        niveauPhysique.add(NiveauEntrainement.ENTRAINE.toString());
+        niveauPhysique.add(NiveauEntrainement.DEBUTANT.toString());
+        adaptateur = new ArrayAdapter<>(this,
+                                        androidx.appcompat.R.layout.
+                                        support_simple_spinner_dropdown_item,
+                                        niveauPhysique);
+        niveauUtilisateur.setAdapter(adaptateur);
 
         /* On rend les données non modifiables */
         nomUtilisateur.setEnabled(false);

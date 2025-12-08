@@ -2,6 +2,9 @@ package fr.iutrodez.roadeo.controleur;
 
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.UtilisateurService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,4 +24,16 @@ public class UtilisateurApiControleur {
     public List<Utilisateur> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
     }
+
+    @PostMapping("/Id")
+    public ResponseEntity<Utilisateur> getUtilisateurById(@RequestBody Utilisateur request) {
+        Utilisateur utilisateur = utilisateurService.getUtilisateur(request.getId());
+
+        if (utilisateur != null) {
+            return ResponseEntity.ok(utilisateur);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

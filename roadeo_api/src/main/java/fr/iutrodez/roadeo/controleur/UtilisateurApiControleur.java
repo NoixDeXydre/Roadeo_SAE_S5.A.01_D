@@ -2,6 +2,7 @@ package fr.iutrodez.roadeo.controleur;
 
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.UtilisateurService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class UtilisateurApiControleur {
         if (utilisateur != null) {
             return ResponseEntity.ok(utilisateur);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 

@@ -7,6 +7,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.BuildConfig;
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.APIRequeteur;
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
@@ -69,7 +70,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
             // TODO appels API
 
             // Test API
-            apiRequeteur = new APIRequeteur(this.getApplicationContext(), CacheApplication.URL_API_PREFIXE);
+            apiRequeteur = new APIRequeteur(this.getApplicationContext(), BuildConfig.API_URL);
             apiRequeteur.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
                     new IAPIConnexionCallback() {
                 @Override

@@ -2,17 +2,10 @@ package fr.iutrodez.roadeo.service;
 
 import fr.iutrodez.roadeo.UtilisateurInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Utilisateur;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.exact;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.startsWith;
 
 @Service
 public class UtilisateurService {
@@ -43,13 +36,8 @@ public class UtilisateurService {
      */
     public Utilisateur validerConnexion(String email, String mdp) {
 
-        Utilisateur person = new Utilisateur(null, null, mdp, email, null);
-        ExampleMatcher matcher = ExampleMatcher.matching()
-                .withIgnoreCase("adresse_mail")
-                .withMatcher("adresse_mail", exact())
-                .withMatcher("mdp", exact());
-
-        var resultat = repository.findOne(Example.of(person, matcher));
+        var resultat = repository.findByAdresseMailAndMdp
+                (email.toLowerCase().trim(), mdp);
         return resultat.orElse(null);
     }
 }

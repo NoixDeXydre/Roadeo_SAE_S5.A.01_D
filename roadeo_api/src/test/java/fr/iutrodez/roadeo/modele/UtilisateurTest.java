@@ -3,7 +3,6 @@ package fr.iutrodez.roadeo.modele;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,7 +43,7 @@ public class UtilisateurTest {
     @Test
     @DisplayName("Test du getter de adresse mail")
     public void getMailTest(){
-        assertEquals("nomprenom@test.com", utilTest.getAdresse_mail());
+        assertEquals("nomprenom@test.com", utilTest.getAdresseMail());
     }
 
     @Test

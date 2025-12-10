@@ -55,7 +55,7 @@ public class UtilisateurServiceTests {
         Utilisateur result = service.validerConnexion("test@example.com", "mdp123");
 
         assertNotNull(result);
-        assertEquals(expectedList.get(0).getAdresse_mail(), result.getAdresse_mail());
+        assertEquals(expectedList.get(0).getAdresseMail(), result.getAdresseMail());
         assertEquals(expectedList.get(0).getMdp(), result.getMdp());
 
         verify(repository, times(1)).findOne(any(Example.class));

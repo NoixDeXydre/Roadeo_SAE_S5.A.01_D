@@ -25,7 +25,7 @@ public class UtilisateurApiControleur {
     public ResponseEntity<Utilisateur> seConnecter(@RequestBody Utilisateur request) {
 
         var utilisateur = utilisateurService.validerConnexion
-                (request.getAdresse_mail(), request.getMdp());
+                (request.getAdresseMail(), request.getMdp());
         if (utilisateur != null) {
             return ResponseEntity.ok(utilisateur);
         } else {

@@ -19,11 +19,19 @@ import org.iut.roadeo.R;
  * de la vérification des champs et de la liaison
  * entre la page principale et la création de compte.
  *
+ * Vous retrouverez en plus dans ce contrôleur
+ * une instance de APIRequeteur.
+ *
  * @author BOYER Djedline
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
 public class ControleurPageConnexion extends AppCompatActivity {
+
+    /**
+     * Instance globale permettant de faire des requêtes.
+     */
+    public static APIRequeteur apiRequeteur;
 
     private EditText champIdentifiant;
     private EditText champMotDePasse;
@@ -47,6 +55,9 @@ public class ControleurPageConnexion extends AppCompatActivity {
      */
     public void seConnecter(View view) {
 
+        // On remet à zéro le requêteur
+        apiRequeteur = null;
+
         // Vérification des champs
 
         if (!isChampCorrect(champIdentifiant.getText().toString())) {
@@ -58,8 +69,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
             // TODO appels API
 
             // Test API
-            APIRequeteur api = new APIRequeteur(this.getApplicationContext(), CacheApplication.URL_API_PREFIXE);
-            api.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
+            apiRequeteur = new APIRequeteur(this.getApplicationContext(), CacheApplication.URL_API_PREFIXE);
+            apiRequeteur.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
                     new IAPIConnexionCallback() {
                 @Override
                 public void onSuccess(String message) {

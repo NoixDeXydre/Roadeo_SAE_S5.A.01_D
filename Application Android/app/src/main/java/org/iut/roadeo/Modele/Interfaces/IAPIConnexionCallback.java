@@ -8,6 +8,6 @@ package org.iut.roadeo.Modele.Interfaces;
  * @author VIGUE Adrien
  */
 public interface IAPIConnexionCallback {
-    public void onSuccess(String message);
+    public void onSuccess();
     public void onError(String message);
 }

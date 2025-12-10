@@ -4,11 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.BuildConfig;
-import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.APIRequeteur;
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
 import org.iut.roadeo.R;
@@ -74,7 +74,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
             apiRequeteur.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
                     new IAPIConnexionCallback() {
                 @Override
-                public void onSuccess(String message) {
+                public void onSuccess() {
 
                     // Note :
                     // Après connexion, l'utilisateur pourra appuyer sur BACK
@@ -87,7 +87,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
                 @Override
                 public void onError(String message) {
-                    // Corps vide
+                    Toast.makeText(ControleurPageConnexion.this,
+                            message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
                 }
             });
         }

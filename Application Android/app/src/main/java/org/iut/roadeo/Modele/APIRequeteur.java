@@ -3,10 +3,12 @@ package org.iut.roadeo.Modele;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.BuildConfig;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -24,6 +26,25 @@ import java.util.HashMap;
  */
 public class APIRequeteur {
 
+    // ===== Messages d'erreur =====
+
+    private final static String MESSAGE_ERREUR_LOGIN_ECHEC
+            = "Echec : L'utilisateur n'a pas pu se connecter," +
+            " l'adresse mail ou le mot de passe est incorrecte.";
+
+    private final static String MESSAGE_ERREUR_QUELCONQUE
+            = "Echec : Une erreur inconnue est survenue.";
+
+    private final static String MESSAGE_ERREUR_SERVEUR_ECHEC
+            = "Echec : Le serveur est en dysfonctionnement ou indisponible.";
+
+    private final static String MESSAGE_ERREUR_CONNEXION
+            = "Echec : Aucune connexion.";
+
+    private final static String MESSAGE_ERREUR_SERVEUR_INTROUVABLE
+            = "Echec : Le serveur est introuvable.";
+
+    // ======= Commandes API =======
     private final static String SUFFIXE_API_UTILISATEUR = "Utilisateur";
     private final static String SUFFIXE_API_SE_CONNECTER = SUFFIXE_API_UTILISATEUR
             + "/seConnecter";
@@ -66,20 +87,23 @@ public class APIRequeteur {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess("API good !");
+                        callback.onSuccess();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError error) {
 
-                        // Erreur 401
-                        if (error instanceof AuthFailureError) {
-                            callback.onError("Utilisateur non autorisé");
-
-                        } else {
-                            callback.onError("Erreur de connexion à l'API");
-                        }
+                        if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
                     }
                 });
 

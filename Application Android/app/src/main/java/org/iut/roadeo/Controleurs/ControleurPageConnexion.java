@@ -7,6 +7,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.CacheApplication;
+import org.iut.roadeo.Modele.APIRequeteur;
+import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
 import org.iut.roadeo.R;
 
 /**
@@ -54,13 +57,27 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
             // TODO appels API
 
-            // Note :
-            // Après connexion, l'utilisateur pourra appuyer sur BACK
-            // pour revenir à cette page.
+            // Test API
+            APIRequeteur api = new APIRequeteur(this.getApplicationContext(), CacheApplication.URL_API_PREFIXE);
+            api.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
+                    new IAPIConnexionCallback() {
+                @Override
+                public void onSuccess(String message) {
 
-            Intent intention = new Intent(ControleurPageConnexion.this,
-                    ControleurMenuPrincipal.class);
-            startActivity(intention);
+                    // Note :
+                    // Après connexion, l'utilisateur pourra appuyer sur BACK
+                    // pour revenir à cette page.
+
+                    Intent intention = new Intent(ControleurPageConnexion.this,
+                            ControleurMenuPrincipal.class);
+                    startActivity(intention);
+                }
+
+                @Override
+                public void onError(String message) {
+                    // Corps vide
+                }
+            });
         }
     }
 

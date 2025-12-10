@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 import org.iut.roadeo.Controleurs.ControleurCompteUtilisateur;
 import org.iut.roadeo.Controleurs.ControleurListeParticipant;
-import org.iut.roadeo.Controleurs.ControleurMenuPrincipal;
+import org.iut.roadeo.Controleurs.ControleurDashboard;
 import org.iut.roadeo.R;
 
 /**
@@ -34,7 +34,7 @@ public class ChangeVue {
 
         // en fonction de l'option choisie on lance l'activitée associée
         if(item.getItemId() == R.id.afficheMenu){
-            intention = new Intent(contexte, ControleurMenuPrincipal.class);
+            intention = new Intent(contexte, ControleurDashboard.class);
         } else if(item.getItemId() == R.id.afficheCompte){
             intention = new Intent(contexte, ControleurCompteUtilisateur.class);
         } else if(item.getItemId() == R.id.afficheListeParticipants){

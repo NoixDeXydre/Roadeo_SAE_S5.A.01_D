@@ -59,7 +59,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
             // pour revenir à cette page.
 
             Intent intention = new Intent(ControleurPageConnexion.this,
-                    ControleurMenuPrincipal.class);
+                    ControleurDashboard.class);
             startActivity(intention);
         }
     }

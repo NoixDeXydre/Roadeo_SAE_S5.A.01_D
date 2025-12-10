@@ -1,6 +1,5 @@
 package org.iut.roadeo.Controleurs;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,13 +17,13 @@ import org.iut.roadeo.R;
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class ControleurMenuPrincipal extends AppCompatActivity {
+public class ControleurDashboard extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_principal);
+        setContentView(R.layout.dashboard);
         // FIXME
         // on aura dashboard avec les parcours et les randonnées.
     }
@@ -41,7 +40,7 @@ public class ControleurMenuPrincipal extends AppCompatActivity {
         /* On envoi la vue choisie et le contexte à la méthode
          * permettant de changer de vue
          */
-        ChangeVue.changeurVue(item, ControleurMenuPrincipal.this);
+        ChangeVue.changeurVue(item, ControleurDashboard.this);
 
         return super.onOptionsItemSelected(item);
     }

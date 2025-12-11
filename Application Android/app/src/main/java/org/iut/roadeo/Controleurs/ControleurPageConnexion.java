@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.R;
 
+import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
+
 /**
  * Point d'entrée de l'application.
  *
@@ -46,10 +48,10 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         // Vérification des champs
 
-        if (!isChampCorrect(champIdentifiant.getText().toString()
+        if (!isTexteNonVide(champIdentifiant.getText().toString()
                 .toLowerCase().trim())) {
             // TODO afficher erreur identifiant
-        } else if (!isChampCorrect(champMotDePasse.getText().toString())) {
+        } else if (!isChampNonVide((champMotDePasse))) {
             // TODO afficher erreur mdp
         } else {
 
@@ -74,9 +76,5 @@ public class ControleurPageConnexion extends AppCompatActivity {
         Intent intention = new Intent(ControleurPageConnexion.this,
                 ControleurCreationCompte.class);
         startActivity(intention);
-    }
-
-    private boolean isChampCorrect(String texteChamp) {
-        return texteChamp != null && !texteChamp.isBlank();
     }
 }

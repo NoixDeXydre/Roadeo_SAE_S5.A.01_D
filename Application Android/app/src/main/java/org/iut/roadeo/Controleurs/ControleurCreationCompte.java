@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.R;
 
+import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
+
 /**
  * Gère la création du compte.
  *
@@ -58,10 +60,31 @@ public class ControleurCreationCompte extends AppCompatActivity {
         // TODO vérification données
         // TODO appel API
 
-        Intent intention = new Intent(this, ControleurDashboard.class);
-        startActivity(intention);
 
-        // Comme ça, le bouton retour ne mènera plus à cette activité.
-        finish();
+        // TODO vérifier les champs restants
+        if (!isChampNonVide(champNom)) {
+
+        } else if (!isChampNonVide(champPrenom)) {
+
+        } else if (!isTexteNonVide(champAdresseMail.getText().toString()
+                .toLowerCase().trim())) {
+
+        } else if (!isChampNonVide(champMdp)) {
+
+        } else if (!isChampNonVide(champMdp) && !isChampNonVide(champConfirmationMdp)
+                && isChampsMdpIdentiques(champMdp, champConfirmationMdp)) {
+
+        } else if (!isChampNonVide(champDomicile)) {
+
+        } else if (getIntFromChamp(champAge, 0) != 0) {
+
+        } else {
+
+            Intent intention = new Intent(this, ControleurDashboard.class);
+            startActivity(intention);
+
+            // Comme ça, le bouton retour ne mènera plus à cette activité.
+            finish();
+        }
     }
 }

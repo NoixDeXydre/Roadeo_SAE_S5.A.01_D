@@ -13,6 +13,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -87,7 +88,21 @@ public class APIRequeteur {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess();
+
+                        Utilisateur utilisateur;
+                        try {
+                            utilisateur = new Utilisateur(
+                                    response.getString("patronyme").split(" ")[0],
+                                    response.getString("patronyme").split(" ")[1],
+                                    response.getString("mdp"),
+                                    response.getString("adresseMail"),
+                                    response.getString("domicile")
+                            );
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        callback.onSuccess(utilisateur);
                     }
                 },
                 new Response.ErrorListener() {

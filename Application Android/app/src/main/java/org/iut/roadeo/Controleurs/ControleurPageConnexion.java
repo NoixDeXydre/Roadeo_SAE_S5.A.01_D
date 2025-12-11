@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.iut.roadeo.BuildConfig;
 import org.iut.roadeo.Modele.APIRequeteur;
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
+import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
 /**
@@ -74,7 +75,11 @@ public class ControleurPageConnexion extends AppCompatActivity {
             apiRequeteur.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
                     new IAPIConnexionCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(Utilisateur utilisateur) {
+
+                    // TODO enregistrer l'utilisateur dans le cache
+                    System.out.println(utilisateur.getNom() + " " + utilisateur.getPrenom());
+                    System.out.println("TODO écriture dans le cache de l'utilisateur.");
 
                     // Note :
                     // Après connexion, l'utilisateur pourra appuyer sur BACK

@@ -46,7 +46,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         // Vérification des champs
 
-        if (!isChampCorrect(champIdentifiant.getText().toString())) {
+        if (!isChampCorrect(champIdentifiant.getText().toString()
+                .toLowerCase().trim())) {
             // TODO afficher erreur identifiant
         } else if (!isChampCorrect(champMotDePasse.getText().toString())) {
             // TODO afficher erreur mdp

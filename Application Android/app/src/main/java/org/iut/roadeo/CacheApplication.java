@@ -10,5 +10,5 @@ package org.iut.roadeo;
  */
 public class CacheApplication {
     // TODO singleton
-    // On aurait juste à stocker l'utilisateur en théorie + la clé API.
+    // On aurait juste à stocker l'utilisateur en théorie
 }

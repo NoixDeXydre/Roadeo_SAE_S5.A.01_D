@@ -25,4 +25,19 @@ public class UtilisateurService {
         //Objet Utilisateur
         return result.orElse(null);
     }
+
+    // TODO dans une version supérieure
+    //      la clé API devrait être fournie.
+    /**
+     * Valide la connexion de l'utilisateur.
+     * @param email
+     * @param mdp
+     * @return l'utilisateur connecté
+     */
+    public Utilisateur validerConnexion(String email, String mdp) {
+
+        var resultat = repository.findByAdresseMailAndMdp
+                (email.toLowerCase().trim(), mdp);
+        return resultat.orElse(null);
+    }
 }

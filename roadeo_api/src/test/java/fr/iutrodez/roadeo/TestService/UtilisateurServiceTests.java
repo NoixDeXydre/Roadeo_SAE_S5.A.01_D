@@ -7,13 +7,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.domain.Example;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class UtilisateurServiceTests {
@@ -44,6 +44,33 @@ public class UtilisateurServiceTests {
 
         assertEquals(expectedList, result);
         verify(repository, times(1)).findAll();
+    }
+
+    @Test
+    void testValiderConnexionSucces() {
+
+        // Simuler le comportement du repository
+        when(repository.findOne(any(Example.class))).thenReturn(Optional.of(expectedList.get(0)));
+
+        Utilisateur result = service.validerConnexion("test@example.com", "mdp123");
+
+        assertNotNull(result);
+        assertEquals(expectedList.get(0).getAdresseMail(), result.getAdresseMail());
+        assertEquals(expectedList.get(0).getMdp(), result.getMdp());
+
+        verify(repository, times(1)).findOne(any(Example.class));
+    }
+
+    @Test
+    void testValiderConnexionEchec() {
+
+        // Simuler un login incorrect
+        when(repository.findOne(any(Example.class))).thenReturn(Optional.empty());
+
+        Utilisateur result = service.validerConnexion("wrong@example.com", "badpass");
+
+        assertNull(result);
+        verify(repository, times(1)).findOne(any(Example.class));
     }
 
     @Test

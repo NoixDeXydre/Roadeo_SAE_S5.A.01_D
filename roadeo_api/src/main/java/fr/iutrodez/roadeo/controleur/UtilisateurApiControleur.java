@@ -2,6 +2,7 @@ package fr.iutrodez.roadeo.controleur;
 
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.UtilisateurService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,19 @@ public class UtilisateurApiControleur {
         this.utilisateurService = utilisateurService;
     }
 
+    // TODO dans les versions supérieures, devrait renvoyer la clé API.
+    @PostMapping("seConnecter")
+    public ResponseEntity<Utilisateur> seConnecter(@RequestBody Utilisateur request) {
+
+        var utilisateur = utilisateurService.validerConnexion
+                (request.getAdresseMail(), request.getMdp());
+        if (utilisateur != null) {
+            return ResponseEntity.ok(utilisateur);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
     @RequestMapping("/liste")
     public List<Utilisateur> getUtilisateur() {
         return utilisateurService.getAllUtilisateurs();
@@ -35,5 +49,4 @@ public class UtilisateurApiControleur {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

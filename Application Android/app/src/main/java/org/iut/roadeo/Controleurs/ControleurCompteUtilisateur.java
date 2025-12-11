@@ -1,6 +1,5 @@
 package org.iut.roadeo.Controleurs;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,7 +54,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
 
         /* Ecriture des données du compte */
-        nomUtilisateur.setText(R.string.description_nom);
+        nomUtilisateur.setText(R.string.description_patronyme);
         motDePasseUtilisateur.setText(R.string.description_motdepasse);
         emailUtilisateur.setText(R.string.description_motdepasse);
         domicileUtilisateur.setText(R.string.description_domicile);

@@ -7,6 +7,8 @@
     <string name="nom_page_creation_compte">"Création d'un compte"</string>
 
     <!-- Lié aux informations du compte -->
+    <string name="label_compte_nom">Nom</string>
+    <string name="label_compte_prenom">Prenom</string>
     <string name="label_compte_motdepasse">Mot de passe</string>
     <string name="label_compte_conf_motdepasse">Confirmation du mot de passe</string>
     <string name="label_compte_email">Adresse mail</string>
@@ -22,11 +24,13 @@
     <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
 
     <!-- Descriptions edit text -->
+    <string name="description_nom">Marcel</string>
+    <string name="description_prenom">Marcenac</string>
     <string name="description_email">M-Marcenac@email.com</string>
     <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_age">20</string>
     <string name="description_domicile">7 rue du Citron</string>
-    <string name="description_nom">Marcel Marcenac</string>
+    <string name="description_patronyme">Marcel Marcenac</string>
     <string name="texte_participants">Liste des participants</string>
     <string name="option_menu_dashboard">Menu principal</string>
     <string name="option_menu_compte_utilisateur">Compte utilisateur</string>

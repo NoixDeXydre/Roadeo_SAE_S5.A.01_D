@@ -3,6 +3,8 @@ package org.iut.roadeo.Controleurs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,13 +19,33 @@ import org.iut.roadeo.R;
  */
 public class ControleurCreationCompte extends AppCompatActivity {
 
-    // TODO faire classe
+    private EditText champNom;
+    private EditText champPrenom;
+    private EditText champAdresseMail;
+    private EditText champDomicile;
+    private EditText champMdp;
+    private EditText champConfirmationMdp;
+    private EditText champAge;
+    private Spinner spinnerNiveauPhysique;
+    private Spinner spinnerMorphologie;
+
     // TODO remplir les spinners.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
+
+        champNom = findViewById(R.id.champNom);
+        champPrenom = findViewById(R.id.champPrenom);
+        champAdresseMail = findViewById(R.id.champAdresse);
+        champMdp = findViewById(R.id.champMotDePasse);
+        champConfirmationMdp = findViewById(R.id.champConfirmationMotDePasse);
+        champAge = findViewById(R.id.champAge);
+
+        spinnerNiveauPhysique = findViewById(R.id.spinnerNiveauEntrainement);
+        spinnerMorphologie = findViewById(R.id.spinnerMorphologie);
     }
 
     /**

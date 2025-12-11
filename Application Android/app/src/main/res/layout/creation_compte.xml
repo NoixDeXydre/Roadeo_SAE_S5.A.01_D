@@ -21,6 +21,50 @@
         android:textSize="@dimen/taille_titre_page" />
 
     <TableRow
+        android:id="@+id/ligneNom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/labelNom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_nom" />
+
+        <EditText
+            android:id="@+id/champNom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/description_nom"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/lignePrenom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/labelPrenom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_prenom" />
+
+        <EditText
+            android:id="@+id/champPrenom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/description_prenom"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
         android:id="@+id/ligneLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +83,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/description_email"
-            android:inputType="textEmailAddress" />
+            android:inputType="text" />
     </TableRow>
 
     <TableRow
@@ -122,7 +166,7 @@
             android:text="@string/label_compte_age" />
 
         <EditText
-            android:id="@+id/compteurAge"
+            android:id="@+id/champAge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:inputType="numberSigned"

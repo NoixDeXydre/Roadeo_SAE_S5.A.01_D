@@ -36,7 +36,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
         // TODO vérification données
         // TODO appel API
 
-        Intent intention = new Intent(this, ControleurMenuPrincipal.class);
+        Intent intention = new Intent(this, ControleurDashboard.class);
         startActivity(intention);
 
         // Comme ça, le bouton retour ne mènera plus à cette activité.

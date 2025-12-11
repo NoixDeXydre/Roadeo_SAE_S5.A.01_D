@@ -1,5 +1,8 @@
 package org.iut.roadeo.Modele;
 
+import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
+import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+
 /**
  * Représente un utilisateur.
  * Pour rappel, un utilisateur est un randonneur.
@@ -27,9 +30,11 @@ public class Utilisateur extends Randonneur {
      * @param email l'email de l'utiliteur
      * @param mDP le mot de passe de l'utilisateur
      */
-    public Utilisateur(String nom, String prenom, String mDP, String email,
+    public Utilisateur(String nom, String prenom, int age,
+                       NiveauEntrainement niveauEntrainement,
+                       Morphologie morphologie, String mDP, String email,
                        String domicile) {
-        super(nom, prenom);
+        super(nom, prenom, age, niveauEntrainement, morphologie);
         setMotDePasse(mDP);
         setEmail(email);
         setDomicile(domicile);

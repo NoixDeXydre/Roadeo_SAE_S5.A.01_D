@@ -1,11 +1,15 @@
 package org.iut.roadeo.Controleurs;
 
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,7 +34,7 @@ public class ControleurListeParticipant extends AppCompatActivity {
     /* contient les différents participants */
     private ArrayList<Randonneur> participants;
 
-    private ArrayAdapter<String> adaptateur;
+    private ArrayAdapter<Randonneur> adaptateur;
 
     private ListView listeParticipant;
 
@@ -58,10 +62,39 @@ public class ControleurListeParticipant extends AppCompatActivity {
 
         adaptateur = new ArrayAdapter<>(this,
                                         androidx.appcompat.R.layout.
-                                        support_simple_spinner_dropdown_item);
-        adaptateur.add(participants.get(0).toString());
-        adaptateur.add(participants.get(1).toString());
+                                        support_simple_spinner_dropdown_item, participants);
         listeParticipant.setAdapter(adaptateur);
+
+        // on associe le menu contextuel
+        registerForContextMenu(listeParticipant);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        new MenuInflater(this).inflate(R.menu.menu_ajouter_liste, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo information =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        if(item.getItemId() == R.id.detailParticipant){
+            // TODO vue créer participant avec infos sur participant
+            Toast.makeText(this, "pas encore implémenté", Toast.LENGTH_LONG).show();
+        } else if (item.getItemId() == R.id.supprimerParticipant
+                    && information.position != 0) {
+            participants.remove(information.position);
+            listeParticipant.setAdapter(adaptateur);
+        } else {
+            // l'utilisateur tente de supprimer le créateur de la randonnée
+            Toast.makeText(this, "Vous ne pouvez pas supprimer le créateur de"
+                                        + " la randonnée", Toast.LENGTH_LONG)
+                            .show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -73,11 +106,20 @@ public class ControleurListeParticipant extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /* On envoi la vue choisie et le contexte à la méthode
-         * permettant de changer de vue
-         */
+        // On envoi la vue choisie et le contexte à la méthode
+        // permettant de changer de vue
+
         ChangeVue.changeurVue(item, ControleurListeParticipant.this);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Envoi vers la vue permettant de créer un participant
+     * @param view non utilisé
+     */
+    public void ajouterParticipant(View view) {
+        // TODO envoyer vers la vue créer un participant
+        Toast.makeText(this, "pas encore implémenté", Toast.LENGTH_LONG).show();
     }
 }

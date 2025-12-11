@@ -12,6 +12,13 @@
         android:gravity="center"
         android:textSize="30sp"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/ajouter"
+        android:onClick="ajouterParticipant"/>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"

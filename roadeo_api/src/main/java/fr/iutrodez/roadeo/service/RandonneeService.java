@@ -4,9 +4,12 @@ import fr.iutrodez.roadeo.dao.ParcoursInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.RandoneeInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Parcours;
 import fr.iutrodez.roadeo.modele.Randonnee;
+import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RandonneeService {
@@ -25,4 +28,13 @@ public class RandonneeService {
     public List<Parcours> getAllParcours() {
         return parcoursRepository.findAll();
     }
+
+    public ArrayList<Parcours> getParcoursByIdRando(String idRando) {
+        return parcoursRepository.findByIdRando(idRando);
+    }
+
+    public Randonnee getRandonnee(String id) {
+        return repository.findById(id).orElse(null);
+    }
+
 }

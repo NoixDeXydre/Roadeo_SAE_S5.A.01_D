@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,5 +32,23 @@ public class RandoneeApiControleur {
     @RequestMapping("/listeParcours")
     public List<Parcours> getParcours() {
         return randonneeService.getAllParcours();
+    }
+
+    @PostMapping("/infoRandoUtil")
+    public List<Randonnee> getRandonneeParIdUtil(@RequestBody String idUtilisateur) {
+        List<Randonnee> listeRandonnee = randonneeService.getAllRandonnees();
+        for (Randonnee randonnee : listeRandonnee) {
+            randonnee.setParcours(
+                    randonneeService.getParcoursByIdRando(randonnee.getId())
+            );
+        }
+        return listeRandonnee;
+    }
+
+    @PostMapping("/infoRando")
+    public Randonnee getRandonneeParId(@RequestBody String idRando) {
+        Randonnee randonnee = randonneeService.getRandonnee(idRando);
+        randonnee.setParcours(randonneeService.getParcoursByIdRando(randonnee.getId()));
+        return randonnee;
     }
 }

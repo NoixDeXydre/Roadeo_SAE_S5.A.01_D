@@ -21,6 +21,9 @@ import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
  */
 public class ControleurCreationCompte extends AppCompatActivity {
 
+    private final static int AGE_MINIMUM = 1;
+    private final static int AGE_MAXIMUM = 120;
+
     private EditText champNom;
     private EditText champPrenom;
     private EditText champAdresseMail;
@@ -31,8 +34,6 @@ public class ControleurCreationCompte extends AppCompatActivity {
     private Spinner spinnerNiveauPhysique;
     private Spinner spinnerMorphologie;
 
-    // TODO remplir les spinners.
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -41,10 +42,13 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         champNom = findViewById(R.id.champNom);
         champPrenom = findViewById(R.id.champPrenom);
-        champAdresseMail = findViewById(R.id.champAdresse);
+        champAdresseMail = findViewById(R.id.champLogin);
+        champDomicile = findViewById(R.id.champAdresse);
         champMdp = findViewById(R.id.champMotDePasse);
         champConfirmationMdp = findViewById(R.id.champConfirmationMotDePasse);
         champAge = findViewById(R.id.champAge);
+
+        // TODO remplir les spinners.
 
         spinnerNiveauPhysique = findViewById(R.id.spinnerNiveauEntrainement);
         spinnerMorphologie = findViewById(R.id.spinnerMorphologie);
@@ -57,28 +61,30 @@ public class ControleurCreationCompte extends AppCompatActivity {
      */
     public void confirmerCreationCompte(View view) {
 
-        // TODO vérification données
-        // TODO appel API
+        // TODO vérifier les spinner
 
-
-        // TODO vérifier les champs restants
         if (!isChampNonVide(champNom)) {
-
+            // TODO message explicite ou highlight
         } else if (!isChampNonVide(champPrenom)) {
-
+            // TODO message explicite ou highlight
         } else if (!isTexteNonVide(champAdresseMail.getText().toString()
                 .toLowerCase().trim())) {
-
-        } else if (!isChampNonVide(champMdp)) {
-
-        } else if (!isChampNonVide(champMdp) && !isChampNonVide(champConfirmationMdp)
-                && isChampsMdpIdentiques(champMdp, champConfirmationMdp)) {
-
+            // TODO message explicite ou highlight
         } else if (!isChampNonVide(champDomicile)) {
-
-        } else if (getIntFromChamp(champAge, 0) != 0) {
-
+            // TODO message explicite ou highlight
+        } else if (!isChampNonVide(champMdp)) {
+            // TODO message explicite ou highlight
+        } else if (!isChampNonVide(champConfirmationMdp)) {
+            // TODO message explicite ou highlight
+        } else if (!isChampsMdpIdentiques(champMdp, champConfirmationMdp)) {
+            // TODO message explicite ou highlight
+        } else if (!isChampNonVide(champAge)
+                || getIntFromChamp(champAge, 0) < AGE_MINIMUM
+                || getIntFromChamp(champAge, 0) > AGE_MAXIMUM) {
+            // TODO message explicite ou highlight
         } else {
+
+            // TODO appel API
 
             Intent intention = new Intent(this, ControleurDashboard.class);
             startActivity(intention);

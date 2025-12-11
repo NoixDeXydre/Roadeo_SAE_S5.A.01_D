@@ -15,8 +15,18 @@ services:
       MONGO_INITDB_DATABASE: Roadeo-db
 
     volumes:
-      - mongodb_data:/data/db 
-      - ./init:/docker-entrypoint-initdb.d:ro
+      - mongodb_data:/data/db
+
+  springBoot:
+    image: jelastic/springboot:temurinjdk-21.0.8-almalinux-9
+    container_name: randoSpring
+    restart: always
+
+    ports:
+      - "8080:8080"  
+
+    depends_on:
+      - mongodb   
 
 volumes:
   mongodb_data:

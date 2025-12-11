@@ -48,6 +48,12 @@
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
+
+        <activity
+            android:name=".Controleurs.ControleurAjoutRandonneur"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

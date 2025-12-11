@@ -14,4 +14,5 @@ public interface UtilisateurInterfaceMongoDB extends MongoRepository<Utilisateur
      * @return l'utilisateur ou null
      */
     Optional<Utilisateur> findByAdresseMailAndMdp(String adresseMail, String mdp);
+
 }

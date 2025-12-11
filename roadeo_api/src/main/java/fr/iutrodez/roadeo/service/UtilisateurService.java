@@ -9,16 +9,32 @@ import java.util.Optional;
 
 @Service
 public class UtilisateurService {
+    /**
+     *
+     */
     private final UtilisateurInterfaceMongoDB repository;
 
+    /**
+     *
+     * @param repository
+     */
     public UtilisateurService(UtilisateurInterfaceMongoDB repository) {
         this.repository = repository;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Utilisateur> getAllUtilisateurs() {
         return repository.findAll();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Utilisateur getUtilisateur(String id) {
 
         Optional<Utilisateur> result = repository.findById(id);
@@ -39,5 +55,46 @@ public class UtilisateurService {
         var resultat = repository.findByAdresseMailAndMdp
                 (email.toLowerCase().trim(), mdp);
         return resultat.orElse(null);
+    }
+
+    /**
+     * Supprime un utilisateur si il existe
+     * @param id  id de l'utilisateur à supprimer
+     * @return true si l'utilisateur est supprimé
+     *          false sinon
+     */
+    public boolean supprimerUtilisateur(String id) {
+        if (!repository.existsById(id)) {
+            return false;
+        }
+        repository.deleteById(id);
+        return true;
+    }
+
+    /**
+     * Modifie un utilisateur existant
+     * @param utilisateur, l'utilisateur à modifier avec les données modifiées
+     * @return la nouvelle valeur de l'utilisateur si modifié
+     * @throws IllegalArgumentException si l'utilisateur n'existe pas
+     *      ou si le parametre est null
+     */
+    public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
+        if  (utilisateur == null || !repository.existsById(utilisateur.getId())) {
+            throw new IllegalArgumentException();
+        }
+        return repository.save(utilisateur);
+    }
+
+    /**
+     * Ajoute un utilisateur dans la bd mango
+     * @param utilisateur  les données utilisateur à ajouter
+     * @return l'utilisateur ajouté
+     * @throws IllegalArgumentException si le paramètre est null
+     */
+    public Utilisateur addUtilisateur(Utilisateur utilisateur) {
+        if (utilisateur == null) {
+            throw new IllegalArgumentException();
+        }
+        return repository.save(utilisateur);
     }
 }

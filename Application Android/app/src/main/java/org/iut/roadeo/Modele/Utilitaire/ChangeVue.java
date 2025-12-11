@@ -22,7 +22,7 @@ public class ChangeVue {
 
     /**
      * remplace l'activitee actuelle par l'activitee selectionnee
-     * par l'utilisateur
+     * par l'utilisateur à partir du menu burger
      * @param item activitee a afficher
      * @param contexte activitee actuellement affichee
      */

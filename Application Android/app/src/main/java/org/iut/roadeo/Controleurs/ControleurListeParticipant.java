@@ -1,5 +1,7 @@
 package org.iut.roadeo.Controleurs;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -11,6 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.Modele.Randonneur;
@@ -81,9 +86,17 @@ public class ControleurListeParticipant extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo information =
                 (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
+        // On regarde l'option choisie par l'utilisateur
         if(item.getItemId() == R.id.detailParticipant){
+            Intent intention = new Intent(this,
+                                          ControleurAjoutRandonneur.class);
+
+            intention.putExtra("POSITION", information.position);
+
+            startActivity(intention);
             // TODO vue créer participant avec infos sur participant
-            Toast.makeText(this, "pas encore implémenté", Toast.LENGTH_LONG).show();
+
+            //lanceCreation.launch(intention);
         } else if (item.getItemId() == R.id.supprimerParticipant
                     && information.position != 0) {
             participants.remove(information.position);
@@ -119,7 +132,8 @@ public class ControleurListeParticipant extends AppCompatActivity {
      * @param view non utilisé
      */
     public void ajouterParticipant(View view) {
-        // TODO envoyer vers la vue créer un participant
-        Toast.makeText(this, "pas encore implémenté", Toast.LENGTH_LONG).show();
+        Intent intention = new Intent(this, ControleurAjoutRandonneur.class);
+
+        startActivity(intention);
     }
 }

@@ -40,4 +40,9 @@
     <string name="supprimer">Supprimer</string>
     <string name="details">Détails…</string>
 
+    <!-- Messages d'erreur -->
+
+    <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>
+    <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
+
 </resources>

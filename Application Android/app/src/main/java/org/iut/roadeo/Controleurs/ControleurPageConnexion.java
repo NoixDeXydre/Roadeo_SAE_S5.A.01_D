@@ -1,11 +1,15 @@
 package org.iut.roadeo.Controleurs;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import org.iut.roadeo.R;
 
@@ -23,7 +27,6 @@ import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
  * @author VIGUE Adrien
  */
 public class ControleurPageConnexion extends AppCompatActivity {
-
     private EditText champIdentifiant;
     private EditText champMotDePasse;
 
@@ -50,10 +53,41 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         if (!isTexteNonVide(champIdentifiant.getText().toString()
                 .toLowerCase().trim())) {
-            // TODO afficher erreur identifiant
+
+            champIdentifiant.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.red),
+                    PorterDuff.Mode.SRC_IN
+            );
+
+            champMotDePasse.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.black),
+                    PorterDuff.Mode.SRC_IN
+            );
+
+            Toast.makeText(ControleurPageConnexion.this, R.string.message_erreur_mail,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide((champMotDePasse))) {
-            // TODO afficher erreur mdp
+
+            champIdentifiant.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.black),
+                    PorterDuff.Mode.SRC_IN
+            );
+
+            champMotDePasse.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.red),
+                    PorterDuff.Mode.SRC_IN
+            );
+
+            Toast.makeText(ControleurPageConnexion.this, R.string.message_erreur_mdp,
+                    Toast.LENGTH_SHORT).show();
+
         } else {
+
+            champIdentifiant.getBackground().setColorFilter(
+                    ContextCompat.getColor(this, R.color.black),
+                    PorterDuff.Mode.SRC_IN
+            );
 
             // TODO appels API
 

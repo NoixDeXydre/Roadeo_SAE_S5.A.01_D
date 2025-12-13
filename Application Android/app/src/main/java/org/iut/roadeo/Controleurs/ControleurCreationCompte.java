@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
+import static org.iut.roadeo.Modele.Utilitaire.RecuperateurChamps.*;
 import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
 
 /**

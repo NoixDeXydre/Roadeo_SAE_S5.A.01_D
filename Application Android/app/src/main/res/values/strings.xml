@@ -40,6 +40,20 @@
     <string name="supprimer">Supprimer</string>
     <string name="details">Détails…</string>
 
+    <!-- Spinners -->
+
+    <string-array name="spinner_niveau_physique">
+        <item name="debutant">Débutant</item>
+        <item name="entraine">Entrainé</item>
+        <item name="sportif">Sportif</item>
+    </string-array>
+
+    <string-array name="spinner_morphologie">
+        <item name="leger">Léger</item>
+        <item name="moyen">Moyen</item>
+        <item name="fort">Fort</item>
+    </string-array>
+
     <!-- Messages d'erreur -->
 
     <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>

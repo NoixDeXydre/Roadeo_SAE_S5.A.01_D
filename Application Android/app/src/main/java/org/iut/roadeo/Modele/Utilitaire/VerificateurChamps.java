@@ -2,9 +2,12 @@ package org.iut.roadeo.Modele.Utilitaire;
 
 import android.widget.EditText;
 
+import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
+import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+
 /**
  * Offre des méthodes utilitaires
- * pour la vérification des champs utilisateur.
+ * pour la vérification et la gestion des champs utilisateur.
  *
  * @author BOYER Djedline
  * @author M'TIMA LESNIAK Noa
@@ -56,5 +59,21 @@ public class VerificateurChamps {
         }
 
         return valeurDefaut;
+    }
+
+    /**
+     * @param position
+     * @return le niveau d'entrainement
+     */
+    public static NiveauEntrainement getNiveauEntrainementWithPosition(int position) {
+        return NiveauEntrainement.values()[position];
+    }
+
+    /**
+     * @param position
+     * @return la morphologie
+     */
+    public static Morphologie getMorphologieWithPosition(int position) {
+        return Morphologie.values()[position];
     }
 }

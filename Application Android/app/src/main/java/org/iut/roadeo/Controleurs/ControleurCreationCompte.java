@@ -2,17 +2,20 @@ package org.iut.roadeo.Controleurs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
-import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.setChampListenerResetErreurOnEcriture;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.*;
 import static org.iut.roadeo.Modele.Utilitaire.Champ.RecuperateurChamps.*;
 import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
@@ -55,6 +58,29 @@ public class ControleurCreationCompte extends AppCompatActivity {
                 (findViewById(R.id.champConfirmationMotDePasse));
         champAge = setChampListenerResetErreurOnEcriture(findViewById(R.id.champAge));
 
+        // Avec cet écouteur, on peut bloquer
+        // la confirmation du mot de passe si aucun mdp n'a été inséré.
+        champMdp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                // TODO mettre une constante pour les valeurs alpha
+                if (charSequence.length() != 0) {
+                    champConfirmationMdp.setEnabled(true);
+                    champConfirmationMdp.setAlpha(1.0f);
+                } else {
+                    champConfirmationMdp.setEnabled(false);
+                    champConfirmationMdp.setAlpha(0.3f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+
         spinnerNiveauPhysique = findViewById(R.id.spinnerNiveauEntrainement);
         spinnerMorphologie = findViewById(R.id.spinnerMorphologie);
 
@@ -80,24 +106,70 @@ public class ControleurCreationCompte extends AppCompatActivity {
     public void confirmerCreationCompte(View view) {
 
         if (!isChampNonVide(champNom)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champNom, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_nom,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide(champPrenom)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champNom, R.color.black);
+            setBarreCouleurChamp(champPrenom, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_prenom,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isTexteNonVide(champAdresseMail.getText().toString()
                 .toLowerCase().trim())) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champPrenom, R.color.black);
+            setBarreCouleurChamp(champAdresseMail, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_mail,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide(champDomicile)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champAdresseMail, R.color.black);
+            setBarreCouleurChamp(champDomicile, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_adresse,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide(champMdp)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champDomicile, R.color.black);
+            setBarreCouleurChamp(champMdp, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_mdp,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide(champConfirmationMdp)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champMdp, R.color.black);
+            setBarreCouleurChamp(champConfirmationMdp, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_confirmation_mdp,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampsMdpIdentiques(champMdp, champConfirmationMdp)) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champConfirmationMdp, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_mdp_conf_echec,
+                    Toast.LENGTH_SHORT).show();
+
         } else if (!isChampNonVide(champAge)
                 || getIntFromChamp(champAge, 0) < AGE_MINIMUM
                 || getIntFromChamp(champAge, 0) > AGE_MAXIMUM) {
-            // TODO message explicite ou highlight
+            setBarreCouleurChamp(champConfirmationMdp, R.color.black);
+            setBarreCouleurChamp(champAge, R.color.red);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_age,
+                    Toast.LENGTH_LONG).show();
+
         } else {
 
             // TODO enregistrer cet utilisateur

@@ -1,4 +1,4 @@
-package org.iut.roadeo.Modele.Utilitaire;
+package org.iut.roadeo.Modele.Utilitaire.Champ;
 
 import android.widget.EditText;
 

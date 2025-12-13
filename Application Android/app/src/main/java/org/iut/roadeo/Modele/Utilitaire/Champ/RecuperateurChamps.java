@@ -1,6 +1,6 @@
-package org.iut.roadeo.Modele.Utilitaire;
+package org.iut.roadeo.Modele.Utilitaire.Champ;
 
-import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
 import android.widget.EditText;
 

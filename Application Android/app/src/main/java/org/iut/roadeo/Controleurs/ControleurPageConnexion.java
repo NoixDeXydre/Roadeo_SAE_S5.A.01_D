@@ -1,19 +1,17 @@
 package org.iut.roadeo.Controleurs;
 
 import android.content.Intent;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import org.iut.roadeo.R;
 
-import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
 /**
  * Point d'entrée de l'application.
@@ -36,8 +34,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_connexion);
 
-        champIdentifiant = findViewById(R.id.champLogin);
-        champMotDePasse = findViewById(R.id.champMotDePasse);
+        champIdentifiant = setChampListenerResetErreurOnEcriture(findViewById(R.id.champLogin));
+        champMotDePasse = setChampListenerResetErreurOnEcriture(findViewById(R.id.champMotDePasse));
     }
 
     /**
@@ -54,40 +52,23 @@ public class ControleurPageConnexion extends AppCompatActivity {
         if (!isTexteNonVide(champIdentifiant.getText().toString()
                 .toLowerCase().trim())) {
 
-            champIdentifiant.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.red),
-                    PorterDuff.Mode.SRC_IN
-            );
-
-            champMotDePasse.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.black),
-                    PorterDuff.Mode.SRC_IN
-            );
-
-            Toast.makeText(ControleurPageConnexion.this, R.string.message_erreur_mail,
+            setBarreCouleurChamp(champIdentifiant, R.color.red);
+            setBarreCouleurChamp(champMotDePasse, R.color.black);
+            Toast.makeText(ControleurPageConnexion.this,
+                    R.string.message_erreur_mail,
                     Toast.LENGTH_SHORT).show();
 
         } else if (!isChampNonVide((champMotDePasse))) {
 
-            champIdentifiant.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.black),
-                    PorterDuff.Mode.SRC_IN
-            );
-
-            champMotDePasse.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.red),
-                    PorterDuff.Mode.SRC_IN
-            );
-
-            Toast.makeText(ControleurPageConnexion.this, R.string.message_erreur_mdp,
+            setBarreCouleurChamp(champIdentifiant, R.color.black);
+            setBarreCouleurChamp(champMotDePasse, R.color.red);
+            Toast.makeText(ControleurPageConnexion.this,
+                    R.string.message_erreur_mdp,
                     Toast.LENGTH_SHORT).show();
 
         } else {
 
-            champIdentifiant.getBackground().setColorFilter(
-                    ContextCompat.getColor(this, R.color.black),
-                    PorterDuff.Mode.SRC_IN
-            );
+            setBarreCouleurChamp(champIdentifiant, R.color.black);
 
             // TODO appels API
 

@@ -12,8 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
-import static org.iut.roadeo.Modele.Utilitaire.RecuperateurChamps.*;
-import static org.iut.roadeo.Modele.Utilitaire.VerificateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.setChampListenerResetErreurOnEcriture;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.RecuperateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
 /**
  * Gère la création du compte.
@@ -45,13 +46,14 @@ public class ControleurCreationCompte extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
 
-        champNom = findViewById(R.id.champNom);
-        champPrenom = findViewById(R.id.champPrenom);
-        champAdresseMail = findViewById(R.id.champLogin);
-        champDomicile = findViewById(R.id.champAdresse);
-        champMdp = findViewById(R.id.champMotDePasse);
-        champConfirmationMdp = findViewById(R.id.champConfirmationMotDePasse);
-        champAge = findViewById(R.id.champAge);
+        champNom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champNom));
+        champPrenom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champPrenom));
+        champAdresseMail = setChampListenerResetErreurOnEcriture(findViewById(R.id.champLogin));
+        champDomicile = setChampListenerResetErreurOnEcriture(findViewById(R.id.champAdresse));
+        champMdp = setChampListenerResetErreurOnEcriture(findViewById(R.id.champMotDePasse));
+        champConfirmationMdp = setChampListenerResetErreurOnEcriture
+                (findViewById(R.id.champConfirmationMotDePasse));
+        champAge = setChampListenerResetErreurOnEcriture(findViewById(R.id.champAge));
 
         spinnerNiveauPhysique = findViewById(R.id.spinnerNiveauEntrainement);
         spinnerMorphologie = findViewById(R.id.spinnerMorphologie);

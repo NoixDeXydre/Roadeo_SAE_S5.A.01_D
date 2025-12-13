@@ -17,6 +17,8 @@
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
 
+    <string name="asterix">*</string>
+
     <!-- Labels boutons -->
     <string name="label_btn_creercompte">Créer un compte</string>
     <string name="label_btn_confirmation_creation_compte">Confirmer la création du compte</string>

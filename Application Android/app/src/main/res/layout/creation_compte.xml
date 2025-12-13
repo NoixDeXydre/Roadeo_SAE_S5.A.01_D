@@ -27,6 +27,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
+
+        <TextView
             android:id="@+id/labelNom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,6 +54,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
 
         <TextView
             android:id="@+id/labelPrenom"
@@ -71,6 +85,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
+
+        <TextView
             android:id="@+id/labelLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,6 +112,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
 
         <TextView
             android:id="@+id/labelAdresse"
@@ -115,6 +143,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
+
+        <TextView
             android:id="@+id/labelMotDePasse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -137,6 +172,13 @@
         android:layout_gravity="center">
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
+
+        <TextView
             android:id="@+id/labelConfirmationMotDePasse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -157,6 +199,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dist_asterix_label"
+            android:textColor="@color/red"
+            android:text="@string/asterix"/>
 
         <TextView
             android:id="@+id/labelAge"

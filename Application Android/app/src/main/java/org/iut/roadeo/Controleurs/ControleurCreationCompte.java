@@ -181,6 +181,10 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     champMdp.getText().toString(), champAdresseMail.getText().toString(),
                     champDomicile.getText().toString());
 
+            Toast.makeText(ControleurCreationCompte.this,
+                    getString(R.string.message_succes_creation_compte, utilisateur.getNom()),
+                    Toast.LENGTH_LONG).show();
+
             // TODO appel API
 
             Intent intention = new Intent(this, ControleurDashboard.class);

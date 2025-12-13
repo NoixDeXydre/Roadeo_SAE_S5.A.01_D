@@ -56,6 +56,10 @@
         <item name="fort">Fort</item>
     </string-array>
 
+    <!-- Messages succès -->
+
+    <string name="message_succes_creation_compte">"Votre compte a été crée avec succès.\nBienvenue, %s !"</string>
+
     <!-- Messages d'erreur -->
 
     <string name="message_erreur_nom">Veuillez insérer votre nom.</string>

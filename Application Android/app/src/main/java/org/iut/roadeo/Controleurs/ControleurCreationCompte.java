@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
@@ -172,7 +173,6 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         } else {
 
-            // TODO enregistrer cet utilisateur
             Utilisateur utilisateur = new Utilisateur
                     (champNom.getText().toString(), champPrenom.getText().toString(),
                     getIntFromChamp(champAge, 0),
@@ -180,6 +180,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     getMorphologieWithPosition(spinnerNiveauPhysique.getSelectedItemPosition()),
                     champMdp.getText().toString(), champAdresseMail.getText().toString(),
                     champDomicile.getText().toString());
+
+            CacheApplication.getInstance().setUtilisateurConnecte(utilisateur);
 
             Toast.makeText(ControleurCreationCompte.this,
                     getString(R.string.message_succes_creation_compte, utilisateur.getNom()),

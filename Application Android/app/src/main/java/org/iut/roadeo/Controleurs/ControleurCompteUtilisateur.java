@@ -10,7 +10,9 @@ import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.Modele.Utilitaire.ChangeVue;
 import org.iut.roadeo.R;
 
@@ -43,6 +45,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compte_utilisateur);
 
@@ -53,11 +56,14 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         domicileUtilisateur = findViewById(R.id.domicileUtilisateur);
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
 
+        CacheApplication cacheApplication = CacheApplication.getInstance();
+        Utilisateur utilisateur = cacheApplication.getUtilisateurConnecte();
+
         /* Ecriture des données du compte */
-        nomUtilisateur.setText(R.string.description_patronyme);
-        motDePasseUtilisateur.setText(R.string.description_motdepasse);
-        emailUtilisateur.setText(R.string.description_motdepasse);
-        domicileUtilisateur.setText(R.string.description_domicile);
+        nomUtilisateur.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
+        motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
+        emailUtilisateur.setText(utilisateur.getEmail());
+        domicileUtilisateur.setText(utilisateur.getDomicile());
 
         /* Remplissage spinner */
         niveauPhysique = new ArrayList<>();

@@ -16,7 +16,7 @@
             android:id="@+id/nomUtilisateur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/description_nom"/>
+            android:hint="@string/description_patronyme"/>
         <ImageButton
             android:id="@+id/modifNom"
             android:layout_width="50dp"

@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.R;
+
+import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
 /**
  * Point d'entrée de l'application.
@@ -21,7 +25,6 @@ import org.iut.roadeo.R;
  * @author VIGUE Adrien
  */
 public class ControleurPageConnexion extends AppCompatActivity {
-
     private EditText champIdentifiant;
     private EditText champMotDePasse;
 
@@ -31,8 +34,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_connexion);
 
-        champIdentifiant = findViewById(R.id.champLogin);
-        champMotDePasse = findViewById(R.id.champMotDePasse);
+        champIdentifiant = setChampListenerResetErreurOnEcriture(findViewById(R.id.champLogin));
+        champMotDePasse = setChampListenerResetErreurOnEcriture(findViewById(R.id.champMotDePasse));
     }
 
     /**
@@ -46,11 +49,26 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         // Vérification des champs
 
-        if (!isChampCorrect(champIdentifiant.getText().toString())) {
-            // TODO afficher erreur identifiant
-        } else if (!isChampCorrect(champMotDePasse.getText().toString())) {
-            // TODO afficher erreur mdp
+        if (!isTexteNonVideBlank(champIdentifiant.getText().toString()
+                .toLowerCase().trim())) {
+
+            setBarreCouleurChamp(champIdentifiant, R.color.red);
+            setBarreCouleurChamp(champMotDePasse, R.color.black);
+            Toast.makeText(ControleurPageConnexion.this,
+                    R.string.message_erreur_mail,
+                    Toast.LENGTH_SHORT).show();
+
+        } else if (!isChampNonVide(champMotDePasse, true)) {
+
+            setBarreCouleurChamp(champIdentifiant, R.color.black);
+            setBarreCouleurChamp(champMotDePasse, R.color.red);
+            Toast.makeText(ControleurPageConnexion.this,
+                    R.string.message_erreur_mdp,
+                    Toast.LENGTH_SHORT).show();
+
         } else {
+
+            setBarreCouleurChamp(champIdentifiant, R.color.black);
 
             // TODO appels API
 
@@ -59,7 +77,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
             // pour revenir à cette page.
 
             Intent intention = new Intent(ControleurPageConnexion.this,
-                    ControleurMenuPrincipal.class);
+                    ControleurDashboard.class);
             startActivity(intention);
         }
     }
@@ -73,9 +91,5 @@ public class ControleurPageConnexion extends AppCompatActivity {
         Intent intention = new Intent(ControleurPageConnexion.this,
                 ControleurCreationCompte.class);
         startActivity(intention);
-    }
-
-    private boolean isChampCorrect(String texteChamp) {
-        return texteChamp != null && !texteChamp.isBlank();
     }
 }

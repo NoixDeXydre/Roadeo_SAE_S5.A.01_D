@@ -2,9 +2,6 @@ package org.iut.roadeo.Modele.Utilitaire.Champ;
 
 import android.widget.EditText;
 
-import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
-import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
-
 /**
  * Offre des méthodes utilitaires
  * pour la vérification et la gestion des champs utilisateur.
@@ -17,18 +14,35 @@ public class VerificateurChamps {
 
     /**
      * @param champ
+     * @param autoriserEspaces
      * @return true si le texte du champ n'est pas vide, sinon false.
      */
-    public static boolean isChampNonVide(EditText champ) {
-        return champ != null && isTexteNonVide(champ.getText().toString());
+    public static boolean isChampNonVide(EditText champ, boolean autoriserEspaces) {
+
+        if (champ == null)
+            return false;
+
+        if (autoriserEspaces)
+            return isTexteNonVideEmpty(champ.getText().toString());
+        return isTexteNonVideBlank(champ.getText().toString());
     }
 
     /**
      * @param texteChamp
-     * @return true si le texte n'est pas vide, sinon false.
+     * @return true si le texte n'est pas vide (en ne comptant pas les espaces),
+     * sinon false.
      */
-    public static boolean isTexteNonVide(String texteChamp) {
+    public static boolean isTexteNonVideBlank(String texteChamp) {
         return texteChamp != null && !texteChamp.isBlank();
+    }
+
+    /**
+     * @param texteChamp
+     * @return true si le texte n'est pas vide (en comptant les espaces),
+     * sinon false.
+     */
+    public static boolean isTexteNonVideEmpty(String texteChamp) {
+        return texteChamp != null && !texteChamp.isEmpty();
     }
 
     /**

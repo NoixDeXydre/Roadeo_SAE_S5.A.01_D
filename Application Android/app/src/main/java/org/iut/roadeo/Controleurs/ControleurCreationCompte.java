@@ -105,14 +105,14 @@ public class ControleurCreationCompte extends AppCompatActivity {
      */
     public void confirmerCreationCompte(View view) {
 
-        if (!isChampNonVide(champNom)) {
+        if (!isChampNonVide(champNom, false)) {
             setBarreCouleurChamp(champNom, R.color.red);
 
             Toast.makeText(ControleurCreationCompte.this,
                     R.string.message_erreur_nom,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide(champPrenom)) {
+        } else if (!isChampNonVide(champPrenom, false)) {
             setBarreCouleurChamp(champNom, R.color.black);
             setBarreCouleurChamp(champPrenom, R.color.red);
 
@@ -120,7 +120,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_prenom,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isTexteNonVide(champAdresseMail.getText().toString()
+        } else if (!isTexteNonVideBlank(champAdresseMail.getText().toString()
                 .toLowerCase().trim())) {
             setBarreCouleurChamp(champPrenom, R.color.black);
             setBarreCouleurChamp(champAdresseMail, R.color.red);
@@ -129,7 +129,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_mail,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide(champDomicile)) {
+        } else if (!isChampNonVide(champDomicile, false)) {
             setBarreCouleurChamp(champAdresseMail, R.color.black);
             setBarreCouleurChamp(champDomicile, R.color.red);
 
@@ -137,7 +137,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_adresse,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide(champMdp)) {
+        } else if (!isChampNonVide(champMdp, true)) {
             setBarreCouleurChamp(champDomicile, R.color.black);
             setBarreCouleurChamp(champMdp, R.color.red);
 
@@ -145,7 +145,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_mdp,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide(champConfirmationMdp)) {
+        } else if (!isChampNonVide(champConfirmationMdp, true)) {
             setBarreCouleurChamp(champMdp, R.color.black);
             setBarreCouleurChamp(champConfirmationMdp, R.color.red);
 
@@ -160,7 +160,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_mdp_conf_echec,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide(champAge)
+        } else if (!isChampNonVide(champAge, false)
                 || getIntFromChamp(champAge, 0) < AGE_MINIMUM
                 || getIntFromChamp(champAge, 0) > AGE_MAXIMUM) {
             setBarreCouleurChamp(champConfirmationMdp, R.color.black);

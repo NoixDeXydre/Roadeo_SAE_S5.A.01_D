@@ -26,7 +26,7 @@ public class RecuperateurChamps {
     public static int getIntFromChamp(EditText champ, int valeurDefaut) {
 
         try {
-            if (isChampNonVide(champ)) {
+            if (isChampNonVide(champ, false)) {
                 return Integer.parseInt(champ.getText().toString());
             }
         } catch (NumberFormatException e) {

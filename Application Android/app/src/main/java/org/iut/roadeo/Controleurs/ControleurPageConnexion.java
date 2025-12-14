@@ -49,7 +49,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         // Vérification des champs
 
-        if (!isTexteNonVide(champIdentifiant.getText().toString()
+        if (!isTexteNonVideBlank(champIdentifiant.getText().toString()
                 .toLowerCase().trim())) {
 
             setBarreCouleurChamp(champIdentifiant, R.color.red);
@@ -58,7 +58,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
                     R.string.message_erreur_mail,
                     Toast.LENGTH_SHORT).show();
 
-        } else if (!isChampNonVide((champMotDePasse))) {
+        } else if (!isChampNonVide(champMotDePasse, true)) {
 
             setBarreCouleurChamp(champIdentifiant, R.color.black);
             setBarreCouleurChamp(champMotDePasse, R.color.red);

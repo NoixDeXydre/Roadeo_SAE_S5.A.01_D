@@ -26,6 +26,13 @@ public class CacheApplication {
         return cacheApplication;
     }
 
+    /**
+     * Supprime l'instance courante et les données avec.
+     */
+    public static void detruireCache() {
+        cacheApplication = null;
+    }
+
     /** @return l'utilisateur connecté */
     public Utilisateur getUtilisateurConnecte() {
         return utilisateurConnecte;

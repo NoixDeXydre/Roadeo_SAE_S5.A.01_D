@@ -29,10 +29,6 @@ import java.util.ArrayList;
  */
 public class ControleurCompteUtilisateur extends AppCompatActivity {
 
-    private ArrayList<String> niveauPhysique;
-
-    private ArrayAdapter<String> adaptateur;
-
     private EditText nomUtilisateur;
 
     private EditText motDePasseUtilisateur;
@@ -42,6 +38,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
     private EditText domicileUtilisateur;
 
     private Spinner niveauUtilisateur;
+    private Spinner morphologie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,26 +52,30 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         emailUtilisateur = findViewById(R.id.emailUtilisateur);
         domicileUtilisateur = findViewById(R.id.domicileUtilisateur);
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
+        morphologie = findViewById(R.id.spinnerMorphologie);
+
+        // Remplissage spinner
+
+        niveauUtilisateur.setAdapter(new ArrayAdapter<>(this,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.spinner_niveau_physique)));
+
+        morphologie.setAdapter(new ArrayAdapter<>(this,
+                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+                getResources().getStringArray(R.array.spinner_morphologie)));
 
         CacheApplication cacheApplication = CacheApplication.getInstance();
         Utilisateur utilisateur = cacheApplication.getUtilisateurConnecte();
 
         /* Ecriture des données du compte */
-        nomUtilisateur.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
-        motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
-        emailUtilisateur.setText(utilisateur.getEmail());
-        domicileUtilisateur.setText(utilisateur.getDomicile());
-
-        /* Remplissage spinner */
-        niveauPhysique = new ArrayList<>();
-        niveauPhysique.add(NiveauEntrainement.SPORTIF.toString());
-        niveauPhysique.add(NiveauEntrainement.ENTRAINE.toString());
-        niveauPhysique.add(NiveauEntrainement.DEBUTANT.toString());
-        adaptateur = new ArrayAdapter<>(this,
-                                        androidx.appcompat.R.layout.
-                                        support_simple_spinner_dropdown_item,
-                                        niveauPhysique);
-        niveauUtilisateur.setAdapter(adaptateur);
+        if (utilisateur != null) {
+            nomUtilisateur.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
+            motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
+            emailUtilisateur.setText(utilisateur.getEmail());
+            domicileUtilisateur.setText(utilisateur.getDomicile());
+            niveauUtilisateur.setSelection(utilisateur.getNiveauEntrainement().ordinal());
+            morphologie.setSelection(utilisateur.getMorphologie().ordinal());
+        }
 
         /* On rend les données non modifiables */
         nomUtilisateur.setEnabled(false);
@@ -82,6 +83,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         emailUtilisateur.setEnabled(false);
         domicileUtilisateur.setEnabled(false);
         niveauUtilisateur.setEnabled(false);
+        morphologie.setEnabled(false);
     }
 
     @Override

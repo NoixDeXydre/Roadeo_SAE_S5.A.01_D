@@ -105,4 +105,23 @@
             android:src="@drawable/crayon"
             android:layout_column="2"/>
     </TableRow>
+    <TableRow>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_compte_morphologie"
+            android:layout_column="1"/>
+        <Spinner
+            android:id="@+id/spinnerMorphologie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"/>
+        <ImageButton
+            android:id="@+id/modifMorphologie"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:backgroundTint="@color/vert_pomme"
+            android:src="@drawable/crayon"
+            android:layout_column="2"/>
+    </TableRow>
 </TableLayout>

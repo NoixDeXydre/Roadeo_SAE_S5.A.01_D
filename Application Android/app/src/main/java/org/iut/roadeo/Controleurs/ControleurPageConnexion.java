@@ -72,13 +72,11 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
             // TODO appels API
 
-            // Note :
-            // Après connexion, l'utilisateur pourra appuyer sur BACK
-            // pour revenir à cette page.
-
             Intent intention = new Intent(ControleurPageConnexion.this,
                     ControleurDashboard.class);
             startActivity(intention);
+
+            finish();
         }
     }
 

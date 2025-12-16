@@ -3,6 +3,8 @@ package org.iut.roadeo.modele;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
+import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.junit.Test;
 
@@ -21,7 +23,9 @@ public class TestUtilisateur {
         Utilisateur util;
 
         // WHEN toutes les informations sont correctes
-        util = new Utilisateur("Marsenac", "Marcel", "motDePasse",
+        util = new Utilisateur("Marsenac", "Marcel", 20,
+                NiveauEntrainement.SPORTIF,
+                Morphologie.FORT, "motDePasse",
                           "email@mail.com", "ici");
 
         // THEN les données sont crées et disponibles
@@ -37,29 +41,26 @@ public class TestUtilisateur {
         String infoNull = null;
 
         // THEN Une erreur IllegalArgumentException est levée
-        // pour le nom
-        assertThrows(IllegalArgumentException.class,
-                 () -> new Utilisateur(infoNull, "Marcel",
-                            "motDePasse", "email@mail.com", "ici"));
-
-        // pour le prenom
-        assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", infoNull,
-                        "motDePasse", "email@mail.com", "ici"));
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         infoNull, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                        "motDePasse", infoNull, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         "motDePasse", "email@mail.com", infoNull));
     }
 
@@ -72,30 +73,26 @@ public class TestUtilisateur {
         String infosVide = "";
 
         // THEN Une erreur IllegalArgumentException est levée
-        // pour le nom
-        assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur(infosVide, "Marcel",
-                        "motDePasse", "email@mail.com", "ici"));
-
-        // pour le prenom
-        assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", infosVide,
-                        "motDePasse", "email@mail.com", "ici"));
-
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         infosVide, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         "motDePasse", infosVide, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosVide));
     }
 
@@ -108,35 +105,33 @@ public class TestUtilisateur {
         String infosBlanc = " ";
 
         // THEN Une erreur IllegalArgumentException est levée
-        // pour le nom
-        assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur(infosBlanc, "Marcel",
-                        "motDePasse", "email@mail.com", "ici"));
-
-        // pour le prenom
-        assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", infosBlanc,
-                        "motDePasse", "email@mail.com", "ici"));
-
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         infosBlanc, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         "motDePasse", infosBlanc, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcenac",
+                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                        NiveauEntrainement.SPORTIF,
+                        Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosBlanc));
     }
     @Test
     public void TestGetMDP() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                           NiveauEntrainement.SPORTIF,
+                                           Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
                                     "ici");
 
@@ -145,7 +140,9 @@ public class TestUtilisateur {
 
     @Test
     public void TestGetEmail() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                           NiveauEntrainement.SPORTIF,
+                                           Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
                                     "ici");
 
@@ -154,7 +151,9 @@ public class TestUtilisateur {
 
     @Test
     public void TestGetDomicile() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                           NiveauEntrainement.SPORTIF,
+                                           Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
                                     "ici");
 
@@ -163,9 +162,11 @@ public class TestUtilisateur {
 
     @Test
     public void TestSetMDP() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
-                "motDePasse", "email@mail.com",
-                "ici");
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                           NiveauEntrainement.SPORTIF,
+                                           Morphologie.FORT,
+                                           "motDePasse", "email@mail.com",
+                                           "ici");
 
         assertThrows(IllegalArgumentException.class,
                      ()->util.setMotDePasse(null));
@@ -177,9 +178,11 @@ public class TestUtilisateur {
 
     @Test
     public void TestSetEmail() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
-                "motDePasse", "email@mail.com",
-                "ici");
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                            NiveauEntrainement.SPORTIF,
+                                            Morphologie.FORT,
+                                            "motDePasse", "email@mail.com",
+                                            "ici");
 
         assertThrows(IllegalArgumentException.class,
                 ()->util.setEmail(null));
@@ -192,9 +195,11 @@ public class TestUtilisateur {
 
     @Test
     public void TestSetDomicile() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel",
-                "motDePasse", "email@mail.com",
-                "ici");
+        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+                                            NiveauEntrainement.SPORTIF,
+                                            Morphologie.FORT,
+                                            "motDePasse", "email@mail.com",
+                                            "ici");
 
         assertThrows(IllegalArgumentException.class,
                 ()->util.setDomicile(null));

@@ -6,5 +6,6 @@
     <!-- Page de connexion -->
     <dimen name="dist_page_connexion_logo_contenu">20dp</dimen>
     <dimen name="dist_page_connexion_labels_champs">10dp</dimen>
+    <dimen name="dist_asterix_label">5dp</dimen>
 
 </resources>

@@ -13,6 +13,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
+import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
+import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -91,9 +93,14 @@ public class APIRequeteur {
 
                         Utilisateur utilisateur;
                         try {
+
+                            // FIXME enlever les paramètres en dur
                             utilisateur = new Utilisateur(
                                     response.getString("patronyme").split(" ")[0],
                                     response.getString("patronyme").split(" ")[1],
+                                    0,
+                                    NiveauEntrainement.DEBUTANT,
+                                    Morphologie.LEGER,
                                     response.getString("mdp"),
                                     response.getString("adresseMail"),
                                     response.getString("domicile")

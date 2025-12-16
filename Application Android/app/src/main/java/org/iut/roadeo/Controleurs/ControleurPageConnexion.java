@@ -102,7 +102,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
                     // pour revenir à cette page.
 
                     Intent intention = new Intent(ControleurPageConnexion.this,
-                            ControleurMenuPrincipal.class);
+                            ControleurDashboard.class);
                     startActivity(intention);
                 }
 
@@ -112,13 +112,6 @@ public class ControleurPageConnexion extends AppCompatActivity {
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
                 }
             });
-            // TODO appels API
-
-            Intent intention = new Intent(ControleurPageConnexion.this,
-                    ControleurDashboard.class);
-            startActivity(intention);
-
-            finish();
         }
     }
 

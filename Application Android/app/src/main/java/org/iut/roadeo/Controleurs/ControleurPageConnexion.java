@@ -108,8 +108,11 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
                 @Override
                 public void onError(String message) {
+
                     Toast.makeText(ControleurPageConnexion.this,
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
+
+                    champMotDePasse.setText("");
                 }
             });
         }

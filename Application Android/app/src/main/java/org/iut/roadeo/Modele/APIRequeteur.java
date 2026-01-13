@@ -98,7 +98,7 @@ public class APIRequeteur {
                             utilisateur = new Utilisateur(
                                     response.getString("patronyme").split(" ")[0],
                                     response.getString("patronyme").split(" ")[1],
-                                    0,
+                                    20,
                                     NiveauEntrainement.DEBUTANT,
                                     Morphologie.LEGER,
                                     response.getString("mdp"),

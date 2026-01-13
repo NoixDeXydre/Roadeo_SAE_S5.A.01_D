@@ -4,10 +4,7 @@ import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.UtilisateurService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,4 +46,44 @@ public class UtilisateurApiControleur {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/ajoutUtilisateur")
+    public ResponseEntity<Utilisateur>  ajoutUtilisateur(@RequestBody Utilisateur request) {
+        try {
+            Utilisateur utilisateur = utilisateurService.addUtilisateur(request);
+            if (utilisateur != null) {
+                return ResponseEntity.ok(utilisateur);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/modifUtilisateur")
+    public ResponseEntity<Utilisateur> modifUtilisateur(@RequestBody Utilisateur request) {
+        try{
+            Utilisateur utilisateur = utilisateurService.updateUtilisateur(request);
+            if (utilisateur != null) {
+                return ResponseEntity.ok(utilisateur);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/supprimeUtilisateur/{id}")
+    public ResponseEntity<Void>  supprimeUtilisateur(@PathVariable String id) {
+        if (id == null) {
+            return ResponseEntity.badRequest().build();
+        } else if (utilisateurService.supprimerUtilisateur(id)) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

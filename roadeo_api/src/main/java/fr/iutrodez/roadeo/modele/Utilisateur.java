@@ -44,4 +44,24 @@ public class Utilisateur {
     public String getDomicile() {
         return domicile;
     }
+
+    public void setAdresseMail(String adresseMail) {
+        this.adresseMail = adresseMail;
+    }
+
+    public void setDomicile(String domicile) {
+        this.domicile = domicile;
+    }
+
+    public void setPatronyme(String patronyme) {
+        this.patronyme = patronyme;
+    }
+
+    public void setMdp(String mdp) {
+        this.mdp = mdp;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

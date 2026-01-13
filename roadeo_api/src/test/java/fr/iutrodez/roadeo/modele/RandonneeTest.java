@@ -1,0 +1,38 @@
+package fr.iutrodez.roadeo.modele;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+public class RandonneeTest {
+
+    private Randonnee randoTest;
+
+    @BeforeEach
+    void setUp() {
+        randoTest = new Randonnee("1","La montagne Noire");
+    }
+
+    @Test
+    @DisplayName("Test du constructeur avec valeur incorrecte")
+    public void randonneeControleurVideTest(){
+        assertThrows(IllegalArgumentException.class, () -> new Randonnee("1",""));
+    }
+
+    @Test
+    @DisplayName("Test du getter de id")
+    public void getIdTest(){
+        assertEquals("1", randoTest.getId());
+    }
+
+    @Test
+    @DisplayName("Test du getter de libelle")
+    public void getLibelleTest(){
+        assertEquals("La montagne Noire", randoTest.getLibelle());
+    }
+}

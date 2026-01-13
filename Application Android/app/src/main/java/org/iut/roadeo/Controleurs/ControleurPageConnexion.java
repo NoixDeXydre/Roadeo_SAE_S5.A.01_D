@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.BuildConfig;
+import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.APIRequeteur;
 import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
 import org.iut.roadeo.Modele.Utilisateur;
@@ -93,9 +94,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
                 @Override
                 public void onSuccess(Utilisateur utilisateur) {
 
-                    // TODO enregistrer l'utilisateur dans le cache
-                    System.out.println(utilisateur.getNom() + " " + utilisateur.getPrenom());
-                    System.out.println("TODO écriture dans le cache de l'utilisateur.");
+                    // Enregistre l'utilisateur dans le cache.
+                    CacheApplication.getInstance().setUtilisateurConnecte(utilisateur);
 
                     // Note :
                     // Après connexion, l'utilisateur pourra appuyer sur BACK

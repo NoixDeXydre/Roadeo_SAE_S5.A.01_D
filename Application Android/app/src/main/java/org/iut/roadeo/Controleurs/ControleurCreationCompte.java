@@ -12,12 +12,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.BuildConfig;
 import org.iut.roadeo.CacheApplication;
+import org.iut.roadeo.Modele.APIRequeteur;
+import org.iut.roadeo.Modele.Interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 
 import static org.iut.roadeo.Modele.Utilitaire.Champ.DecorateurChamps.*;
 import static org.iut.roadeo.Modele.Utilitaire.Champ.RecuperateurChamps.*;
+import static org.iut.roadeo.Modele.Utilitaire.Champ.RecuperateurChamps.getIntFromChamp;
 import static org.iut.roadeo.Modele.Utilitaire.Champ.VerificateurChamps.*;
 
 /**
@@ -173,27 +177,46 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         } else {
 
-            Utilisateur utilisateur = new Utilisateur
-                    (champNom.getText().toString(), champPrenom.getText().toString(),
-                    getIntFromChamp(champAge, 0),
+            Utilisateur utilisateurACreer = new Utilisateur(
+                    champNom.getText().toString(),
+                    champPrenom.getText().toString(),
+                    getIntFromChamp(champAge, 1),
                     getNiveauEntrainementWithPosition(spinnerNiveauPhysique.getSelectedItemPosition()),
-                    getMorphologieWithPosition(spinnerNiveauPhysique.getSelectedItemPosition()),
-                    champMdp.getText().toString(), champAdresseMail.getText().toString(),
+                    getMorphologieWithPosition(spinnerMorphologie.getSelectedItemPosition()),
+                    champMdp.getText().toString(),
+                    champAdresseMail.getText().toString(),
                     champDomicile.getText().toString());
 
-            CacheApplication.getInstance().setUtilisateurConnecte(utilisateur);
+            // À ce moment le requêteur ne pourrait pas exister.
+            ControleurPageConnexion.apiRequeteur
+                    = new APIRequeteur(this.getApplicationContext(), BuildConfig.API_URL);
 
-            Toast.makeText(ControleurCreationCompte.this,
-                    getString(R.string.message_succes_creation_compte, utilisateur.getNom()),
-                    Toast.LENGTH_LONG).show();
+            ControleurPageConnexion.apiRequeteur.ajouterUtilisateur(utilisateurACreer,
+                    new IAPIUtilisateurCallback() {
+                @Override
+                public void onSuccess(Utilisateur utilisateur) {
 
-            // TODO appel API
+                    Toast.makeText(ControleurCreationCompte.this,
+                            getString(R.string.message_succes_creation_compte,
+                                    utilisateurACreer.getNom()),
+                            Toast.LENGTH_LONG).show();
 
-            Intent intention = new Intent(this, ControleurDashboard.class);
-            startActivity(intention);
+                    // On connecte automatiquement l'utilisateur à l'application.
+                    CacheApplication.getInstance().setUtilisateurConnecte(utilisateurACreer);
 
-            // Comme ça, le bouton retour ne mènera plus à cette activité.
-            finish();
+                    Intent intention = new Intent(ControleurCreationCompte.this,
+                            ControleurDashboard.class);
+                    startActivity(intention);
+
+                    // Comme ça, le bouton retour ne mènera plus à cette activité.
+                    finish();
+                }
+
+                @Override
+                public void onError(String message) {
+                    // FIXME corps vide
+                }
+            });
         }
     }
 }

@@ -214,7 +214,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
                 @Override
                 public void onError(String message) {
-                    // FIXME corps vide
+                    Toast.makeText(ControleurCreationCompte.this,
+                            message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
                 }
             });
         }

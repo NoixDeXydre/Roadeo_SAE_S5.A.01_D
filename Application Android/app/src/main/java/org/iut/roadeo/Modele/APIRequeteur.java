@@ -81,12 +81,12 @@ public class APIRequeteur {
     public void ajouterUtilisateur(Utilisateur utilisateur,
                                    IAPIUtilisateurCallback callback) {
 
-        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_SE_CONNECTER;
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_AJOUT_UTILISATEUR;
 
         HashMap<String, String> entreesJsonRequete = new HashMap<>();
 
         entreesJsonRequete.put("patronyme",
-                utilisateur.getNom() + utilisateur.getPrenom());
+                utilisateur.getNom() + " " + utilisateur.getPrenom());
         entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
         entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
         entreesJsonRequete.put("domicile", utilisateur.getDomicile());
@@ -121,7 +121,15 @@ public class APIRequeteur {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError error) {
-                        // TODO erreurs
+
+                        if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
                     }
                 });
 

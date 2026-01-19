@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "utilisateur")
-public class Utilisateur {
+public class Utilisateur extends Participant {
 
     @Id
     private String id;
@@ -17,9 +17,10 @@ public class Utilisateur {
 
     private String domicile;
 
-    public Utilisateur(){}
+    public Utilisateur(){super();}
 
-    public Utilisateur(String id, String patronyme, String mdp, String adresseMail, String domicile) {
+    public Utilisateur(String id, String patronyme, String mdp, String adresseMail, String domicile, String nom, String prenom,  int age, String niveauEntrainement, String morphologie) {
+        super(nom, prenom,  age, niveauEntrainement, morphologie);
         this.id = id;
         this.patronyme = patronyme;
         this.mdp = mdp;

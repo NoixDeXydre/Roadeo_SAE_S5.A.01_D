@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/nom" />
+            android:text="@string/label_compte_nom" />
 
         <EditText
             android:id="@+id/nomRandonneur"
@@ -42,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/prenom" />
+            android:text="@string/label_compte_prenom" />
 
         <EditText
             android:id="@+id/prenomRandonneur"

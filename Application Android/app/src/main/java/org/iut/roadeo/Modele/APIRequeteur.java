@@ -90,6 +90,9 @@ public class APIRequeteur {
         entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
         entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
         entreesJsonRequete.put("domicile", utilisateur.getDomicile());
+        entreesJsonRequete.put("age", Integer.toString(utilisateur.getAge()));
+        entreesJsonRequete.put("niveauEntrainement", utilisateur.getNiveauEntrainement().toString());
+        entreesJsonRequete.put("morphologie", utilisateur.getMorphologie().toString());
 
         JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.POST,
                 urlAppelAPI, new JSONObject(entreesJsonRequete),
@@ -99,18 +102,7 @@ public class APIRequeteur {
 
                         Utilisateur utilisateur;
                         try {
-
-                            // FIXME enlever les paramètres en dur
-                            utilisateur = new Utilisateur(
-                                    response.getString("patronyme").split(" ")[0],
-                                    response.getString("patronyme").split(" ")[1],
-                                    20,
-                                    NiveauEntrainement.DEBUTANT,
-                                    Morphologie.LEGER,
-                                    response.getString("mdp"),
-                                    response.getString("adresseMail"),
-                                    response.getString("domicile")
-                            );
+                            utilisateur = construireUtilisateurWithReponse(response);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -162,20 +154,7 @@ public class APIRequeteur {
 
                         Utilisateur utilisateur;
                         try {
-
-                            // FIXME enlever les paramètres en dur
-                            utilisateur = new Utilisateur(
-                                    response.getString("patronyme").split(" ")[0],
-                                    response.getString("patronyme").split(" ")[1],
-                                    Integer.parseInt(response.getString("age")), // Attention aux crashs :
-                                    NiveauEntrainement.valueOf(response.getString
-                                            ("niveauEntrainement").toUpperCase()),
-                                    Morphologie.valueOf(response.getString
-                                            ("morphologie").toUpperCase()),
-                                    response.getString("mdp"),
-                                    response.getString("adresseMail"),
-                                    response.getString("domicile")
-                            );
+                            utilisateur = construireUtilisateurWithReponse(response);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -201,6 +180,20 @@ public class APIRequeteur {
                 });
 
         getFileRequete().add(requeteConnexion);
+    }
+
+    private Utilisateur construireUtilisateurWithReponse(JSONObject reponse) throws JSONException {
+        return new Utilisateur(
+                reponse.getString("patronyme").split(" ")[0],
+                reponse.getString("patronyme").split(" ")[1],
+                Integer.parseInt(reponse.getString("age")), // Attention aux crashs
+                NiveauEntrainement.valueOf(reponse.getString
+                        ("niveauEntrainement").toUpperCase()),
+                Morphologie.valueOf(reponse.getString
+                        ("morphologie").toUpperCase()),
+                reponse.getString("mdp"),
+                reponse.getString("adresseMail"),
+                reponse.getString("domicile"));
     }
 
     private RequestQueue getFileRequete() {

@@ -3,6 +3,7 @@ package org.iut.roadeo.Controleurs;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,7 +58,7 @@ public class ControleurListeParticipant extends AppCompatActivity {
                                                   Morphologie.FORT,
                                                   "qqchose", "email@mail.com",
                                                   "ici");
-        Randonneur randonneur2 = new Randonneur("Un", "Randoneur", 22,
+        Randonneur randonneur2 = new Randonneur("Un", "Randonneur", 22,
                                                 NiveauEntrainement.ENTRAINE,
                                                 Morphologie.MOYEN);
 
@@ -91,7 +92,12 @@ public class ControleurListeParticipant extends AppCompatActivity {
             Intent intention = new Intent(this,
                                           ControleurAjoutRandonneur.class);
 
-            intention.putExtra("POSITION", information.position);
+            intention.putExtra("NOM_RANDONNEUR",
+                               participants.get(information.position).getNom());
+            intention.putExtra("PRENOM_RANDONNEUR",
+                               participants.get(information.position).getPrenom());
+            intention.putExtra("AGE_RANDONNEUR",
+                               participants.get(information.position).getAge());
 
             startActivity(intention);
             // TODO vue créer participant avec infos sur participant

@@ -1,6 +1,5 @@
 package org.iut.roadeo.Controleurs;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;

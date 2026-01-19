@@ -1,15 +1,18 @@
-name: Couverture api Java
+name: Couverture API et application Android
 
 # Déclenchement sur push vers main et integration
 on:
+  workflow_dispatch:
   push:
-    branches: [ main, api ]
+    branches: [ main, dev ]
 
 jobs:
-  build-and-test:
+  
+  Tests-API:
+    
     runs-on: ubuntu-latest
-
     steps:
+      
       # Récupérer le code
       - name: Checkout code
         uses: actions/checkout@v3
@@ -21,12 +24,59 @@ jobs:
           distribution: 'temurin'
           java-version: '20'
 
+      # ========= Tests de l'API =========
+
       # Générer les rapports qualité
-      - name: Maven build and tests
+      - name: Maven build et tests
         working-directory: roadeo_api
         run: mvn clean verify
 
       # Générer le rapport de couverture (JaCoCo)
-      - name: Generate code coverage
+      - name: Générer code coverage API
         working-directory: roadeo_api
         run: mvn jacoco:report
+        
+      - name: jacoco-reporter
+        id: jacoco_reporter
+        uses: PavanMudigonda/jacoco-reporter@v5.0
+        with:
+          coverage_results_path: "roadeo_api/target/site/jacoco/jacoco.xml"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Couverture API
+        run: echo "${{ steps.jacoco-reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
+        
+  Tests-Android:
+    
+    runs-on: ubuntu-latest
+    steps:
+      
+      # Récupérer le code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Installer Java JDK 20
+      - name: Setup JDK 20
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '20'
+      
+      # ========= Tests de l'application Android =========
+        
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Tests Android + Coverage
+        working-directory: "Application Android"
+        run: chmod +x gradlew && ./gradlew build createDebugCoverageReport
+        
+      - name: jacoco-reporter
+        id: jacoco_reporter
+        uses: PavanMudigonda/jacoco-reporter@v5.0
+        with:
+          coverage_results_path: "Application Android/app/build/reports/coverage/test/debug/report.xml"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        
+      - name: Couverture application Android
+        run: echo "${{ steps.jacoco-reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY

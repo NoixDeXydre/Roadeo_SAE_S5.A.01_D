@@ -12,7 +12,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.iut.roadeo.Modele.Interfaces.IAPIConnexionCallback;
+import org.iut.roadeo.Modele.Interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.json.JSONException;
@@ -28,6 +28,9 @@ import java.util.HashMap;
  * @author VIGUE Adrien
  */
 public class APIRequeteur {
+
+    // TODO utiliser une clé API dans les méthodes
+    // Il suffit de la mettre dans le header.
 
     // ===== Messages d'erreur =====
 
@@ -51,6 +54,9 @@ public class APIRequeteur {
     private final static String SUFFIXE_API_UTILISATEUR = "Utilisateur";
     private final static String SUFFIXE_API_SE_CONNECTER = SUFFIXE_API_UTILISATEUR
             + "/seConnecter";
+
+    private final static String SUFFIXE_API_AJOUT_UTILISATEUR = SUFFIXE_API_UTILISATEUR
+            + "/ajoutUtilisateur";
     private String prefixeUrl;
     private Context contexteApplication;
     private RequestQueue fileRequete;
@@ -68,13 +74,76 @@ public class APIRequeteur {
     }
 
     /**
+     * Ajoute un utilisateur dans la base de données.
+     * @param utilisateur l'utilisateur à ajouter dans la base de données.
+     * @param callback les actions à effectuer.
+     */
+    public void ajouterUtilisateur(Utilisateur utilisateur,
+                                   IAPIUtilisateurCallback callback) {
+
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_AJOUT_UTILISATEUR;
+
+        HashMap<String, String> entreesJsonRequete = new HashMap<>();
+
+        entreesJsonRequete.put("patronyme",
+                utilisateur.getNom() + " " + utilisateur.getPrenom());
+        entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
+        entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
+        entreesJsonRequete.put("domicile", utilisateur.getDomicile());
+
+        JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.POST,
+                urlAppelAPI, new JSONObject(entreesJsonRequete),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Utilisateur utilisateur;
+                        try {
+
+                            // FIXME enlever les paramètres en dur
+                            utilisateur = new Utilisateur(
+                                    response.getString("patronyme").split(" ")[0],
+                                    response.getString("patronyme").split(" ")[1],
+                                    20,
+                                    NiveauEntrainement.DEBUTANT,
+                                    Morphologie.LEGER,
+                                    response.getString("mdp"),
+                                    response.getString("adresseMail"),
+                                    response.getString("domicile")
+                            );
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        callback.onSuccess(utilisateur);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError error) {
+
+                        if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion);
+    }
+
+    /**
      * Récupère la clé API, confirmant la connexion de l'utilisateur.
      * @param adresseMail
      * @param mdp
      * @param callback les actions à effectuer.
      */
     public void seConnecter(String adresseMail, String mdp,
-                            IAPIConnexionCallback callback) {
+                            IAPIUtilisateurCallback callback) {
 
         // FIXME cette méthode devrait récupérer
         //       une clé API après confirmation
@@ -98,9 +167,11 @@ public class APIRequeteur {
                             utilisateur = new Utilisateur(
                                     response.getString("patronyme").split(" ")[0],
                                     response.getString("patronyme").split(" ")[1],
-                                    20,
-                                    NiveauEntrainement.DEBUTANT,
-                                    Morphologie.LEGER,
+                                    Integer.parseInt(response.getString("age")), // Attention aux crashs :
+                                    NiveauEntrainement.valueOf(response.getString
+                                            ("niveauEntrainement").toUpperCase()),
+                                    Morphologie.valueOf(response.getString
+                                            ("morphologie").toUpperCase()),
                                     response.getString("mdp"),
                                     response.getString("adresseMail"),
                                     response.getString("domicile")

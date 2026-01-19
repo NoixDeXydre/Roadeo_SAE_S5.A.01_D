@@ -167,9 +167,11 @@ public class APIRequeteur {
                             utilisateur = new Utilisateur(
                                     response.getString("patronyme").split(" ")[0],
                                     response.getString("patronyme").split(" ")[1],
-                                    20,
-                                    NiveauEntrainement.DEBUTANT,
-                                    Morphologie.LEGER,
+                                    Integer.parseInt(response.getString("age")), // Attention aux crashs :
+                                    NiveauEntrainement.valueOf(response.getString
+                                            ("niveauEntrainement").toUpperCase()),
+                                    Morphologie.valueOf(response.getString
+                                            ("morphologie").toUpperCase()),
                                     response.getString("mdp"),
                                     response.getString("adresseMail"),
                                     response.getString("domicile")

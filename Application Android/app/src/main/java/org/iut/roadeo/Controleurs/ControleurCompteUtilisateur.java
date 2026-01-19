@@ -55,16 +55,16 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
 
         /* Ecriture des données du compte */
-        nomUtilisateur.setText(R.string.description_nom);
+        nomUtilisateur.setText(R.string.description_patronyme);
         motDePasseUtilisateur.setText(R.string.description_motdepasse);
         emailUtilisateur.setText(R.string.description_motdepasse);
         domicileUtilisateur.setText(R.string.description_domicile);
 
         /* Remplissage spinner */
         niveauPhysique = new ArrayList<>();
-        niveauPhysique.add(NiveauEntrainement.SPORTIF.toString());
-        niveauPhysique.add(NiveauEntrainement.ENTRAINE.toString());
-        niveauPhysique.add(NiveauEntrainement.DEBUTANT.toString());
+        niveauPhysique.add(NiveauEntrainement.SPORTIF.toString().toLowerCase());
+        niveauPhysique.add(NiveauEntrainement.ENTRAINE.toString().toLowerCase());
+        niveauPhysique.add(NiveauEntrainement.DEBUTANT.toString().toLowerCase());
         adaptateur = new ArrayAdapter<>(this,
                                         androidx.appcompat.R.layout.
                                         support_simple_spinner_dropdown_item,

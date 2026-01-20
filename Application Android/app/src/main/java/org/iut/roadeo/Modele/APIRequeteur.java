@@ -183,14 +183,35 @@ public class APIRequeteur {
     }
 
     private Utilisateur construireUtilisateurWithReponse(JSONObject reponse) throws JSONException {
+
+        // Récupération des énums
+
+        NiveauEntrainement niveauEntrainement;
+        try {
+            niveauEntrainement = NiveauEntrainement.valueOf
+                    (reponse.getString("niveauEntrainement").toUpperCase());
+        } catch (IllegalArgumentException _) {
+            niveauEntrainement = NiveauEntrainement.DEBUTANT;
+        }
+
+        Morphologie morphologie;
+        try {
+            morphologie = Morphologie.valueOf
+                    (reponse.getString("morphologie").toUpperCase());
+        } catch (IllegalArgumentException _) {
+            morphologie = Morphologie.LEGER;
+        }
+
+        int age = Integer.parseInt(reponse.getString("age"));
+        if (Integer.parseInt(reponse.getString("age")) == 0) {
+            age = 1;
+        }
+
+        // Création de l'utilisateur
         return new Utilisateur(
                 reponse.getString("patronyme").split(" ")[0],
                 reponse.getString("patronyme").split(" ")[1],
-                Integer.parseInt(reponse.getString("age")), // Attention aux crashs
-                NiveauEntrainement.valueOf(reponse.getString
-                        ("niveauEntrainement").toUpperCase()),
-                Morphologie.valueOf(reponse.getString
-                        ("morphologie").toUpperCase()),
+                age, niveauEntrainement, morphologie,
                 reponse.getString("mdp"),
                 reponse.getString("adresseMail"),
                 reponse.getString("domicile"));

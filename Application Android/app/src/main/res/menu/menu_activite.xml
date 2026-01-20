@@ -9,4 +9,7 @@
     <item
         android:id="@+id/afficheListeParticipants"
         android:title="@string/liste_participants_rando"/>
+    <item
+        android:id="@+id/seDeconnecter"
+        android:title="@string/se_deconnecter"/>
 </menu>

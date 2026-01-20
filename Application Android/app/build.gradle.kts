@@ -2,11 +2,18 @@ plugins {
     id("com.android.application")
 }
 
+// TODO mettre l'URL du serveur distant
+val URL_API by extra("http://10.0.2.2:8080/api/")
+
 android {
     namespace = "org.iut.roadeo"
     compileSdk = 34
 
     defaultConfig {
+
+        android.buildFeatures.buildConfig = true
+        buildConfigField("String", "API_URL", "\"${extra["URL_API"]}\"")
+
         applicationId = "org.iut.roadeo"
         minSdk = 24
         targetSdk = 34
@@ -38,6 +45,9 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("org.osmdroid:osmdroid-android:6.1.6")
+    implementation("org.osmdroid:osmdroid-wms:6.1.6")
+    implementation("org.osmdroid:osmdroid-mapsforge:6.1.6")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

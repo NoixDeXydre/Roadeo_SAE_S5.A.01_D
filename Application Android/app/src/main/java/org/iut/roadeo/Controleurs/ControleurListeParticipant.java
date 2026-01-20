@@ -98,6 +98,10 @@ public class ControleurListeParticipant extends AppCompatActivity {
                                participants.get(information.position).getPrenom());
             intention.putExtra("AGE_RANDONNEUR",
                                participants.get(information.position).getAge());
+            intention.putExtra("NIVEAU_RANDONNEUR",
+                               participants.get(information.position).getNiveauEntrainement().toString());
+            intention.putExtra("MORPHOLOGIE_RANDONNEUR",
+                               participants.get(information.position).getMorphologie().toString());
 
             startActivity(intention);
             // TODO vue créer participant avec infos sur participant

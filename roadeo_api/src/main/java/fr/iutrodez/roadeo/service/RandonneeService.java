@@ -37,4 +37,33 @@ public class RandonneeService {
         return repository.findById(id).orElse(null);
     }
 
+    /**
+     * Ajoute une randonnee dans la bd mango
+     * @param rando la randonnée à ajouter
+     * @return la randonnee ajoutée
+     * @throws IllegalArgumentException si le paramètre est null
+     */
+    public Randonnee addRandonnee(Randonnee rando) {
+        if (rando == null) {
+            throw new IllegalArgumentException();
+        }
+        return repository.save(rando);
+    }
+
+    public Randonnee addParcours(String id, Parcours parcours) {
+        Randonnee randonnee;
+        if (!repository.existsById(id)) {
+            return null;
+        } else {
+            Optional<Randonnee> rando = repository.findById(id);
+            randonnee = rando.orElse(null);
+        }
+
+        if (randonnee == null) {
+            throw new IllegalArgumentException();
+        }
+        randonnee.addParcours(parcours);
+        return repository.save(randonnee);
+    }
+
 }

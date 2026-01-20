@@ -58,7 +58,8 @@ public class UtilisateurApiControleurTest {
     void testSeConnecterUtilisateurSucces() {
 
         Utilisateur u1 = new Utilisateur("1", "JM",
-                "jean-miche@gmail.com", "1234", "IUT Rodez");
+                "jean-miche@gmail.com", "1234", "IUT Rodez",
+                "JM", "JM", 34, "sportif", "moyen");
 
         when(utilisateurService.validerConnexion(u1.getAdresseMail(), u1.getMdp())).thenReturn(u1);
 
@@ -74,7 +75,8 @@ public class UtilisateurApiControleurTest {
     void testSeConnecterUtilisateurEchec() throws Exception {
 
         Utilisateur u1 = new Utilisateur("1", "JM",
-                "jean-miche@gmail.com", "1234", "IUT Rodez");
+                "jean-miche@gmail.com", "1234", "IUT Rodez",
+                "JM", "JM", 34, "sportif", "moyen");
 
         when(utilisateurService.validerConnexion("mauvais-email@g.com","non"))
                 .thenReturn(null);

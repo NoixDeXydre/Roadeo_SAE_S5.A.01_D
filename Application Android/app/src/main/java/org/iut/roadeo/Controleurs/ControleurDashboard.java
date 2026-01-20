@@ -1,9 +1,11 @@
 package org.iut.roadeo.Controleurs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,5 +45,10 @@ public class ControleurDashboard extends AppCompatActivity {
         ChangeVue.changeurVue(item, ControleurDashboard.this);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void ouvrirCarte(View view) {
+        startActivity(new Intent(ControleurDashboard.this,
+                ControleurCarte.class));
     }
 }

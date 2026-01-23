@@ -41,4 +41,6 @@ public class Randonnee {
     public void setParcours(ArrayList<Parcours> parcours) {
         this.parcours = parcours;
     }
+
+    public void addParcours(Parcours parcours) {this.parcours.add(parcours);}
 }

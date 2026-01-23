@@ -1,15 +1,13 @@
 package fr.iutrodez.roadeo.controleur;
 
 import fr.iutrodez.roadeo.modele.Parcours;
+import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.RandonneeService;
 import fr.iutrodez.roadeo.service.UtilisateurService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +32,16 @@ public class RandoneeApiControleur {
         return randonneeService.getAllParcours();
     }
 
+    /**
+     * Renvoie la liste des participants
+     * @param id
+     * @return
+     */
+    @GetMapping("/listeParticipant/{id}") //Utilisation de GetMapping car seul une variable String est passée en argument
+    public List<Participant> getParticipant(@PathVariable String id) {
+        return randonneeService.getParticipantParcours(id); // Renvoie la liste des participants
+    }
+
     @PostMapping("/infoRandoUtil")
     public List<Randonnee> getRandonneeParIdUtil(@RequestBody String idUtilisateur) {
         List<Randonnee> listeRandonnee = randonneeService.getAllRandonnees();
@@ -50,5 +58,33 @@ public class RandoneeApiControleur {
         Randonnee randonnee = randonneeService.getRandonnee(idRando);
         randonnee.setParcours(randonneeService.getParcoursByIdRando(randonnee.getId()));
         return randonnee;
+    }
+
+    @PostMapping("/ajoutRandonnee")
+    public ResponseEntity<Randonnee>  ajoutRandonnee(@RequestBody Randonnee rando) {
+        try {
+            Randonnee randonnee = randonneeService.addRandonnee(rando);
+            if (randonnee != null) {
+                return ResponseEntity.ok(randonnee);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/ajoutRandonnee/{id}")
+    public ResponseEntity<Randonnee>  ajoutParcoursRando(@PathVariable String id, @RequestBody Parcours parcours) {
+        try {
+            Randonnee randonnee = randonneeService.addParcours(id,parcours);
+            if (randonnee != null) {
+                return ResponseEntity.ok(randonnee);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

@@ -11,21 +11,36 @@ public class SacADos {
     private int valeur;
 
     private double poids = 1.0;
+    private double poidsMax = 50;
 
     public SacADos(){}
 
-    public SacADos(ArrayList<Objet> contenu, double volumeMax, int valeur) {
+    public SacADos(ArrayList<Objet> contenu, double poidsMax, int valeur) {
         this.contenu = contenu;
-        this.volumeMax = volumeMax;
+        this.poidsMax = poidsMax;
+        this.valeur = valeur;
+    }
+
+    public SacADos(double poidsMax, int valeur) {
+        this.contenu = new ArrayList<>();
+        this.poidsMax = poidsMax;
         this.valeur = valeur;
     }
 
     public double volumeOccuppe() {
-        return 0.0;
+        double volume = 0.0;
+        for (Objet o : this.contenu) {
+            volume += o.getVolume();
+        }
+        return volume;
     }
 
     public double poidsTotal() {
-        return this.poids;
+        double poids = 0.0;
+        for (Objet o : this.contenu) {
+            poids += o.getPoids();
+        }
+        return this.poids + poids;
     }
 
     public int valeur() {
@@ -66,11 +81,22 @@ public class SacADos {
 
     @Override
     public String toString() {
-        return "SacADos{" +
-                "contenu=" + contenu +
-                ", volumeMax=" + volumeMax +
-                ", valeur=" + valeur +
-                ", poids=" + poids +
+        StringBuilder contenuObjet = new StringBuilder();
+        for (Objet objet : this.contenu) {
+            contenuObjet.append("    ").append(objet.toString()).append("\n");
+        }
+    return "SacADos{" +
+                "\n volumeMax=" + this.volumeOccuppe() +
+                "\n valeur=" + valeur +
+                "\n poids=" + this.poidsTotal() + " / " + this.poidsMax +
+                "\ncontenu :\n" + contenuObjet +
                 '}';
+    }
+
+    public boolean addObjet(Objet objet) {
+        if (this.poidsTotal() + objet.getPoids() > this.poidsMax) {
+            return false;
+        }
+        return this.contenu.add(objet);
     }
 }

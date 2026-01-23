@@ -1,6 +1,7 @@
 package fr.iutrodez.roadeo.controleur;
 
 import fr.iutrodez.roadeo.modele.Parcours;
+import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.RandonneeService;
@@ -29,6 +30,11 @@ public class RandoneeApiControleur {
     @RequestMapping("/listeParcours")
     public List<Parcours> getParcours() {
         return randonneeService.getAllParcours();
+    }
+
+    @RequestMapping("/listeParticipant")
+    public List<Participant> getParticipant(@RequestBody String idParcours) {
+        return randonneeService.getParticipantParcours(idParcours);
     }
 
     @PostMapping("/infoRandoUtil")

@@ -1,8 +1,10 @@
 package fr.iutrodez.roadeo.service;
 
 import fr.iutrodez.roadeo.dao.ParcoursInterfaceMongoDB;
+import fr.iutrodez.roadeo.dao.ParticipantInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.RandoneeInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Parcours;
+import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.stereotype.Service;
@@ -15,10 +17,13 @@ import java.util.Optional;
 public class RandonneeService {
     private final RandoneeInterfaceMongoDB repository;
     private final ParcoursInterfaceMongoDB parcoursRepository;
+    private final ParticipantInterfaceMongoDB participantRepository;
 
-    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository) {
+    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository,
+                            ParticipantInterfaceMongoDB participantRepository) {
         this.repository = repository;
         this.parcoursRepository = parcoursRepository;
+        this.participantRepository = participantRepository;
     }
 
     public List<Randonnee> getAllRandonnees() {
@@ -27,6 +32,12 @@ public class RandonneeService {
 
     public List<Parcours> getAllParcours() {
         return parcoursRepository.findAll();
+    }
+
+    public List<Participant> getParticipantParcours(String idParcours) {
+        ArrayList<Parcours> parcoursRandonnee = parcoursRepository.findParcoursById(idParcours);
+        Parcours parcours = parcoursRandonnee.get(0);
+        return parcours.getParticipants();
     }
 
     public ArrayList<Parcours> getParcoursByIdRando(String idRando) {

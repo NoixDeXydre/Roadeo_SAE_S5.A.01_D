@@ -15,20 +15,20 @@ public class ParcoursTest {
 
     @BeforeEach
     void setUp() {
-        randoTest = new Parcours("1","3", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>());
+        randoTest = new Parcours("1", "1","3", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>());
     }
 
     @Test
     @DisplayName("Test du constructeur avec valeur incorrecte")
     public void parcoursControleurVideTest(){
-        assertThrows(IllegalArgumentException.class, () -> new Parcours("1","", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
-        assertThrows(IllegalArgumentException.class, () -> new Parcours("1","3", "", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
+        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
+        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","3", "", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
     }
 
     @Test
     @DisplayName("Test du getter de id")
-    public void getIdTest() {
-        assertEquals("1", randoTest.getId());
+    public void getIdRandoTest() {
+        assertEquals("1", randoTest.getIdRando());
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ParcoursTest {
 
     @Test
     @DisplayName("Test du getter de l'id utilisateur")
-    public void getIdUtilisateurTest() {
+    public void getIdRandoUtilisateurTest() {
         assertEquals("3", randoTest.getIdUtilisateur());
     }
 }

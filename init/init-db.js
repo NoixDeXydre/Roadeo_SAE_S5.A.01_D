@@ -78,6 +78,7 @@ db.createCollection("parcours");
 // (Mock)
 
 db.parcours.insertOne({
+  _id: '1',
   idRando: '1', 
   id_utilisateur: '1', 
   libelle_randonnee: 'La montagne Noire', 
@@ -100,6 +101,7 @@ db.parcours.insertOne({
 });
 
 db.parcours.insertOne({
+  _id: '2',
   idRando: '2', 
   id_utilisateur: '3', 
   libelle_randonnee: "Parcours Découverte", 
@@ -137,6 +139,7 @@ db.parcours.insertOne({
 });
 
 db.parcours.insertOne({
+  _id: '3',
   idRando: '2', 
   id_utilisateur: '3', 
   libelle_randonnee: "Décourverte exceptionnelle des bâtiments universitaires", 

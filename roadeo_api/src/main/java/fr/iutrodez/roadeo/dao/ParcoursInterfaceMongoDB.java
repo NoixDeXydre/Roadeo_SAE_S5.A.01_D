@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public interface ParcoursInterfaceMongoDB extends MongoRepository<Parcours, String> {
 
     ArrayList<Parcours> findByIdRando(String idRando);
+    ArrayList<Parcours> findParcoursById(String idParcours);
 }

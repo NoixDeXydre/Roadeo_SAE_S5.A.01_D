@@ -1,6 +1,7 @@
 package org.iut.roadeo.Modele.Utilitaire;
 
 import org.iut.roadeo.Modele.Randonnee;
+import org.iut.roadeo.Modele.Randonneur;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ public class Parcours {
     /** Points d'intérêts enregistrés par l'utilisateur. */
     private ArrayList<GeoPoint> pointsInteret;
 
+    /** Les randonneurs inscrits au parcours. */
+    private ArrayList<Randonneur> randonneurs;
+
     /** Trajet composé de plusieurs coordonnées. */
     private ArrayList<GeoPoint> trajetRealise;
 
@@ -61,12 +65,24 @@ public class Parcours {
         // TODO méthode
     }
 
+    /**
+     * Ajoute un randonneur dans le parcours.
+     * @param nouveauRandonneur
+     */
+    public void ajouterRandonneur(Randonneur nouveauRandonneur) {
+        // TODO méthode
+    }
+
     public ArrayList<GeoPoint> getPointsInteret() {
         return new ArrayList<>(pointsInteret);
     }
 
     public ArrayList<GeoPoint> getTrajetRealise() {
         return new ArrayList<>(trajetRealise);
+    }
+
+    public ArrayList<Randonneur> getRandonneurs() {
+        return new ArrayList<>(randonneurs);
     }
 
     public boolean isParcoursEnArret() {
@@ -100,6 +116,14 @@ public class Parcours {
      * @param pointInteret le point d'intérêt à supprimer.
      */
     public void supprimerPointInteret(GeoPoint pointInteret) {
+        // TODO méthode
+    }
+
+    /**
+     * Supprime un randonneur du parcours.
+     * @param randonneur
+     */
+    public void supprimerRandonneur(Randonneur randonneur) {
         // TODO méthode
     }
 }

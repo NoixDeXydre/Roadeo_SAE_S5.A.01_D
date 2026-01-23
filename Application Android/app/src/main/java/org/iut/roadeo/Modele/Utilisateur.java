@@ -2,6 +2,9 @@ package org.iut.roadeo.Modele;
 
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+import org.iut.roadeo.Modele.Utilitaire.Parcours;
+
+import java.util.ArrayList;
 
 /**
  * Représente un utilisateur.
@@ -21,6 +24,9 @@ public class Utilisateur extends Randonneur {
 
     /** Le domicile de l'utilisateur */
     private String domicile;
+
+    /** Parcours enregistrés par l'utilisateur. */
+    private ArrayList<Parcours> parcours;
 
     /**
      * Crée un nouvel utilisateur.
@@ -95,5 +101,13 @@ public class Utilisateur extends Randonneur {
             throw new IllegalArgumentException("Le domicile incorrect");
         }
         this.domicile = domicile;
+    }
+
+    public ArrayList<Parcours> getParcours() {
+        return parcours;
+    }
+
+    public void setParcours(ArrayList<Parcours> parcours) {
+        this.parcours = parcours;
     }
 }

@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.Modele.Interfaces.IAPIRandonneursCallback;
 import org.iut.roadeo.Modele.Randonneur;
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
@@ -49,27 +50,32 @@ public class ControleurListeParticipant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.liste_participants);
 
+        participants = new ArrayList<>();
         // on initialise les differents elements
         listeParticipant = findViewById(R.id.listeParticipant);
 
-        // FIXME bouchon à remlacer
-        Utilisateur randonneur1 = new Utilisateur("Marcenac", "Marcel", 20,
-                                                  NiveauEntrainement.SPORTIF,
-                                                  Morphologie.FORT,
-                                                  "qqchose", "email@mail.com",
-                                                  "ici");
-        Randonneur randonneur2 = new Randonneur("Un", "Randonneur", 22,
-                                                NiveauEntrainement.ENTRAINE,
-                                                Morphologie.MOYEN);
+        // TODO adapter en fonction d ela rando choisie
+        ControleurPageConnexion.apiRequeteur.listerParticipant("1", new
+                                                IAPIRandonneursCallback() {
+            @Override
+            public void onSuccess(ArrayList<Randonneur> randonneurs) {
+                participants.addAll(randonneurs);
 
-        participants = new ArrayList<>();
-        participants.add(randonneur1);
-        participants.add(randonneur2);
+                adaptateur = new ArrayAdapter<>(getApplicationContext(),
+                        androidx.appcompat.R.layout.
+                                support_simple_spinner_dropdown_item, participants);
+                listeParticipant.setAdapter(adaptateur);
+            }
 
-        adaptateur = new ArrayAdapter<>(this,
-                                        androidx.appcompat.R.layout.
-                                        support_simple_spinner_dropdown_item, participants);
-        listeParticipant.setAdapter(adaptateur);
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getApplicationContext(),
+                          "Les randonneurs n'ont pas pu être affichés\n"+
+                                message,
+                               Toast.LENGTH_LONG).show();
+
+            }
+        });
 
         // on associe le menu contextuel
         registerForContextMenu(listeParticipant);

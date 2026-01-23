@@ -1,6 +1,7 @@
 package org.iut.roadeo.Modele;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NoConnectionError;
@@ -9,15 +10,19 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.iut.roadeo.Modele.Interfaces.IAPIRandonneursCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -50,13 +55,18 @@ public class APIRequeteur {
     private final static String MESSAGE_ERREUR_SERVEUR_INTROUVABLE
             = "Echec : Le serveur est introuvable.";
 
-    // ======= Commandes API =======
+    // ======= Commandes API - Utilisateur =======
     private final static String SUFFIXE_API_UTILISATEUR = "Utilisateur";
     private final static String SUFFIXE_API_SE_CONNECTER = SUFFIXE_API_UTILISATEUR
             + "/seConnecter";
-
     private final static String SUFFIXE_API_AJOUT_UTILISATEUR = SUFFIXE_API_UTILISATEUR
             + "/ajoutUtilisateur";
+
+    // ======= Commandes API - Randonnee =======
+
+    private final static String SUFFIXE_API_RANDONNEE = "Randonnee";
+    private final static String SUFFIXE_API_LISTE_PARTICIPANT = SUFFIXE_API_RANDONNEE
+            + "/listeParticipant/";
     private String prefixeUrl;
     private Context contexteApplication;
     private RequestQueue fileRequete;
@@ -180,6 +190,92 @@ public class APIRequeteur {
                 });
 
         getFileRequete().add(requeteConnexion);
+    }
+
+    public void listerParticipant(String id, IAPIRandonneursCallback callback) {
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARTICIPANT + id;
+        System.out.print(urlAppelAPI);
+        JsonArrayRequest requeteConnexion = new JsonArrayRequest(urlAppelAPI,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        ArrayList<Randonneur> randonneurs = new ArrayList<>();
+                        try {
+                            randonneurs = construireRandonneursWithReponse(
+                                          response);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        callback.onSuccess(randonneurs);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError
+                                                error) {
+
+                        if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion);
+    }
+
+    private ArrayList<Randonneur>
+            construireRandonneursWithReponse(JSONArray reponse)
+            throws JSONException {
+
+        ArrayList<Randonneur> aRetourner;
+
+        JSONObject aCreer;
+        Randonneur randonneur;
+
+        aRetourner = new ArrayList<>();
+        // Récupération des énums
+        for(int i=0; i<reponse.length(); i++) {
+            aCreer = reponse.getJSONObject(i);
+
+            String nom = aCreer.getString("nom");
+            String prenom = aCreer.getString("prenom");
+
+            int age = Integer.parseInt(aCreer.getString("age"));
+            if (Integer.parseInt(aCreer.getString("age")) == 0) {
+                age = 1;
+            }
+
+            NiveauEntrainement niveauEntrainement;
+            try {
+                niveauEntrainement = NiveauEntrainement.valueOf
+                        (aCreer.getString("niveauEntrainement").toUpperCase());
+            } catch (IllegalArgumentException _) {
+                niveauEntrainement = NiveauEntrainement.DEBUTANT;
+            }
+
+            Morphologie morphologie;
+            try {
+                morphologie = Morphologie.valueOf
+                        (aCreer.getString("morphologie").toUpperCase());
+            } catch (IllegalArgumentException _) {
+                morphologie = Morphologie.LEGER;
+            }
+
+            randonneur = new Randonneur(nom, prenom, age, niveauEntrainement, morphologie);
+            aRetourner.add(randonneur);
+        }
+
+        // Création du randonneur
+        return aRetourner;
     }
 
     private Utilisateur construireUtilisateurWithReponse(JSONObject reponse) throws JSONException {

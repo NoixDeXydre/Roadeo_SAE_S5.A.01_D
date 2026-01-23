@@ -5,6 +5,7 @@ import org.iut.roadeo.Modele.Randonneur;
 import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Représente un parcours crée à partir
@@ -29,7 +30,7 @@ public class Parcours {
     private Randonnee randonneeParcours;
 
     /** La date de début du parcours. */
-    private String date;
+    private Date date;
 
     /** Points d'intérêts enregistrés par l'utilisateur. */
     private ArrayList<GeoPoint> pointsInteret;
@@ -45,7 +46,7 @@ public class Parcours {
      * @param randonnee la randonnée liée au parcours.
      * @param date la date de début du parcours.
      */
-    public Parcours(Randonnee randonnee, String date) {
+    public Parcours(Randonnee randonnee, Date date) {
         // TODO constructeur
     }
 
@@ -79,6 +80,10 @@ public class Parcours {
 
     public ArrayList<GeoPoint> getTrajetRealise() {
         return new ArrayList<>(trajetRealise);
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public ArrayList<Randonneur> getRandonneurs() {

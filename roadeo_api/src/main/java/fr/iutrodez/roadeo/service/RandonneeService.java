@@ -34,10 +34,21 @@ public class RandonneeService {
         return parcoursRepository.findAll();
     }
 
-    public List<Participant> getParticipantParcours(String idParcours) {
-        ArrayList<Parcours> parcoursRandonnee = parcoursRepository.findParcoursById(idParcours);
-        Parcours parcours = parcoursRandonnee.get(0);
-        return parcours.getParticipants();
+    /**
+     * Permet de renvoyer une liste de participant d'un parcours
+     * @param id id du parcours
+     * @return la liste de participant
+     */
+    public List<Participant> getParticipantParcours(String id) {
+        // info changment (à supprimer) : ArrayList est devenu Optional car on ne veut qu'un parcours à la fois
+        Optional<Parcours> result = parcoursRepository.findById(id); // Récupère le résultat mongoDB
+
+        // info à supprimer : Optional devient parcours pour pouvoir utiliser les méthode et renvoyer le json
+        Parcours parcours = result.orElse(null); // Renvoie le parcours ou null si rien trouvé
+        if (parcours == null) {
+            return null;
+        }
+        return parcours.getParticipants(); // return la liste des participants
     }
 
     public ArrayList<Parcours> getParcoursByIdRando(String idRando) {

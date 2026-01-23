@@ -78,6 +78,30 @@ public class Parcours {
         return this.libelleRandonnee;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setIdRando(String idRando) {
+        this.idRando = idRando;
+    }
+
+    public void setIdUtilisateur(String idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
+    }
+
+    public void setLibelleRandonnee(String libelleRandonnee) {
+        this.libelleRandonnee = libelleRandonnee;
+    }
+
+    public void setParticipants(ArrayList<Participant> participants) {
+        this.participants = participants;
+    }
+
+    public void setPointInterets(ArrayList<PointInteret> pointInterets) {
+        this.pointInterets = pointInterets;
+    }
+
     /** liste des randonnées */
     public ArrayList<Participant> getParticipants() {
         return this.participants;

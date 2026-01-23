@@ -32,9 +32,14 @@ public class RandoneeApiControleur {
         return randonneeService.getAllParcours();
     }
 
-    @RequestMapping("/listeParticipant")
-    public List<Participant> getParticipant(@RequestBody String idParcours) {
-        return randonneeService.getParticipantParcours(idParcours);
+    /**
+     * Renvoie la liste des participants
+     * @param id
+     * @return
+     */
+    @GetMapping("/listeParticipant/{id}") //Utilisation de GetMapping car seul une variable String est passée en argument
+    public List<Participant> getParticipant(@PathVariable String id) {
+        return randonneeService.getParticipantParcours(id); // Renvoie la liste des participants
     }
 
     @PostMapping("/infoRandoUtil")

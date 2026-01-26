@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajout objet dans le sac</title>
+</head>
+<body>
+<div style="display: flex; gap: 30px;">
+
+    <!-- Conteneur pour visualiser le sac actuel -->
+    <div class="container" id="sac-container" style="flex: 1;">
+        <!-- récapitulatif (poids total des objets/ poids max, kcal total/ kcal requis, prix -->
+        <h2>Récapitulatif du sac</h2>
+        <p id="poids-summary">Poids total / Poids max : 0 kg / 10 kg</p>
+        <p id="kcal-summary">Calories total / Calories requises : 0 kcal / 2000 kcal</p>
+        <p id="prix-summary">Prix total : 0 €</p>
+
+        <!-- Tableau des objets -->
+        <table id="sac-table">
+            <thead>
+            <tr>
+                <th>Dénomination</th>
+                <th>Poids</th>
+                <th>Kcal</th>
+                <th>Prix</th>
+                <th>Priorité</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Les lignes seront générées dynamiquement -->
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 5px;">Pommes</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">0.5 kg</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">250 kcal</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">2 €</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">Haute</td>
+                <td style="border: 1px solid #ccc; padding: 5px;">
+                    <button>Supprimer</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Conteneur pour visualiser et ajouter les objets -->
+    <div class="container" id="objets-container" style="flex: 1;">
+        <h2>Ajouter un objet</h2>
+
+        <!-- Sélection du type et de l'objet -->
+        <div>
+            <label for="type-objet">Type d'objet :</label>
+            <select id="type-objet">
+                <option value="">--Choisir un type--</option>
+                <option value="aliment">Aliment</option>
+                <option value="equipement">Équipement</option>
+                <option value="divers">Divers</option>
+            </select>
+
+            <label for="objet-select">Objet :</label>
+            <select id="objet-select">
+                <option value="">--Choisir un objet--</option>
+                <!-- Options générées dynamiquement selon le type -->
+            </select>
+        </div>
+
+        <!-- Présentation détaillée de l'objet -->
+        <div id="objet-details" style="margin-top: 15px; border: 1px solid #ccc; padding: 10px;">
+            <h3 id="objet-title">Nom de l'objet</h3>
+            <p id="objet-description">Description détaillée de l'objet</p>
+            <div class="info-horizontal">
+                <span id="objet-poids">Poids : 0 kg</span>
+                <span id="objet-kcal">Calories : 0 kcal</span>
+                <span id="objet-utilite">Utilité : 0</span>
+                <span id="objet-prix">Prix : 0 €</span>
+                <span id="objet-priorite">Priorité : 0</span>
+            </div>
+            <button id="add-objet-btn">Ajouter au sac</button>
+        </div>
+    </div>
+
+</div>
+
+<!-- Valider la liste d'objets pour le nom du sac -->
+<div class="container" style="margin-top: 30px;">
+    <h2>Valider le sac</h2>
+    <label for="nom-sac">Nom du sac :</label>
+    <input type="text" id="nom-sac" placeholder="Entrez le nom du sac">
+    <button id="valider-sac-btn">Valider</button>
+</div>
+</body>

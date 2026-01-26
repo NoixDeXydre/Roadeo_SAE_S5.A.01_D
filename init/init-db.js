@@ -15,7 +15,8 @@ db.utilisateur.insertOne({
   prenom: "Marcel", 
   age: 40, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Forte"
+  morphologie: "Forte",
+  sac: []
 })
 
 db.utilisateur.insertOne({
@@ -28,8 +29,10 @@ db.utilisateur.insertOne({
   prenom: "Jean-Michel", 
   age: 23, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Moyenne"
+  morphologie: "Moyenne",
+  sac: []
 })
+
 db.utilisateur.insertOne({
   _id:'3',
   patronyme:'Un Utilisateur',
@@ -40,7 +43,8 @@ db.utilisateur.insertOne({
   prenom: "Un", 
   age: 39, 
   niveauEntrainement: "Debutant", 
-  morphologie: "Legere"
+  morphologie: "Legere",
+  sac: []
 })
 
 // Création de la collection randonnee
@@ -76,26 +80,33 @@ db.randonnee.insertOne({
 db.createCollection("parcours");
 
 // (Mock)
+//etat :
+// 1 -> parcours à valider
+// 2 -> sac à faire
+// 3 -> prêt pour la randonnée
 
 db.parcours.insertOne({
   _id: '1',
   idRando: '1', 
   id_utilisateur: '1', 
   libelle_randonnee: 'La montagne Noire', 
+  etat: 2,
   participants: [
     {
       nom: "Marcel Jr", 
       prenom: "Marcenelle", 
       age: 12, 
       niveauEntrainement: "Debutant", 
-      morphologie: "Legere"
+      morphologie: "Legere",
+      sac: []
     }, 
     {
       nom: "Marie Marcel", 
       prenom: "Montrane", 
       age: 39, 
       niveauEntrainement: "Entraine", 
-      morphologie: "Moyenne"
+      morphologie: "Moyenne",
+      sac: []
     }
   ]
 });
@@ -105,6 +116,7 @@ db.parcours.insertOne({
   idRando: '2', 
   id_utilisateur: '3', 
   libelle_randonnee: "Parcours Découverte", 
+  etat: 1,
   pointInterets: [{libelle : "Rodez", geo:[2.5730260710644473,44.35083409171523]},
           {libelle : "Le Monastère", geo :[2.5787285490859517,44.34252528780783]},
           {libelle : "Olemps", geo :[2.5534796512809237,44.338902416241694]},
@@ -119,21 +131,24 @@ db.parcours.insertOne({
       prenom: "Pierre", 
       age: 61, 
       niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne"
+      morphologie: "Moyenne",
+      sac: []
     }, 
     {
       nom: "Tournepluie", 
       prenom: "M Tournesol", 
       age: 67, 
       niveauEntrainement: "Debutant", 
-      morphologie: "Legere"
+      morphologie: "Legere",
+      sac: []
     },
     {
       nom: "L'étudiant", 
       prenom: "Marcel", 
       age: 23, 
       niveauEntrainement: "sportif", 
-      morphologie: "Legere"
+      morphologie: "Legere",
+      sac: []
     }
   ]
 });
@@ -142,7 +157,8 @@ db.parcours.insertOne({
   _id: '3',
   idRando: '2', 
   id_utilisateur: '3', 
-  libelle_randonnee: "Décourverte exceptionnelle des bâtiments universitaires", 
+  libelle_randonnee: "Décourverte exceptionnelle des bâtiments universitaires",
+  etat: 1, 
   pointInterets: [{libelle : "Entrée IUT", geo:[2.575503749917175, 44.360080320786864]},
           {libelle : "Batiment C", geo :[2.575853338825084, 44.360287526289454]},
           {libelle : "Batiment A", geo :[2.5765978001776375, 44.36019428390435]},
@@ -153,14 +169,46 @@ db.parcours.insertOne({
       prenom: "Pierre", 
       age: 61, 
       niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne"
+      morphologie: "Moyenne",
+      sac: []
     }, 
     {
       nom: "Tournepluie", 
       prenom: "M Tournesol", 
       age: 67, 
       niveauEntrainement: "Debutant", 
-      morphologie: "Legere"
+      morphologie: "Legere",
+      sac: []
     }
   ]
 });
+
+db.createCollection("produits");
+
+db.produits.insertOne({
+denomination: "Repas lyophilisé - pâtes à la bolognaise - 120g",
+nom : "pâte bolognaise",
+description : "Notre équipe passionnée de trekking a conçu ce repas pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 140 g.",
+masse : 140.0, // en gramme
+nutrition: 381, // kcal
+prix : 8.49 // euros
+})
+
+db.produits.insertOne({
+  denomination: "Soupe lyophilisée - Goulash au poulet - 50 g",
+  nom: "Goulash",
+  description: "Notre équipe passionnée de trekking a conçu cette soupe lyophilisée pour vos activités physiques avec un apport énergétique adapté pour un poids minimal : 70 g.",
+  masse: 70,
+  nutrition: 190,
+  prix: 7.49
+})
+
+db.produits.insertOne({
+  denomination: "Dessert lyophilisé - Riz au lait à la vanille - 45 g",
+  nom: "Riz au lait",
+  description: "Notre équipe passionnée de trekking a conçu ce dessert pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 57 g.",
+  masse: 57,
+  nutrition: 191,
+  prix: 4.99
+})
+

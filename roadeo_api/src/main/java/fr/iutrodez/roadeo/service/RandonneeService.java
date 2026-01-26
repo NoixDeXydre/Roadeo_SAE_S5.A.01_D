@@ -40,7 +40,7 @@ public class RandonneeService {
      * @return la liste de participant
      */
     public List<Participant> getParticipantParcours(String id) {
-        // info changment (à supprimer) : ArrayList est devenu Optional car on ne veut qu'un parcours à la fois
+        // info changement (à supprimer) : ArrayList est devenu Optional car on ne veut qu'un parcours à la fois
         Optional<Parcours> result = parcoursRepository.findById(id); // Récupère le résultat mongoDB
 
         // info à supprimer : Optional devient parcours pour pouvoir utiliser les méthode et renvoyer le json

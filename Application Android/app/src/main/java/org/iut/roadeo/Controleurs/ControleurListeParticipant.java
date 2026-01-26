@@ -54,7 +54,7 @@ public class ControleurListeParticipant extends AppCompatActivity {
         // on initialise les differents elements
         listeParticipant = findViewById(R.id.listeParticipant);
 
-        // TODO adapter en fonction d ela rando choisie
+        // TODO adapter en fonction de la rando choisie
         ControleurPageConnexion.apiRequeteur.listerParticipant("1", new
                                                 IAPIRandonneursCallback() {
             @Override
@@ -105,9 +105,11 @@ public class ControleurListeParticipant extends AppCompatActivity {
             intention.putExtra("AGE_RANDONNEUR",
                                participants.get(information.position).getAge());
             intention.putExtra("NIVEAU_RANDONNEUR",
-                               participants.get(information.position).getNiveauEntrainement().toString());
+                               participants.get(information.position)
+                                           .getNiveauEntrainement().toString());
             intention.putExtra("MORPHOLOGIE_RANDONNEUR",
-                               participants.get(information.position).getMorphologie().toString());
+                               participants.get(information.position)
+                                           .getMorphologie().toString());
 
             startActivity(intention);
             // TODO vue créer participant avec infos sur participant

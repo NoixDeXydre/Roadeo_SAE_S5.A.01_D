@@ -30,8 +30,12 @@ public class UtilisateurServiceTests {
         MockitoAnnotations.openMocks(this);
         service = new UtilisateurService(repository);
 
-        Utilisateur u1 = new Utilisateur("1","nom prenom","test","nomprenom@test.com","test");
-        Utilisateur u2 = new Utilisateur("2","nom2 prenom2","test2","nom2prenom@test.com","test2");
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+        Utilisateur u2 = new Utilisateur("2", "1234", "jean-jacques@gmail.com",
+                                         "IUT Rodez", "Jean", "Jacques", 40,
+                                         "Sportif", "Fort");
 
         expectedList = Arrays.asList(u1, u2);
     }

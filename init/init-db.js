@@ -51,8 +51,8 @@ db.randonnee.insertOne({
   _id: '1', 
   libelle: "La montagne Noire",
   participants_max: 2,
-  point_depart: [43.408308198518846, 2.4458198213038966],
-  point_arrive: [43.424080742263676, 2.462710777901859],
+  point_depart: {libelle: "depart", geo:[43.408308198518846, 2.4458198213038966]},
+  point_arrive: {libelle: "arrive", geo:[43.424080742263676, 2.462710777901859]},
   nombre_jours: 1
 });
 
@@ -60,8 +60,8 @@ db.randonnee.insertOne({
   _id: '2', 
   libelle: "Le Pacific Crest Trail (pour les nuls)",
   participants_max: 3,
-  point_depart: [44.34974473375299, 2.5764601949018444],
-  point_arrive: [44.34974473375299, 2.5764601949018444],
+  point_depart: {libelle: "depart", geo:[44.34974473375299, 2.5764601949018444]},
+  point_arrive: {libelle: "arrive", geo:[44.34974473375299, 2.5764601949018444]},
   nombre_jours: 2
 });
 
@@ -69,8 +69,8 @@ db.randonnee.insertOne({
   _id: '3', 
   libelle: "Balade insolite d'Aveyron",
   participants_max: 3,
-  point_depart: [44.360123830300076, 2.575580735324156],
-  point_arrive: [44.360123830300076, 2.575580735324156],
+  point_depart: {libelle: "depart", geo:[44.360123830300076, 2.575580735324156]},
+  point_arrive: {libelle: "arrive", geo:[44.360123830300076, 2.575580735324156]},
   nombre_jours: 1
 });
 

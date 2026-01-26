@@ -10,6 +10,9 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
+
 import org.iut.roadeo.Modele.Utilitaire.AdaptateurFragmentsDashboard;
 import org.iut.roadeo.Modele.Utilitaire.ChangeVue;
 import org.iut.roadeo.R;
@@ -27,6 +30,7 @@ public class ControleurDashboard extends AppCompatActivity {
     // on aura dashboard avec les parcours et les randonnées.
 
     private ViewPager2 viewPager2;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,14 @@ public class ControleurDashboard extends AppCompatActivity {
         setContentView(R.layout.dashboard);
 
         viewPager2 = findViewById(R.id.dashboard_viewpager);
+        tabLayout = findViewById(R.id.dashboard_tab_layout);
         viewPager2.setAdapter(new AdaptateurFragmentsDashboard(this)) ;
+
+        String[] titreOnglet = getResources().getStringArray(R.array.onglets);
+
+        new TabLayoutMediator(tabLayout, viewPager2,
+                (tab, position) -> tab.setText(titreOnglet[position])
+        ).attach();
     }
 
     @Override

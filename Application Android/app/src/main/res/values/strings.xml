@@ -6,6 +6,11 @@
     <string name="nom_page_connexion">Connexion</string>
     <string name="nom_page_creation_compte">"Création d'un compte"</string>
 
+    <!-- Titre onglet -->
+    <string-array name="onglets">
+        <item name="onglet_carte">Carte</item>
+    </string-array>
+
     <!-- Lié aux informations du compte -->
     <string name="label_compte_nom">Nom</string>
     <string name="label_compte_prenom">Prenom</string>

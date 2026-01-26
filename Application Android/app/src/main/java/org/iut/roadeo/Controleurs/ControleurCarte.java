@@ -21,7 +21,7 @@ import org.osmdroid.views.MapView;
 public class ControleurCarte extends AppCompatActivity {
 
     private IMapController controleurMapView;
-    private MapView mapview;
+    private MapView mapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +33,22 @@ public class ControleurCarte extends AppCompatActivity {
                 getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
-        mapview = findViewById(R.id.mapview);
-        mapview.setTileSource(TileSourceFactory.MAPNIK);
+        mapView = findViewById(R.id.mapview);
+        mapView.setTileSource(TileSourceFactory.MAPNIK);
 
-        controleurMapView = mapview.getController();
+        controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 }

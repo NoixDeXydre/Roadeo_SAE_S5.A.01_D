@@ -48,34 +48,38 @@ db.utilisateur.insertOne({
 })
 
 // Création de la collection randonnee
-// Incomplete
 
 db.createCollection("randonnee");
 
 db.randonnee.insertOne({
   _id: '1', 
-  libelle: "La montagne Noire"
+  libelle: "La montagne Noire",
+  participants_max: 2,
+  point_depart: {libelle: "depart", geo:[43.408308198518846, 2.4458198213038966]},
+  point_arrive: {libelle: "arrive", geo:[43.424080742263676, 2.462710777901859]},
+  nombre_jours: 1
 });
 
 db.randonnee.insertOne({
   _id: '2', 
-  libelle: "Le Pacific Crest Trail (pour les nuls)"
+  libelle: "Le Pacific Crest Trail (pour les nuls)",
+  participants_max: 3,
+  point_depart: {libelle: "depart", geo:[44.34974473375299, 2.5764601949018444]},
+  point_arrive: {libelle: "arrive", geo:[44.34974473375299, 2.5764601949018444]},
+  nombre_jours: 2
 });
 
 db.randonnee.insertOne({
   _id: '3', 
-  libelle: "Balade insolite d'Aveyron"
+  libelle: "Balade insolite d'Aveyron",
+  participants_max: 3,
+  point_depart: {libelle: "depart", geo:[44.360123830300076, 2.575580735324156]},
+  point_arrive: {libelle: "arrive", geo:[44.360123830300076, 2.575580735324156]},
+  nombre_jours: 1
 });
 
 // Création de la table parcours
-// Attention elle n'est pas complète !!!
-
-// TODO point départ
-// TODO point arrivée
-// TODO date
-// TODO points d'intérêts (optionnel)
-
-// TODO voir si l'utilisateur est inclut dans la site de participants.
+// l'utilisateur est inclut dans la site de participants.
 
 db.createCollection("parcours");
 
@@ -91,6 +95,7 @@ db.parcours.insertOne({
   id_utilisateur: '1', 
   libelle_randonnee: 'La montagne Noire', 
   etat: 2,
+  date_realisation: new ISODate("2026-01-18T14:10:30.123Z"),
   participants: [
     {
       nom: "Marcel Jr", 
@@ -125,6 +130,7 @@ db.parcours.insertOne({
           {libelle : "Cassarou", geo : [2.4768070240403404,44.33126526040786]},
           {libelle : "Moyrazès", geo : [2.4398242797784917,44.34276725217214]},
           {libelle : "Montès", geo : [2.455742937387953,44.32713060116157]}],
+  date_realisation: new ISODate("2026-01-22T14:10:30.123Z"),
   participants: [
     {
       nom: "Le Marcheur", 
@@ -155,7 +161,7 @@ db.parcours.insertOne({
 
 db.parcours.insertOne({
   _id: '3',
-  idRando: '2', 
+  idRando: '3', 
   id_utilisateur: '3', 
   libelle_randonnee: "Décourverte exceptionnelle des bâtiments universitaires",
   etat: 1, 
@@ -163,6 +169,7 @@ db.parcours.insertOne({
           {libelle : "Batiment C", geo :[2.575853338825084, 44.360287526289454]},
           {libelle : "Batiment A", geo :[2.5765978001776375, 44.36019428390435]},
           {libelle : "Batiment B", geo : [ 2.576335155660985,44.35970734903577]}],
+  date_realisation: new ISODate("2026-01-22T14:10:30.123Z"),
   participants: [
     {
       nom: "Le Marcheur", 

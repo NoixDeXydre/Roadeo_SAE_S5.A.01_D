@@ -12,13 +12,17 @@ public class UtilisateurTest {
 
     @BeforeEach
     void setUp() {
-        utilTest = new Utilisateur("1","nom prenom","test","nomprenom@test.com","test");
+        utilTest = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                                   "IUT Rodez", "Jean", "Michel", 40,
+                                   "Sportif", "Fort");
     }
 
     @Test
     @DisplayName("Test du constructeur avec valeur correcte")
     public void utilisateurTest(){
-        Utilisateur util = new Utilisateur("1","nom prenom","test","nomprenom@test.com","test");
+        Utilisateur util = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                                           "IUT Rodez", "Jean", "Michel", 40,
+                                           "Sportif", "Fort");
         assertEquals("1", util.getId());
     }
 

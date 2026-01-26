@@ -2,7 +2,6 @@ package org.iut.roadeo.Modele;
 
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
-import org.iut.roadeo.Modele.Utilitaire.Parcours;
 
 import java.util.ArrayList;
 

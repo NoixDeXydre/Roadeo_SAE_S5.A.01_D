@@ -1,4 +1,4 @@
-package org.iut.roadeo.Modele.Utilitaire;
+package org.iut.roadeo.Modele;
 
 import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Randonneur;

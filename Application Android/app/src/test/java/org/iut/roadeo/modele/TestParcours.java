@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
 import org.iut.roadeo.Modele.Randonnee;
-import org.iut.roadeo.Modele.Utilitaire.Parcours;
+import org.iut.roadeo.Modele.Parcours;
 import org.junit.Test;
 import org.osmdroid.util.GeoPoint;
 

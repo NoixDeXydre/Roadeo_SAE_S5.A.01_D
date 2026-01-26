@@ -2,8 +2,12 @@ package org.iut.roadeo.Controleurs;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import org.iut.roadeo.R;
 import org.osmdroid.api.IMapController;
@@ -20,7 +24,7 @@ import org.osmdroid.views.overlay.Marker;
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class ControleurCarte extends AppCompatActivity {
+public class ControleurCarte extends Fragment {
 
     // TODO manipulation du cache après appel API.
     // TODO appel API
@@ -28,17 +32,26 @@ public class ControleurCarte extends AppCompatActivity {
     private IMapController controleurMapView;
     private MapView mapView;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public static ControleurCarte newInstance() {
+        return new ControleurCarte();
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.carte);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View vue = inflater.inflate(R.layout.carte, container, false);
 
         Configuration.getInstance().load(
-                getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+                vue.getContext(),
+                PreferenceManager.getDefaultSharedPreferences(vue.getContext()));
 
-        mapView = findViewById(R.id.mapview);
+        mapView = vue.findViewById(R.id.mapview);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
 
         controleurMapView = mapView.getController();
@@ -49,6 +62,8 @@ public class ControleurCarte extends AppCompatActivity {
                 2.57556698405f));
         Marker a = creerPointInteret(new GeoPoint(44.362608f, 2.582049f));
         //supprimerPointInteret(a);
+
+        return vue;
     }
 
     @Override

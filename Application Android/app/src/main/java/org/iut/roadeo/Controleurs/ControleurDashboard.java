@@ -8,7 +8,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
+import org.iut.roadeo.Modele.Utilitaire.AdaptateurFragmentsDashboard;
 import org.iut.roadeo.Modele.Utilitaire.ChangeVue;
 import org.iut.roadeo.R;
 
@@ -21,13 +23,19 @@ import org.iut.roadeo.R;
  */
 public class ControleurDashboard extends AppCompatActivity {
 
+    // FIXME
+    // on aura dashboard avec les parcours et les randonnées.
+
+    private ViewPager2 viewPager2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard);
-        // FIXME
-        // on aura dashboard avec les parcours et les randonnées.
+
+        viewPager2 = findViewById(R.id.dashboard_viewpager);
+        viewPager2.setAdapter(new AdaptateurFragmentsDashboard(this)) ;
     }
 
     @Override

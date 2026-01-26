@@ -12,15 +12,27 @@ public class UtilisateurTest {
 
     @BeforeEach
     void setUp() {
+<<<<<<< HEAD
         utilTest = new Utilisateur("1","nom prenom","test","nomprenom@test.com",
                 "test", "nom", "prenom", 20, "sportif", "légère");
+=======
+        utilTest = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                                   "IUT Rodez", "Jean", "Michel", 40,
+                                   "Sportif", "Fort");
+>>>>>>> 179536d0ba00639dfc7f3212ce849060fc68c5d7
     }
 
     @Test
     @DisplayName("Test du constructeur avec valeur correcte")
     public void utilisateurTest(){
+<<<<<<< HEAD
         Utilisateur util = new Utilisateur("1","nom prenom","test","nomprenom@test.com",
                 "test", "nom", "prenom", 20, "sportif", "légère");
+=======
+        Utilisateur util = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                                           "IUT Rodez", "Jean", "Michel", 40,
+                                           "Sportif", "Fort");
+>>>>>>> 179536d0ba00639dfc7f3212ce849060fc68c5d7
         assertEquals("1", util.getId());
     }
 

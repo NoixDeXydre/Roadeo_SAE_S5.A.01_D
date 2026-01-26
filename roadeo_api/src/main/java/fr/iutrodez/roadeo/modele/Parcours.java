@@ -1,5 +1,6 @@
 package fr.iutrodez.roadeo.modele;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -10,6 +11,9 @@ import java.util.ArrayList;
  */
 @Document(collection = "parcours")
 public class Parcours {
+
+    @Id
+    private String id;
 
     /** id de la randonnée auquelle le parcours est associé */
     private String idRando;
@@ -39,13 +43,14 @@ public class Parcours {
     public Parcours() {}
 
     /** Constructeur manuel */
-    public Parcours(String idRando, String idUtilisateur, String libelleRandonnee,
+    public Parcours(String id, String idRando, String idUtilisateur, String libelleRandonnee,
                     ArrayList<Participant> participants,  ArrayList<PointInteret> pointInterets) {
         if ( idRando == null || idRando.isEmpty()
                 || idUtilisateur == null || idUtilisateur.isEmpty()
                 || libelleRandonnee == null || libelleRandonnee.isEmpty()) {
             throw new IllegalArgumentException();
         }
+        this.id = id;
         this.idRando = idRando;
         this.idUtilisateur = idUtilisateur;
         this.libelleRandonnee = libelleRandonnee;
@@ -53,8 +58,13 @@ public class Parcours {
         this.pointInterets = pointInterets;
     }
 
-    /** Renvoie l'id de la randonnée du parcours */
+    /** Renvoi l'id du parcours */
     public String getId() {
+        return this.id;
+    }
+
+    /** Renvoie l'id de la randonnée du parcours */
+    public String getIdRando() {
         return this.idRando;
     }
 
@@ -66,6 +76,30 @@ public class Parcours {
     /** Renvoie le libelle de la randonnee */
     public String getLibelleRandonnee() {
         return this.libelleRandonnee;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setIdRando(String idRando) {
+        this.idRando = idRando;
+    }
+
+    public void setIdUtilisateur(String idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
+    }
+
+    public void setLibelleRandonnee(String libelleRandonnee) {
+        this.libelleRandonnee = libelleRandonnee;
+    }
+
+    public void setParticipants(ArrayList<Participant> participants) {
+        this.participants = participants;
+    }
+
+    public void setPointInterets(ArrayList<PointInteret> pointInterets) {
+        this.pointInterets = pointInterets;
     }
 
     /** liste des randonnées */

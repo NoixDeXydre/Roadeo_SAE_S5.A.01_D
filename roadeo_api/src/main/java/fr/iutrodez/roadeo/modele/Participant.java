@@ -118,4 +118,48 @@ public class Participant {
     public void setMorphologie(String morphologie) {
         this.morphologie = morphologie;
     }
+
+    /**
+     * Renvoie une estimation de la taille moyenne selon l'âge
+     * 8 - 10 = 133
+     * 11 - 15 = 155,5
+     * 16 - 75 = 170
+     * 75+ = 165
+     * @return la taille
+     */
+    public double tailleApproximative() {
+        if (this.age < 10) {
+            return 133.0;
+        } else if(this.age < 15) {
+            return 155.5;
+        } else if(this.age < 75) {
+            return 170;
+        } else {
+            return 165;
+        }
+    }
+
+    /**
+     * Renvoie une estimation de la taille moyenne selon l'âge
+     * @return la taille
+     */
+    public double poidsApproximative() {
+        double corpulence = 1.0;
+
+        if (this.morphologie.equals("Legere")) {
+            corpulence = 1.10;
+        } else if (this.morphologie.equals("Moyenne")) {
+            corpulence = 0.90;
+        }
+
+        if (this.age < 10) {
+            return 18 * Math.pow(1.33,2) * corpulence;
+        } else if(this.age < 15) {
+            return 18 * Math.pow(1.55,2) * corpulence;
+        } else if(this.age < 75) {
+            return 22 * Math.pow(1.70,2) * corpulence;
+        } else {
+            return 22 * Math.pow(1.65,2) * corpulence;
+        }
+    }
 }

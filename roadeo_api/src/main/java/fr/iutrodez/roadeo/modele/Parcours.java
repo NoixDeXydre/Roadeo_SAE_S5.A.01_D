@@ -110,4 +110,27 @@ public class Parcours {
     public ArrayList<PointInteret> getPointInterets() {
         return this.pointInterets;
     }
+
+    /**
+     * Calcul de Kcal selon la formule de Mifflin–St Jeor
+     * MB = 10 × poids(kg) + 6,25 × taille(cm) − 5 × âge + 5
+     * -> on prend la formule du calcul pour un homme
+     * @return le nombre de kilo calorie d'une personne
+     */
+    private double calculKcalParticipant(double poids, double taille, int age) {
+        return 10 * poids + 6.25 * taille - 5 * age + 5;
+    }
+
+    /**
+     * Calcul le nombre Kcal total pour l'ensemble des participants du parcours
+     * @param jour durée de la randonnée en jour
+     * @return les besoins en Kcal pour tout le parcours
+     */
+    public double calculKcalTotal(int jour) {
+        double result = 0.0;
+        for (Participant participant : this.participants) {
+            result += calculKcalParticipant(participant.poidsApproximative(), participant.tailleApproximative(), participant.getAge());
+        }
+        return result * jour;
+    }
 }

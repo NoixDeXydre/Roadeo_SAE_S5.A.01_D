@@ -3,13 +3,14 @@ package org.iut.roadeo.Modele.Interfaces;
 import org.iut.roadeo.Modele.Utilisateur;
 
 /**
- * Callback à effectuer après une tentative de connexion à l'API.
+ * Callback à effectuer après une requête API
+ * impactant un utilisateur.
  *
  * @author BOYER Djedline
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public interface IAPIConnexionCallback {
+public interface IAPIUtilisateurCallback {
 
     /**
      * Sur un succès, renvoi l'utilisateur

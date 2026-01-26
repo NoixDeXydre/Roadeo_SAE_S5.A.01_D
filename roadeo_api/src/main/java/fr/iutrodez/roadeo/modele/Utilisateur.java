@@ -19,7 +19,9 @@ public class Utilisateur extends Participant {
 
     public Utilisateur(){super();}
 
-    public Utilisateur(String id, String mdp, String adresseMail, String domicile, String nom, String prenom,  int age, String niveauEntrainement, String morphologie) {
+    public Utilisateur(String id, String mdp, String adresseMail, String domicile,
+                       String nom, String prenom,  int age, String niveauEntrainement,
+                       String morphologie) {
         super(nom, prenom,  age, niveauEntrainement, morphologie);
         this.id = id;
         this.patronyme = prenom + " " + nom;

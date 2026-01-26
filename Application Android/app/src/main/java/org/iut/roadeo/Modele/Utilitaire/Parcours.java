@@ -45,9 +45,21 @@ public class Parcours {
      * Crée un nouveau parcours.
      * @param randonnee la randonnée liée au parcours.
      * @param date la date de début du parcours.
+     * @throws IllegalArgumentException Si la randonnée liée ou la date est null.
      */
-    public Parcours(Randonnee randonnee, Date date) {
-        // TODO constructeur
+    public Parcours(Randonnee randonnee, Date date) throws IllegalArgumentException {
+
+        if (randonnee == null || date == null) {
+            throw new IllegalArgumentException("Erreur : la randonnée" +
+                    " ou la date de la randonnée est null.");
+        }
+
+        randonneeParcours = randonnee;
+        this.date = date;
+
+        pointsInteret = new ArrayList<>();
+        randonneurs = new ArrayList<>();
+        trajetRealise = new ArrayList<>();
     }
 
     /**
@@ -55,7 +67,9 @@ public class Parcours {
      * @param pointInteret
      */
     public void ajouterPointInteret(GeoPoint pointInteret) {
-        // TODO méthode
+
+        if (pointInteret != null)
+            pointsInteret.add(pointInteret);
     }
 
     /**

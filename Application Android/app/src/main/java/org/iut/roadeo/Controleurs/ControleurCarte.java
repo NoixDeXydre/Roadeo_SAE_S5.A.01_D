@@ -17,10 +17,16 @@ import androidx.fragment.app.Fragment;
 import org.iut.roadeo.R;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.MinimapOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +81,8 @@ public class ControleurCarte extends Fragment {
 
         // La correction du tactile
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
+
+        // Corrige un problème où le fragment empêche le tactile de fonctionner.
         mapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -91,12 +99,30 @@ public class ControleurCarte extends Fragment {
                         break;
                 }
 
-                System.out.println("test");
-
                 // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
                 return false;
             }
         });
+
+        // On code ici le clic sur la carte.
+        MapEventsReceiver mReceive = new MapEventsReceiver() {
+            @Override
+            public boolean singleTapConfirmedHelper(GeoPoint p) {
+                creerPointInteret(p);
+                return true; // Retourne true pour dire que l'événement est géré
+            }
+
+            // À coder, éventuellement
+            // Vous pouvez gérer le clic long ici si besoin (return false sinon)
+            @Override
+            public boolean longPressHelper(GeoPoint p) {
+                return false;
+            }
+        };
+
+        MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(mReceive);
+        mapView.getOverlays().add(0, mapEventsOverlay);
+        // Ajouter en index 0 pour qu'il soit "derrière" les autres marqueurs
 
         controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);
@@ -131,6 +157,8 @@ public class ControleurCarte extends Fragment {
 
         Marker pointInteret = new Marker(mapView);
         pointInteret.setPosition(position);
+        pointInteret.setTitle("Point d'intérêt Roadeo");
+
         mapView.getOverlays().add(pointInteret);
 
         return pointInteret;

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
         android:gravity="center"
-        android:text="@string/ajout_randonneur"
+        android:text="@string/options_randonneur"
         android:textSize="@dimen/taille_titre_page" />
 
     <TableRow

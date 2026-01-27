@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:gravity="center"
+        android:text="@string/details_randonnee"
+        android:textSize="@dimen/taille_titre_page" />
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/nom_randonnee" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nom_randonnee"
+            android:id="@+id/labelLibelle"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/nb_max_personne" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nb_max_personne"
+            android:id="@+id/labelNbMaxPersonne"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/duree_jours" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nb_max_personne"
+            android:id="@+id/labelDureeJours"
+            android:inputType="number" />
+    </TableRow>
+
+</LinearLayout>

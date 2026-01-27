@@ -73,6 +73,11 @@ public class ControleurCarte extends Fragment {
         mapView = vue.findViewById(R.id.mapview);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
 
+        // Permet de ne pas détruire le mapview quand
+        // on change de page dans un fragment.
+        // https://github.com/osmdroid/osmdroid/issues/1641
+        mapView.setDestroyMode(false);
+
         requestPermissionsIfNecessary(new String[]{
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE

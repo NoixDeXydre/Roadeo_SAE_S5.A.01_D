@@ -71,6 +71,7 @@ public class Randonnee {
                                                " jours");
         }
 
+        setLibelle(libelle);
         setNbParticpantsMax(nbParticpantsMax);
         setNbJours(nbJours);
         setPointDepart(pointDepart);
@@ -79,6 +80,10 @@ public class Randonnee {
 
     public String getLibelle() {
         return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
     }
 
     /** @return Le point de départ, ou null s'il n'a pas été paramétré. */
@@ -113,5 +118,10 @@ public class Randonnee {
 
     public void setNbJours(int nbJours) {
         this.nbJours = nbJours;
+    }
+
+    @Override
+    public String toString() {
+        return "Randonnée : " + libelle;
     }
 }

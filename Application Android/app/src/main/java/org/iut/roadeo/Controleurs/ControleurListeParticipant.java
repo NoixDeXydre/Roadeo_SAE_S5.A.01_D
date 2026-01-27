@@ -61,10 +61,10 @@ public class ControleurListeParticipant extends AppCompatActivity {
             @Override
             public void onSuccess(ArrayList<Randonneur> randonneurs) {
                 participants.addAll(randonneurs);
-
                 adaptateur = new ArrayAdapter<>(getApplicationContext(),
-                        androidx.appcompat.R.layout.
-                                support_simple_spinner_dropdown_item, participants);
+                                                androidx.appcompat.R.layout.
+                                                support_simple_spinner_dropdown_item,
+                                                participants);
                 listeParticipant.setAdapter(adaptateur);
             }
 
@@ -74,7 +74,6 @@ public class ControleurListeParticipant extends AppCompatActivity {
                           "Les randonneurs n'ont pas pu être affichés\n"+
                                 message,
                                Toast.LENGTH_LONG).show();
-
             }
         });
 

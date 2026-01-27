@@ -231,7 +231,53 @@ public class APIRequeteur {
 
         getFileRequete().add(requeteConnexion);
     }
+/*
+    private ArrayList<Randonnee>
+    construireRandonneesWithReponse(JSONArray reponse)
+            throws JSONException {
 
+        ArrayList<Randonnee> aRetourner;
+
+        JSONObject aCreer;
+        Randonnee randonnee;
+
+        aRetourner = new ArrayList<>();
+        // Récupération des énums
+        for(int i=0; i<reponse.length(); i++) {
+            aCreer = reponse.getJSONObject(i);
+
+            String label = aCreer.getString("label");
+            String prenom = aCreer.getString("prenom");
+
+            int age = Integer.parseInt(aCreer.getString("age"));
+            if (Integer.parseInt(aCreer.getString("age")) == 0) {
+                age = 1;
+            }
+
+            NiveauEntrainement niveauEntrainement;
+            try {
+                niveauEntrainement = NiveauEntrainement.valueOf
+                        (aCreer.getString("niveauEntrainement").toUpperCase());
+            } catch (IllegalArgumentException _) {
+                niveauEntrainement = NiveauEntrainement.DEBUTANT;
+            }
+
+            Morphologie morphologie;
+            try {
+                morphologie = Morphologie.valueOf
+                        (aCreer.getString("morphologie").toUpperCase());
+            } catch (IllegalArgumentException _) {
+                morphologie = Morphologie.LEGER;
+            }
+
+            randonnee = new randonnee(label, prenom, age, niveauEntrainement, morphologie);
+            aRetourner.add(randonnee);
+        }
+
+        // Création du randonneur
+        return aRetourner;
+    }
+*/
     private ArrayList<Randonneur>
             construireRandonneursWithReponse(JSONArray reponse)
             throws JSONException {
@@ -270,7 +316,8 @@ public class APIRequeteur {
                 morphologie = Morphologie.LEGER;
             }
 
-            randonneur = new Randonneur(nom, prenom, age, niveauEntrainement, morphologie);
+            randonneur = new Randonneur(nom, prenom, age, niveauEntrainement,
+                                        morphologie);
             aRetourner.add(randonneur);
         }
 
@@ -278,7 +325,8 @@ public class APIRequeteur {
         return aRetourner;
     }
 
-    private Utilisateur construireUtilisateurWithReponse(JSONObject reponse) throws JSONException {
+    private Utilisateur construireUtilisateurWithReponse(JSONObject reponse)
+                        throws JSONException {
 
         // Récupération des énums
 

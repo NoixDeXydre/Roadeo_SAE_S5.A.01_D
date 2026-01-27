@@ -38,11 +38,12 @@ import java.util.ArrayList;
  */
 public class ControleurListeParticipant extends AppCompatActivity {
 
-    /* contient les différents participants */
+    /* Contient les différents participants */
     private ArrayList<Randonneur> participants;
 
     private ArrayAdapter<Randonneur> adaptateur;
 
+    /* Liste les différents participants */
     private ListView listeParticipant;
 
     @Override
@@ -85,6 +86,7 @@ public class ControleurListeParticipant extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
+        // on défini les items du menu click droit
         new MenuInflater(this).inflate(R.menu.menu_ajouter_liste, menu);
     }
 
@@ -94,10 +96,11 @@ public class ControleurListeParticipant extends AppCompatActivity {
                 (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         // On regarde l'option choisie par l'utilisateur
-        if(item.getItemId() == R.id.detailParticipant){
+        if(item.getItemId() == R.id.detail){
+            // S'il a choisi les détails sur le participant, on ouvre
+            // l'activité permettant de consulter les détails
             Intent intention = new Intent(this,
                                           ControleurAjoutRandonneur.class);
-
             intention.putExtra("NOM_RANDONNEUR",
                                participants.get(information.position).getNom());
             intention.putExtra("PRENOM_RANDONNEUR",
@@ -115,7 +118,7 @@ public class ControleurListeParticipant extends AppCompatActivity {
             // TODO vue créer participant avec infos sur participant
 
             //lanceCreation.launch(intention);
-        } else if (item.getItemId() == R.id.supprimerParticipant
+        } else if (item.getItemId() == R.id.supprimer
                     && information.position != 0) {
             participants.remove(information.position);
             listeParticipant.setAdapter(adaptateur);

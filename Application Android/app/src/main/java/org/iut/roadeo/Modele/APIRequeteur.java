@@ -14,6 +14,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.iut.roadeo.Modele.Interfaces.IAPIRandonneesCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIRandonneursCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
@@ -21,6 +22,7 @@ import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.util.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +69,8 @@ public class APIRequeteur {
     private final static String SUFFIXE_API_RANDONNEE = "Randonnee";
     private final static String SUFFIXE_API_LISTE_PARTICIPANT = SUFFIXE_API_RANDONNEE
             + "/listeParticipant/";
+    private final static String SUFFIXE_API_LISTE_RANDONNEE = SUFFIXE_API_RANDONNEE
+            + "/liste";
     private String prefixeUrl;
     private Context contexteApplication;
     private RequestQueue fileRequete;
@@ -194,27 +198,65 @@ public class APIRequeteur {
 
     public void listerParticipant(String id, IAPIRandonneursCallback callback) {
         String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARTICIPANT + id;
-        System.out.print(urlAppelAPI);
+        JsonArrayRequest requeteConnexion = new JsonArrayRequest(urlAppelAPI,
+                                            new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                ArrayList<Randonneur> randonneurs = new ArrayList<>();
+                try {
+                    randonneurs = construireRandonneursWithReponse(
+                                  response);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+
+                callback.onSuccess(randonneurs);
+            }
+        },
+        new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(com.android.volley.VolleyError
+                                        error) {
+
+                if (error instanceof AuthFailureError)
+                    callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                else if (error instanceof ServerError)
+                    callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                else if (error instanceof TimeoutError)
+                    callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                else if (error instanceof NoConnectionError)
+                    callback.onError(MESSAGE_ERREUR_CONNEXION);
+                else
+                    callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+            }
+        });
+
+        getFileRequete().add(requeteConnexion);
+    }
+
+    public void listerRandonnee(IAPIRandonneesCallback callback) {
+        String urlAppelAPI = prefixeUrl + SUFFIXE_API_LISTE_RANDONNEE;
         JsonArrayRequest requeteConnexion = new JsonArrayRequest(urlAppelAPI,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        ArrayList<Randonneur> randonneurs = new ArrayList<>();
+                        ArrayList<Randonnee> randonnees = new ArrayList<>();
                         try {
-                            randonneurs = construireRandonneursWithReponse(
-                                          response);
+                            randonnees = construireRandonneesWithReponse(
+                                    response);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
 
-                        callback.onSuccess(randonneurs);
+                        callback.onSuccess(randonnees);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError
-                                                error) {
+                                                        error) {
 
                         if (error instanceof AuthFailureError)
                             callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
@@ -230,6 +272,55 @@ public class APIRequeteur {
                 });
 
         getFileRequete().add(requeteConnexion);
+    }
+
+    private ArrayList<Randonnee>
+            construireRandonneesWithReponse(JSONArray reponse)
+            throws JSONException {
+
+        ArrayList<Randonnee> aRetourner;
+
+        JSONObject aCreer;
+        Randonnee randonnee;
+
+        aRetourner = new ArrayList<>();
+        // Récupération des énums
+        for(int i=0; i<reponse.length(); i++) {
+            aCreer = reponse.getJSONObject(i);
+
+            /* On récupère les différents paramètres de la randonnée */
+            String libelle = aCreer.getString("libelle");
+            int participantsMax = aCreer.getInt("participantsMax");
+            int nombreJours = aCreer.getInt("nombreJours");
+
+            /* On récupère le point de départ */
+            JSONObject depart = aCreer.getJSONObject("depart");
+
+            /* on récupère les coordonnées du point de départ */
+            JSONArray coordonneeDepart = depart.getJSONArray("coordonnees");
+            double latitudeDepart = coordonneeDepart.getDouble(0);
+            double longitudeDepart = coordonneeDepart.getDouble(0);
+
+            GeoPoint pointDepart = new GeoPoint(latitudeDepart, longitudeDepart);
+
+            /* On récupère le point de départ */
+            JSONObject arrivee = aCreer.getJSONObject("arrive");
+
+            /* on récupère les coordonnées du point de départ */
+            JSONArray coordonneeArrivee = arrivee.getJSONArray("coordonnees");
+            double latitudeArrivee = coordonneeArrivee.getDouble(0);
+            double longitudeArrivee = coordonneeArrivee.getDouble(0);
+
+            GeoPoint pointArrivee = new GeoPoint(latitudeArrivee, longitudeArrivee);
+
+            /* On crée la randonnée et on l'ajoute à la liste */
+            randonnee = new Randonnee(libelle, participantsMax, nombreJours,
+                                      pointDepart, pointArrivee);
+            aRetourner.add(randonnee);
+        }
+
+        // On retroune la liste des randonnées
+        return aRetourner;
     }
 
     private ArrayList<Randonneur>
@@ -270,7 +361,8 @@ public class APIRequeteur {
                 morphologie = Morphologie.LEGER;
             }
 
-            randonneur = new Randonneur(nom, prenom, age, niveauEntrainement, morphologie);
+            randonneur = new Randonneur(nom, prenom, age, niveauEntrainement,
+                                        morphologie);
             aRetourner.add(randonneur);
         }
 
@@ -278,7 +370,8 @@ public class APIRequeteur {
         return aRetourner;
     }
 
-    private Utilisateur construireUtilisateurWithReponse(JSONObject reponse) throws JSONException {
+    private Utilisateur construireUtilisateurWithReponse(JSONObject reponse)
+                        throws JSONException {
 
         // Récupération des énums
 

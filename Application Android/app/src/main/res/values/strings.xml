@@ -8,6 +8,7 @@
 
     <!-- Titre onglet -->
     <string-array name="onglets">
+        <item name="onglet_liste">Liste des randonnées</item>
         <item name="onglet_carte">Carte</item>
     </string-array>
 
@@ -75,8 +76,9 @@
     <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>
     <string name="message_erreur_confirmation_mdp">Veuillez confirmer votre mot de passe.</string>
     <string name="message_erreur_mdp_conf_echec">"La confirmation du mot de passe à échouer, faite en sorte à ce qu'il corresponde à votre mot de passe initial."</string>
-    <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 - 120.</string>
+    <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
+    <string name="texte_randonee">Liste des randonnées</string>
 
 </resources>

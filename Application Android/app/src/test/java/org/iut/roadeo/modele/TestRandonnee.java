@@ -18,26 +18,59 @@ public class TestRandonnee {
     public void testRandonneeErreurSiLibelleNull() {
 
         try {
-            new Randonnee(null, null, null);
+            new Randonnee(null, 3, 1, null, null);
             fail("Le libellé ne peut pas être null.");
         } catch (IllegalArgumentException e) { }
 
         try {
-            new Randonnee("", null, null);
+            new Randonnee("", 3, 1,null, null);
             fail("Le libellé ne peut pas être vide.");
         } catch (IllegalArgumentException e) { }
 
         try {
-            new Randonnee(" ", null, null);
+            new Randonnee(" ", 3, 1, null, null);
             fail("Le libellé ne peut pas être vide (même avec des espaces.)");
         } catch (IllegalArgumentException e) { }
+    }
+
+    @Test
+    public void testRandonneeErreurNbParticpantMax() {
+
+        try {
+            new Randonnee("Ma randonnée", 0, 1, null, null);
+            fail("Le nombre de participant max est invalide");
+        } catch (IllegalArgumentException e) { }
+
+        try {
+            new Randonnee("Ma randonnée", Randonnee.NB_MAX_PARTICIPANT+1, 1,
+                          null, null);
+            fail("Le nombre de participant max est invalide");
+        } catch (IllegalArgumentException e) { }
+
+    }
+
+    @Test
+    public void testRandonneeErreurNbJours() {
+
+        try {
+            new Randonnee("Ma randonnée", 3, Randonnee.NB_JOURS_MIN-1, null,
+                          null);
+            fail("Le nombre de participant max est invalide");
+        } catch (IllegalArgumentException e) { }
+
+        try {
+            new Randonnee("Ma randonnée", 3, Randonnee.NB_JOURS_MAX+1, null,
+                          null);
+            fail("Le nombre de participant max est trop grand pour être valide");
+        } catch (IllegalArgumentException e) { }
+
     }
 
     @Test
     public void testRandonneeSucces() {
 
         try {
-            new Randonnee("Ma randonnée", null, null);
+            new Randonnee("Ma randonnée", 3, 1, null, null);
         } catch (IllegalArgumentException e) {
             fail("La randonnée devrait être construite à ce point.");
         }

@@ -3,6 +3,7 @@ package org.iut.roadeo.Controleurs;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -53,6 +54,28 @@ public class ControleurCarte extends Fragment {
 
         mapView = vue.findViewById(R.id.mapview);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
+
+        // La correction du tactile
+        mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
+        mapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Empêche le ScrollView parent d'intercepter le toucher
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Rend le contrôle au ScrollView parent quand on relâche
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+                // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
+                return false;
+            }
+        });
 
         controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);

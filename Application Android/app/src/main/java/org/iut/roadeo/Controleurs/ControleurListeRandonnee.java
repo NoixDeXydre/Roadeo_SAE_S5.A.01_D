@@ -3,9 +3,13 @@ package org.iut.roadeo.Controleurs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -78,6 +82,7 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
                 Toast.LENGTH_LONG).show();
         }
         });
+        registerForContextMenu(listeRandonnee);
 
         return vue;
     }
@@ -87,5 +92,28 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
         if (view.getId() == R.id.ajoutRandonnee) {
             // TODO lien vers l'ajout d'une randonnée
         }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        // on défini les items du menu click droit
+        new MenuInflater(getContext()).inflate(R.menu.menu_ajouter_liste, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo information =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        // On regarde l'option choisie par l'utilisateur
+        if(item.getItemId() == R.id.detail){
+            // TODO aller vers l'onglet présentant la randonnée
+        } else if (item.getItemId() == R.id.supprimer) {
+            randonnees.remove(information.position);
+            listeRandonnee.setAdapter(adaptateur);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

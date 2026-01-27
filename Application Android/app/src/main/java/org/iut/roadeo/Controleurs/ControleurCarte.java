@@ -1,5 +1,7 @@
 package org.iut.roadeo.Controleurs;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -8,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import org.iut.roadeo.R;
@@ -18,8 +22,14 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * Affiche la carte du parcours.
+ *
+ * Une partie du code vient de
+ * https://github.com/osmdroid/osmdroid/wiki/How-to-use-the-osmdroid-library-(Java)
  *
  * @author BOYER Djedline
  * @author M'TIMA LESNIAK Noa
@@ -29,6 +39,8 @@ public class ControleurCarte extends Fragment {
 
     // TODO manipulation du cache après appel API.
     // TODO appel API
+
+    private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     private IMapController controleurMapView;
     private MapView mapView;
@@ -55,6 +67,12 @@ public class ControleurCarte extends Fragment {
         mapView = vue.findViewById(R.id.mapview);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
 
+        requestPermissionsIfNecessary(new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }
+        );
+
         // La correction du tactile
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
         mapView.setOnTouchListener(new View.OnTouchListener() {
@@ -72,6 +90,9 @@ public class ControleurCarte extends Fragment {
                         v.getParent().requestDisallowInterceptTouchEvent(false);
                         break;
                 }
+
+                System.out.println("test");
+
                 // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
                 return false;
             }
@@ -121,5 +142,40 @@ public class ControleurCarte extends Fragment {
      */
     private void supprimerPointInteret(Marker pointInteret) {
         pointInteret.remove(mapView);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                                           int[] grantResults) {
+
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (int i = 0; i < grantResults.length; i++) {
+            permissionsToRequest.add(permissions[i]);
+        }
+
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    private void requestPermissionsIfNecessary(String[] permissions) {
+
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(getContext(), permission)
+                    != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(permission);
+            }
+        }
+
+        if (permissionsToRequest.size() > 0) {
+            ActivityCompat.requestPermissions(
+                    getActivity(),
+                    permissionsToRequest.toArray(new String[0]),
+                    REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
     }
 }

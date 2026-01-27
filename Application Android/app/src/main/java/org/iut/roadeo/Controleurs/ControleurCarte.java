@@ -164,6 +164,14 @@ public class ControleurCarte extends Fragment {
         pointInteret.setPosition(position);
         pointInteret.setTitle("Point d'intérêt Roadeo");
 
+        pointInteret.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker, MapView mapView) {
+                supprimerPointInteret(marker);
+                return true;
+            }
+        });
+
         mapView.getOverlays().add(pointInteret);
 
         return pointInteret;

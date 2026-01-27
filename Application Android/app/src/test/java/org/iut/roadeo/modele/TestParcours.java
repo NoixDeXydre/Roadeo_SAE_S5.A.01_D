@@ -29,7 +29,7 @@ public class TestParcours {
 
         try {
             new Parcours(new Randonnee
-                    ("Ma randonnée", null, null), null);
+                    ("Ma randonnée",3,1, null, null), null);
             fail("Le parcours ne devrait pas être valide si pas de date.");
         } catch (IllegalArgumentException e) { }
     }
@@ -47,7 +47,7 @@ public class TestParcours {
     public void testParcoursSucces() {
 
         try {
-            new Parcours(new Randonnee("Ma randonnée", null, null),
+            new Parcours(new Randonnee("Ma randonnée", 3, 1, null, null),
                     new Date());
         } catch (IllegalArgumentException e) {
             fail("Le parcours est en théorie valide et devrait se créer.");
@@ -57,7 +57,7 @@ public class TestParcours {
     @Test
     public void testAjouterPointInteretNull() {
 
-        Parcours parcours = new Parcours(new Randonnee("Mon parcours",
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 3, 1,
                 null, null), new Date());
 
         parcours.ajouterPointInteret(null);
@@ -67,7 +67,7 @@ public class TestParcours {
     @Test
     public void testAjouterPointInteret() {
 
-        Parcours parcours = new Parcours(new Randonnee("Mon parcours",
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 3, 1,
                 null, null), new Date());
 
         ArrayList<GeoPoint> points = new ArrayList<>

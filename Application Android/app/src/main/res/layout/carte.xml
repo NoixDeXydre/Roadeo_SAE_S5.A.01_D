@@ -45,12 +45,66 @@
                 android:text="N/A"
                 android:textColor="@color/white"
                 android:textSize="@dimen/taille_information_carte" />
+
+            <TextView
+                android:id="@+id/label_carte_participants_parcours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_y_carte"
+                android:paddingBottom="@dimen/espacement_carte_titre"
+                android:text="@string/label_participants_carte"
+                android:textColor="@color/white"
+                android:textSize="@dimen/taille_titre_carte" />
+
+            <TextView
+                android:id="@+id/label_point_interet_proche"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_y_carte"
+                android:paddingBottom="@dimen/espacement_carte_titre"
+                android:text="@string/label_point_interet_proche"
+                android:textColor="@color/white"
+                android:textSize="@dimen/taille_titre_carte" />
+
+            <TextView
+                android:id="@+id/distance_point_interet_formatage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/white"
+                android:textSize="@dimen/taille_information_carte" />
+
+            <TextView
+                android:id="@+id/label_status_parcours"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="@dimen/padding_y_carte"
+                android:paddingBottom="@dimen/espacement_carte_titre"
+                android:text="@string/label_status_parcours"
+                android:textColor="@color/white"
+                android:textSize="@dimen/taille_titre_carte" />
+
+            <TextView
+                android:id="@+id/status_parcours_carte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/white"
+                android:textSize="@dimen/taille_information_carte" />
+
         </LinearLayout>
     </ScrollView>
 
     <org.osmdroid.views.MapView
         android:id="@+id/mapview"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content" >
+
+    </org.osmdroid.views.MapView>
 
 </LinearLayout>

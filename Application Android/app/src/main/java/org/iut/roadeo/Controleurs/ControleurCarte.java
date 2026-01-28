@@ -3,7 +3,9 @@ package org.iut.roadeo.Controleurs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,11 +17,18 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.Parcours;
 import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
+
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.events.MapEventsReceiver;
@@ -52,9 +61,13 @@ public class ControleurCarte extends Fragment {
     private IMapController controleurMapView;
     private MapView mapView;
 
+    private FusedLocationProviderClient clientDeLocalisation;
+    private Location derniereLocalisationUtilisateur;
+
     private TextView titreRandonnee;
     private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
+
     private ArrayList<Marker> pointsInteretCarte;
 
     public static ControleurCarte newInstance() {
@@ -67,6 +80,8 @@ public class ControleurCarte extends Fragment {
         super.onCreate(savedInstanceState);
 
         pointsInteretCarte = new ArrayList<>();
+
+        clientDeLocalisation = LocationServices.getFusedLocationProviderClient(getContext());
 
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
@@ -157,6 +172,7 @@ public class ControleurCarte extends Fragment {
                 2.57556698405f));
 
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
+        mettreAJourPositionUtilisateur();
 
         return vue;
     }
@@ -242,6 +258,22 @@ public class ControleurCarte extends Fragment {
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
+    }
+
+    // Met à jour la position de l'utilisateur en temps réel.
+    private void mettreAJourPositionUtilisateur() throws SecurityException {
+
+        LocationRequest requeteLocalisation = new LocationRequest.Builder
+                (10000).setMinUpdateIntervalMillis(5000).build();
+        clientDeLocalisation.requestLocationUpdates(
+                requeteLocalisation,
+                new LocationCallback() {
+                    @Override
+                    public void onLocationResult(LocationResult resultatLocalisation) {
+                        derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
+                    }
+                },
+                Looper.getMainLooper());
     }
 
     // À appeler à chaque fois qu'on change de parcours.

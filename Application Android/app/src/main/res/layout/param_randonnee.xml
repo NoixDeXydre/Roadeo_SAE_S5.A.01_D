@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
@@ -11,106 +10,88 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
         android:gravity="center"
-        android:text="@string/options_randonneur"
+        android:text="@string/details_randonnee"
         android:textSize="@dimen/taille_titre_page" />
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_nom" />
-
-        <EditText
-            android:id="@+id/nomRandonneur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="120"
-            android:hint="@string/description_nom"/>
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_prenom" />
-
-        <EditText
-            android:id="@+id/prenomRandonneur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxLength="120"
-            android:hint="@string/description_prenom"/>
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_age" />
-
-        <EditText
-            android:id="@+id/ageRandonneur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:maxLength="120"
-            android:hint="@string/description_age"/>
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_niveau" />
-
-        <Spinner
-            android:id="@+id/niveauRandonneur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_morphologie" />
-
-        <Spinner
-            android:id="@+id/morphologieRandonneur"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:onClick="confirmerRandonneur"
+        android:id="@+id/confirmerRandonnee"
         android:text="@string/confirmer"
         android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/marron_noisette"/>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/nom_randonnee" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nom_randonnee"
+            android:id="@+id/labelLibelle"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/nb_max_personne" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nb_max_personne"
+            android:id="@+id/labelNbMaxPersonne"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/duree_jours" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nb_max_personne"
+            android:id="@+id/labelDureeJours"
+            android:inputType="number" />
+    </TableRow>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/voirListeParcours"
+        android:text="@string/voir_liste_parcours"
+        android:textColor="@color/black"/>
+    <androidx.constraintlayout.widget.Placeholder
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dist_page_randonnee_boutons"/>
+
 </LinearLayout>

@@ -7,6 +7,7 @@
     <dimen name="dist_page_connexion_logo_contenu">20dp</dimen>
     <dimen name="dist_page_connexion_labels_champs">10dp</dimen>
     <dimen name="dist_asterix_label">5dp</dimen>
+    <dimen name="dist_page_randonnee_boutons">50dp</dimen>
 
     <!-- Carte -->
     <dimen name="taille_titre_carte">18dp</dimen>

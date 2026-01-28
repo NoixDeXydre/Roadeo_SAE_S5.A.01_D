@@ -9,8 +9,13 @@
     <!-- Titre onglet -->
     <string-array name="onglets">
         <item name="onglet_liste">Liste des randonnées</item>
+        <item name="onglet_liste">Paramètre de la randonnée</item>
         <item name="onglet_carte">Carte</item>
     </string-array>
+
+    <!-- option menu burger -->
+    <string name="option_menu_dashboard">Menu principal</string>
+    <string name="option_menu_compte_utilisateur">Compte utilisateur</string>
 
     <!-- Lié aux informations du compte -->
     <string name="label_compte_nom">Nom</string>
@@ -22,6 +27,11 @@
     <string name="label_compte_domicile">Adresse Personnelle</string>
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
+    <string name="nom_randonnee">Nom de la randonnée</string>
+    <string name="nb_max_personne">Nombre de randonneurs maximum</string>
+    <string name="duree_jours">Durée de la randonnée en jours</string>
+    <string name="texte_randonee">Liste des randonnées</string>
+    <string name="details_randonnee">Détails de la randonnée</string>
 
     <string name="asterix">*</string>
 
@@ -45,11 +55,11 @@
     <string name="description_domicile">7 rue du Citron</string>
     <string name="description_patronyme">Marcel Marcenac</string>
     <string name="texte_participants">Liste des participants</string>
-    <string name="option_menu_dashboard">Menu principal</string>
-    <string name="option_menu_compte_utilisateur">Compte utilisateur</string>
     <string name="liste_participants_rando">Liste des participants</string>
-    <string name="ajout_randonneur">Ajouter un randonneur</string>
+    <string name="options_randonneur">Options randonneur</string>
     <string name="se_deconnecter">Se déconnecter</string>
+    <string name="placeholder_nom_randonnee">Écrivez le nom de la randonnee</string>
+    <string name="placeholder_nb_max_personne">Entrez un nombre entre 1 et 3</string>
 
     <!-- Spinners -->
 
@@ -87,6 +97,6 @@
     <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
-    <string name="texte_randonee">Liste des randonnées</string>
+    <string name="voir_liste_parcours">Voir la liste des parcours</string>
 
 </resources>

@@ -314,7 +314,7 @@ public class APIRequeteur {
             GeoPoint pointArrivee = new GeoPoint(latitudeArrivee, longitudeArrivee);
 
             /* On crée la randonnée et on l'ajoute à la liste */
-            randonnee = new Randonnee(libelle, participantsMax, nombreJours,
+            randonnee = new Randonnee(libelle, participantsMax,
                                       pointDepart, pointArrivee);
             aRetourner.add(randonnee);
         }

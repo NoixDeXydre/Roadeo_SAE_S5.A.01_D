@@ -12,6 +12,8 @@
     <dimen name="taille_titre_carte">18dp</dimen>
     <dimen name="taille_information_carte">16dp</dimen>
     <dimen name="taille_pannel_carte">220dp</dimen>
+    <dimen name="padding_x_carte">10dp</dimen>
     <dimen name="padding_y_carte">25dp</dimen>
+    <dimen name="espacement_carte_titre">10dp</dimen>
 
 </resources>

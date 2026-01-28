@@ -53,6 +53,7 @@ public class ControleurCarte extends Fragment {
     private MapView mapView;
 
     private TextView titreRandonnee;
+    private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -84,6 +85,7 @@ public class ControleurCarte extends Fragment {
         View vue = inflater.inflate(R.layout.carte, container, false);
 
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
+        dateParcours = vue.findViewById(R.id.date_parcours);
 
         Configuration.getInstance().load(
                 vue.getContext(),
@@ -262,6 +264,11 @@ public class ControleurCarte extends Fragment {
         }
 
         // Mise à jour des informations de la page.
-        titreRandonnee.setText(parcoursAfficheUtilisateur.getRandonneeParcours().getLibelle());
+
+        Randonnee randonnee = parcoursAfficheUtilisateur.getRandonneeParcours();
+
+        titreRandonnee.setText(randonnee.getLibelle());
+        dateParcours.setText(getString(R.string.date_carte_parcours_formatage,
+                parcoursAfficheUtilisateur.getDate().toLocaleString()));
     }
 }

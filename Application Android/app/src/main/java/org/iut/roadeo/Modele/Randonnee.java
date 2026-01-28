@@ -12,13 +12,13 @@ import org.osmdroid.util.GeoPoint;
 public class Randonnee {
 
     /** Le nombre maximum de paticipants possible à une randonnée */
-    public static int NB_MAX_PARTICIPANT = 3;
+    public static final int NB_MAX_PARTICIPANT = 3;
 
     /** La durée minimale d'une randonnée en jour */
-    public static int NB_JOURS_MIN = 1;
+    public static final int NB_JOURS_MIN = 1;
 
     /** La durée maximale d'une randonnée en jour */
-    public static int NB_JOURS_MAX = 3;
+    public static final int NB_JOURS_MAX = 3;
 
     /** Titre de la randonnée */
     private String libelle;
@@ -43,36 +43,10 @@ public class Randonnee {
      * @param pointArrive le point d'arrivé de la randonnée
      * @throws IllegalArgumentException si le labelle est vide ou null.
      */
-    public Randonnee(String libelle, int nbParticpantsMax, int nbJours, GeoPoint pointDepart, GeoPoint pointArrive)
+    public Randonnee(String libelle, int nbJours, GeoPoint pointDepart, GeoPoint pointArrive)
             throws IllegalArgumentException {
-
-        if (libelle == null || libelle.isBlank()) {
-            throw new IllegalArgumentException("Le libelle de la randonnée" +
-                    " ne devrait pas être vide ou null.");
-        }
-
-
-        if (nbParticpantsMax>NB_MAX_PARTICIPANT) {
-            throw new IllegalArgumentException("Il y a trop de participants" +
-                                               " dans la randonnée");
-        }
-        if (nbParticpantsMax<=0) {
-            throw new IllegalArgumentException("Il doit y avoir au moins 1" +
-                                               " participant à la randonée");
-        }
-        if (nbJours<NB_JOURS_MIN) {
-            throw new IllegalArgumentException("La durée de la randonnée doit" +
-                                               " être d'au moins " + NB_JOURS_MIN +
-                                               " jour");
-        }
-        if (nbJours>NB_JOURS_MAX) {
-            throw new IllegalArgumentException("La durée de la randonnée ne peut" +
-                                               " pas dépasser " + NB_JOURS_MAX +
-                                               " jours");
-        }
-
         setLibelle(libelle);
-        setNbParticpantsMax(nbParticpantsMax);
+        this.nbParticpantsMax = NB_MAX_PARTICIPANT;
         setNbJours(nbJours);
         setPointDepart(pointDepart);
         setPointArrive(pointArrive);
@@ -83,6 +57,10 @@ public class Randonnee {
     }
 
     public void setLibelle(String libelle) {
+        if (libelle == null || libelle.isBlank()) {
+            throw new IllegalArgumentException("Le libelle de la randonnée" +
+                    " ne devrait pas être vide ou null.");
+        }
         this.libelle = libelle;
     }
 
@@ -108,15 +86,21 @@ public class Randonnee {
         return nbParticpantsMax;
     }
 
-    public void setNbParticpantsMax(int nbParticpantsMax) {
-        this.nbParticpantsMax = nbParticpantsMax;
-    }
-
     public int getNbJours() {
         return nbJours;
     }
 
     public void setNbJours(int nbJours) {
+        if (nbJours<NB_JOURS_MIN) {
+            throw new IllegalArgumentException("La durée de la randonnée doit" +
+                    " être d'au moins " + NB_JOURS_MIN +
+                    " jour");
+        }
+        if (nbJours>NB_JOURS_MAX) {
+            throw new IllegalArgumentException("La durée de la randonnée ne peut" +
+                    " pas dépasser " + NB_JOURS_MAX +
+                    " jours");
+        }
         this.nbJours = nbJours;
     }
 

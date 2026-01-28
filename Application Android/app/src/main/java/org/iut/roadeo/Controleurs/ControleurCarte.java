@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -50,6 +51,8 @@ public class ControleurCarte extends Fragment {
 
     private IMapController controleurMapView;
     private MapView mapView;
+
+    private TextView titreRandonnee;
     private Parcours parcoursAfficheUtilisateur;
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -79,6 +82,8 @@ public class ControleurCarte extends Fragment {
                              Bundle savedInstanceState) {
 
         View vue = inflater.inflate(R.layout.carte, container, false);
+
+        titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
 
         Configuration.getInstance().load(
                 vue.getContext(),
@@ -255,5 +260,8 @@ public class ControleurCarte extends Fragment {
         for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
             creerPointInteret(positionPointInteret);
         }
+
+        // Mise à jour des informations de la page.
+        titreRandonnee.setText(parcoursAfficheUtilisateur.getRandonneeParcours().getLibelle());
     }
 }

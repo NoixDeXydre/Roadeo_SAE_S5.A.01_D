@@ -16,12 +16,20 @@
             android:paddingBottom="@dimen/padding_y_carte">
 
             <TextView
-                android:id="@+id/titre_randonnee"
+                android:id="@+id/label_titre_randonnee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="Titre de la randonnée"
                 android:textSize="@dimen/taille_titre_carte" />
+
+            <TextView
+                android:id="@+id/titre_randonnee_formate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="@dimen/taille_information_carte"
+                android:text="N/A" />
         </LinearLayout>
     </ScrollView>
 

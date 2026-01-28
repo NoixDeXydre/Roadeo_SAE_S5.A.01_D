@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
@@ -13,6 +12,20 @@
         android:gravity="center"
         android:text="@string/details_randonnee"
         android:textSize="@dimen/taille_titre_page" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/confirmerRandonnee"
+        android:text="@string/confirmer"
+        android:textColor="@color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/marron_noisette"/>
 
     <TableRow
         android:layout_width="wrap_content"
@@ -70,5 +83,15 @@
             android:id="@+id/labelDureeJours"
             android:inputType="number" />
     </TableRow>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/voirListeParcours"
+        android:text="@string/voir_liste_parcours"
+        android:textColor="@color/black"/>
+    <androidx.constraintlayout.widget.Placeholder
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dist_page_randonnee_boutons"/>
 
 </LinearLayout>

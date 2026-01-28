@@ -6,6 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import org.iut.roadeo.Controleurs.ControleurCarte;
 import org.iut.roadeo.Controleurs.ControleurListeRandonnee;
+import org.iut.roadeo.Controleurs.ControleurParamRandonnee;
 
 /**
  * Gère la position des fragments du contrôleur Dashboard.
@@ -16,7 +17,7 @@ import org.iut.roadeo.Controleurs.ControleurListeRandonnee;
  */
 public class AdaptateurFragmentsDashboard extends FragmentStateAdapter {
 
-    public final static int NOMBRE_FRAGMENTS = 2;
+    public final static int NOMBRE_FRAGMENTS = 3;
 
     public AdaptateurFragmentsDashboard(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -29,6 +30,8 @@ public class AdaptateurFragmentsDashboard extends FragmentStateAdapter {
             case 0:
                 return ControleurListeRandonnee.newInstance();
             case 1:
+                return ControleurParamRandonnee.newInstance();
+            case 2:
                 return ControleurCarte.newInstance();
             default:
                 return null;

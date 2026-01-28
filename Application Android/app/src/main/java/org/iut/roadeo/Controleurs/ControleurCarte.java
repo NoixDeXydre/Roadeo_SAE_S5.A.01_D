@@ -1,6 +1,7 @@
 package org.iut.roadeo.Controleurs;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,11 +10,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import org.iut.roadeo.CacheApplication;
+import org.iut.roadeo.Modele.Parcours;
+import org.iut.roadeo.Modele.Randonnee;
+import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
@@ -21,15 +25,11 @@ import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.MinimapOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Affiche la carte du parcours.
@@ -50,6 +50,8 @@ public class ControleurCarte extends Fragment {
 
     private IMapController controleurMapView;
     private MapView mapView;
+    private Parcours parcoursAfficheUtilisateur;
+    private ArrayList<Marker> pointsInteretCarte;
 
     public static ControleurCarte newInstance() {
         return new ControleurCarte();
@@ -57,9 +59,21 @@ public class ControleurCarte extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        pointsInteretCarte = new ArrayList<>();
+
+        // TODO Données tests à enlever ici
+        Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
+        Parcours parcours = new Parcours(new Randonnee
+                ("Ma randonnée", 3, 1, null, null),
+                new Date());
+        ut.ajouterParcours(parcours);
+        parcoursAfficheUtilisateur = parcours;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,25 +102,22 @@ public class ControleurCarte extends Fragment {
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
 
         // Corrige un problème où le fragment empêche le tactile de fonctionner.
-        mapView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Empêche le ScrollView parent d'intercepter le toucher
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
+        mapView.setOnTouchListener((v, event) -> {
+            int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    // Empêche le ScrollView parent d'intercepter le toucher
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
 
-                    case MotionEvent.ACTION_UP:
-                        // Rend le contrôle au ScrollView parent quand on relâche
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-
-                // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
-                return false;
+                case MotionEvent.ACTION_UP:
+                    // Rend le contrôle au ScrollView parent quand on relâche
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
             }
+
+            // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
+            return false;
         });
 
         // On code ici le clic sur la carte.
@@ -125,9 +136,9 @@ public class ControleurCarte extends Fragment {
             }
         };
 
+        // Ajouter en index 0 pour qu'il soit "derrière" les autres marqueurs
         MapEventsOverlay mapEventsOverlay = new MapEventsOverlay(mReceive);
         mapView.getOverlays().add(0, mapEventsOverlay);
-        // Ajouter en index 0 pour qu'il soit "derrière" les autres marqueurs
 
         controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);
@@ -135,8 +146,10 @@ public class ControleurCarte extends Fragment {
         // FIXME Juste pour les tests :3
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
-        Marker a = creerPointInteret(new GeoPoint(44.362608f, 2.582049f));
-        //supprimerPointInteret(a);
+        parcoursAfficheUtilisateur.ajouterPointInteret(new GeoPoint(44.360054998826f,
+                2.57556698405f));
+
+        mettreAJourCarteParcours(parcoursAfficheUtilisateur);
 
         return vue;
     }
@@ -164,12 +177,14 @@ public class ControleurCarte extends Fragment {
         pointInteret.setPosition(position);
         pointInteret.setTitle("Point d'intérêt Roadeo");
 
-        pointInteret.setOnMarkerClickListener(new Marker.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker, MapView mapView) {
-                supprimerPointInteret(marker);
-                return true;
-            }
+        // Ecriture dans le cache
+        parcoursAfficheUtilisateur.ajouterPointInteret(position);
+
+        pointsInteretCarte.add(pointInteret);
+
+        pointInteret.setOnMarkerClickListener((marker, mapView) -> {
+            supprimerPointInteret(marker);
+            return true;
         });
 
         mapView.getOverlays().add(pointInteret);
@@ -182,7 +197,9 @@ public class ControleurCarte extends Fragment {
      * @param pointInteret
      */
     private void supprimerPointInteret(Marker pointInteret) {
+        parcoursAfficheUtilisateur.supprimerPointInteret(pointInteret.getPosition());
         pointInteret.remove(mapView);
+        pointsInteretCarte.remove(pointInteret);
     }
 
     @Override
@@ -217,6 +234,26 @@ public class ControleurCarte extends Fragment {
                     getActivity(),
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
+        }
+    }
+
+    // À appeler à chaque fois qu'on change de parcours.
+    private void mettreAJourCarteParcours(Parcours parcoursALire) {
+
+        // Le parcours devrait être référencé également par l'utilisateur.
+        parcoursAfficheUtilisateur = parcoursALire;
+
+        // Mise à jour des points d'intérêt.
+
+        // On supprime d'abord les points d'intérêt de la carte.
+        for (Marker pointInteretCarte : pointsInteretCarte) {
+            pointInteretCarte.remove(mapView);
+            pointsInteretCarte.remove(pointInteretCarte);
+        }
+
+        // Puis on met ceux du cache.
+        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
+            creerPointInteret(positionPointInteret);
         }
     }
 }

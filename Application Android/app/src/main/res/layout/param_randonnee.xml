@@ -56,25 +56,6 @@
             android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
             android:gravity="center"
             android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/nb_max_personne" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/placeholder_nb_max_personne"
-            android:id="@+id/labelNbMaxPersonne"
-            android:inputType="number" />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
-            android:gravity="center"
-            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
             android:text="@string/duree_jours" />
         <EditText
             android:layout_width="match_parent"

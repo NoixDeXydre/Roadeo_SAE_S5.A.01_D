@@ -28,7 +28,6 @@
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
     <string name="nom_randonnee">Nom de la randonnée</string>
-    <string name="nb_max_personne">Nombre de randonneurs maximum</string>
     <string name="duree_jours">Durée de la randonnée en jours</string>
     <string name="texte_randonee">Liste des randonnées</string>
     <string name="details_randonnee">Détails de la randonnée</string>
@@ -45,6 +44,7 @@
     <string name="modifier">Modifier</string>
     <string name="supprimer">Supprimer</string>
     <string name="details">Détails…</string>
+    <string name="voir_liste_parcours">Voir la liste des parcours</string>
 
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>
@@ -89,6 +89,5 @@
     <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
-    <string name="voir_liste_parcours">Voir la liste des parcours</string>
 
 </resources>

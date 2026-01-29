@@ -1,5 +1,6 @@
 package org.iut.roadeo.Controleurs;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -39,6 +40,24 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
 
     /* Liste les différentes randonnées */
     private ListView listeRandonnee;
+
+    /*  Listener pour communiquer entre les onglets */
+    private EcouteurGeneration activiteQuiMEcoute;
+
+    /**
+     * Interface surveillant si une randonnée est selectionnée
+     * et s'il y a des données à envoyer
+     */
+    public interface EcouteurGeneration {
+        void recevoirRandonnee(Randonnee randonnee);
+    }
+
+    @Override
+    public void onAttach(Context contexte) {
+        super.onAttach(contexte);
+        // contexte est l'activité parente du fragment, donc l'activité principale
+        activiteQuiMEcoute = (EcouteurGeneration) contexte;
+    }
 
     public static ControleurListeRandonnee newInstance() {
         return new ControleurListeRandonnee();
@@ -90,7 +109,7 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.ajoutRandonnee) {
-            // TODO lien vers l'ajout d'une randonnée
+            activiteQuiMEcoute.recevoirRandonnee(null);
         }
     }
 
@@ -109,7 +128,9 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
 
         // On regarde l'option choisie par l'utilisateur
         if(item.getItemId() == R.id.detail){
-            // TODO aller vers l'onglet présentant la randonnée
+            // Envoi des informations de la randonnée dans les paramêtres
+            activiteQuiMEcoute.recevoirRandonnee(randonnees.get(information
+                                                                .position));
         } else if (item.getItemId() == R.id.supprimer) {
             randonnees.remove(information.position);
             listeRandonnee.setAdapter(adaptateur);

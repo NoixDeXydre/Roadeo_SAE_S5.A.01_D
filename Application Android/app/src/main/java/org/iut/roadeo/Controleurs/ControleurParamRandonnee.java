@@ -5,13 +5,21 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.R;
 import org.osmdroid.config.Configuration;
 
 public class ControleurParamRandonnee extends Fragment implements View.OnClickListener {
+
+    private Randonnee randonnee;
+
+    private EditText saisieLibelle;
+
+    private EditText saisieJours;
 
     public static ControleurParamRandonnee newInstance() {
         return new ControleurParamRandonnee();
@@ -32,6 +40,11 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
                 vue.getContext(),
                 PreferenceManager.getDefaultSharedPreferences(vue.getContext()));
 
+        saisieLibelle = vue.findViewById(R.id.labelLibelle);
+        saisieJours = vue.findViewById(R.id.labelDureeJours);
+
+        randonnee = ((ControleurDashboard) getActivity()).getRandonneeCommunique();
+
         return vue;
     }
 
@@ -41,6 +54,22 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
             // TODO lien vers la liste des parcours
         } else if (view.getId() == R.id.confirmerRandonnee) {
             // TODO retour vers la liste des randonnées
+        }
+    }
+
+    /**
+     * Permet de mettre à jours les champs de la randonnée
+     * @param randonneeAAfficher La randonnée selectionnée
+     *                           null si on crée une nouvelle randonnée
+     */
+    public void mettreAJourLabels(Randonnee randonneeAAfficher) {
+        randonnee = randonneeAAfficher;
+        if (randonnee != null) {
+            saisieLibelle.setText(randonnee.getLibelle());
+            saisieJours.setText(Integer.toString(randonnee.getNbJours()));
+        } else {
+            saisieLibelle.setText(null);
+            saisieJours.setText(null);
         }
     }
 }

@@ -13,6 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
+import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Utilitaire.AdaptateurFragmentsDashboard;
 import org.iut.roadeo.Modele.Utilitaire.ChangeVue;
 import org.iut.roadeo.R;
@@ -24,10 +25,14 @@ import org.iut.roadeo.R;
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class ControleurDashboard extends AppCompatActivity {
+public class ControleurDashboard extends AppCompatActivity
+             implements ControleurListeRandonnee.EcouteurGeneration {
 
     // FIXME
     // on aura dashboard avec les parcours et les randonnées.
+
+    /* La randonnée communiquée de la liste vers les paramêtres */
+    private Randonnee randonnee;
 
     private ViewPager2 viewPager2;
     private TabLayout tabLayout;
@@ -69,5 +74,33 @@ public class ControleurDashboard extends AppCompatActivity {
     public void ouvrirCarte(View view) {
         startActivity(new Intent(ControleurDashboard.this,
                 ControleurCarte.class));
+    }
+
+    /**
+     * Récupère la randonnée choisie par l'utilisateur dans la liste
+     * et la renvoi aux paramètres
+     * @param randonneeChoisie la randonnnée choisie dans la liste
+     */
+    @Override
+    public void recevoirRandonnee(Randonnee randonneeChoisie) {
+        randonnee = randonneeChoisie;
+
+        /* Récupération d'un accès à ControleurParamRandonnee */
+        ControleurParamRandonnee fragmentAModifier =
+                (ControleurParamRandonnee) getSupportFragmentManager()
+                                           .findFragmentByTag("f1");
+
+        /* On vérifie que l'onglet à déjà été ouvert */
+        if (fragmentAModifier != null) {
+            fragmentAModifier.mettreAJourLabels(randonnee);
+        }
+    }
+
+    /**
+     * Renvoi la randonnée à afficher dans les paramètres
+     * @return la randonnée choisie dans la liste
+     */
+    public Randonnee getRandonneeCommunique() {
+        return randonnee;
     }
 }

@@ -67,6 +67,7 @@ public class ControleurCarte extends Fragment {
     private TextView titreRandonnee;
     private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
+    private Marker marqueurUtilisateur;
 
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -113,12 +114,6 @@ public class ControleurCarte extends Fragment {
         // on change de page dans un fragment.
         // https://github.com/osmdroid/osmdroid/issues/1641
         mapView.setDestroyMode(false);
-
-        requestPermissionsIfNecessary(new String[]{
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }
-        );
 
         // La correction du tactile
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
@@ -270,7 +265,20 @@ public class ControleurCarte extends Fragment {
                 new LocationCallback() {
                     @Override
                     public void onLocationResult(LocationResult resultatLocalisation) {
+
                         derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
+
+                        marqueurUtilisateur.remove(mapView);
+
+                        marqueurUtilisateur = new Marker(mapView);
+                        marqueurUtilisateur.setPosition(new GeoPoint
+                                (derniereLocalisationUtilisateur.getLatitude(),
+                                 derniereLocalisationUtilisateur.getLongitude(),
+                                 derniereLocalisationUtilisateur.getAltitude()));
+                        marqueurUtilisateur.setIcon(getResources()
+                                .getDrawable(R.drawable.utilisateur_marqueur));
+
+                        mapView.getOverlays().add(marqueurUtilisateur);
                     }
                 },
                 Looper.getMainLooper());

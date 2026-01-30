@@ -200,6 +200,7 @@ public class ControleurCarte extends Fragment {
         pointInteret.setPosition(position);
         pointInteret.setTitle("Point d'intérêt Roadeo");
         pointInteret.setIcon(getResources().getDrawable(R.drawable.point_interet_marqueur));
+        pointInteret.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
         // Ecriture dans le cache
         parcoursAfficheUtilisateur.ajouterPointInteret(position);
@@ -284,6 +285,7 @@ public class ControleurCarte extends Fragment {
                                  derniereLocalisationUtilisateur.getAltitude()));
                         marqueurUtilisateur.setIcon(getResources()
                                 .getDrawable(R.drawable.utilisateur_marqueur));
+                        marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
                         mapView.getOverlays().add(ORDRE_DESSIN_POINT_UTILISATEUR,
                                 marqueurUtilisateur);

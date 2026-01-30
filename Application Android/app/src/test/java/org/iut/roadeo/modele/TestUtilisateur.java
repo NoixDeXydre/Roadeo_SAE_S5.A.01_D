@@ -3,10 +3,14 @@ package org.iut.roadeo.modele;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import org.iut.roadeo.Modele.Parcours;
+import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
 import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.junit.Test;
+
+import java.util.Date;
 
 /**
  * Classe de tests de la classe Utilisateur.
@@ -128,7 +132,7 @@ public class TestUtilisateur {
                         "motDePasse", "email@mail.com", infosBlanc));
     }
     @Test
-    public void TestGetMDP() {
+    public void testGetMDP() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
@@ -139,7 +143,7 @@ public class TestUtilisateur {
     }
 
     @Test
-    public void TestGetEmail() {
+    public void testGetEmail() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
@@ -150,7 +154,7 @@ public class TestUtilisateur {
     }
 
     @Test
-    public void TestGetDomicile() {
+    public void testGetDomicile() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
@@ -161,7 +165,7 @@ public class TestUtilisateur {
     }
 
     @Test
-    public void TestSetMDP() {
+    public void testSetMDP() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
@@ -177,7 +181,7 @@ public class TestUtilisateur {
     }
 
     @Test
-    public void TestSetEmail() {
+    public void testSetEmail() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                             NiveauEntrainement.SPORTIF,
                                             Morphologie.FORT,
@@ -194,7 +198,7 @@ public class TestUtilisateur {
     }
 
     @Test
-    public void TestSetDomicile() {
+    public void testSetDomicile() {
         Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
                                             NiveauEntrainement.SPORTIF,
                                             Morphologie.FORT,
@@ -207,7 +211,35 @@ public class TestUtilisateur {
                 ()->util.setDomicile(""));
         assertThrows(IllegalArgumentException.class,
                 ()->util.setDomicile(" "));
-
     }
 
+    @Test
+    public void testAjouterParcoursNull() {
+
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 3, 1,
+                null, null), new Date());
+
+        Utilisateur ut = new Utilisateur("a", "a", 1,
+                NiveauEntrainement.DEBUTANT, Morphologie.LEGER, "a", "a", "a");
+
+        ut.ajouterParcours(null);
+        assertEquals(parcours.getPointsInteret().size(), 0);
+    }
+
+    @Test
+    public void testAjouterParcoursSucces() {
+
+        Parcours parcours1 = new Parcours(new Randonnee("Mon parcours", 3, 1,
+                null, null), new Date());
+        Parcours parcours2 = new Parcours(new Randonnee("Mon parcours", 3, 1,
+                null, null), new Date());
+
+        Utilisateur ut = new Utilisateur("a", "a", 1,
+                NiveauEntrainement.DEBUTANT, Morphologie.LEGER, "a", "a", "a");
+
+        ut.ajouterParcours(parcours1);
+        ut.ajouterParcours(parcours2);
+
+        assertEquals(ut.getParcours().size(), 2);
+    }
 }

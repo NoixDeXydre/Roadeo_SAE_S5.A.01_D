@@ -88,6 +88,10 @@ public class Parcours {
         // TODO méthode
     }
 
+    public Randonnee getRandonneeParcours() {
+        return randonneeParcours;
+    }
+
     public ArrayList<GeoPoint> getPointsInteret() {
         return new ArrayList<>(pointsInteret);
     }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -43,7 +44,12 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
         saisieLibelle = vue.findViewById(R.id.labelLibelle);
         saisieJours = vue.findViewById(R.id.labelDureeJours);
 
+        vue.findViewById(R.id.voirListeParcours).setOnClickListener(this);
+        vue.findViewById(R.id.confirmerRandonnee).setOnClickListener(this);
+
         randonnee = ((ControleurDashboard) getActivity()).getRandonneeCommunique();
+
+        mettreAJourLabels(randonnee);
 
         return vue;
     }
@@ -52,8 +58,10 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.voirListeParcours) {
             // TODO lien vers la liste des parcours
-        } else if (view.getId() == R.id.confirmerRandonnee) {
+        }
+        if (view.getId() == R.id.confirmerRandonnee) {
             // TODO retour vers la liste des randonnées
+            ControleurDashboard.tabLayout.getTabAt(0).select();
         }
     }
 

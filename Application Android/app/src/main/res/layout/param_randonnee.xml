@@ -11,14 +11,8 @@
         android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
         android:gravity="center"
         android:text="@string/details_randonnee"
-        android:textSize="@dimen/taille_titre_page" />
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/confirmerRandonnee"
-        android:text="@string/confirmer"
-        android:textColor="@color/black" />
+        android:textColor="@color/vert_gazon"
+        android:textSize="30sp" />
 
     <View
         android:layout_width="match_parent"
@@ -64,6 +58,7 @@
             android:id="@+id/labelDureeJours"
             android:inputType="number" />
     </TableRow>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,8 +66,17 @@
         android:id="@+id/voirListeParcours"
         android:text="@string/voir_liste_parcours"
         android:textColor="@color/black"/>
+
     <androidx.constraintlayout.widget.Placeholder
         android:layout_width="match_parent"
         android:layout_height="@dimen/dist_page_randonnee_boutons"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/confirmerRandonnee"
+        android:text="@string/confirmer"
+        android:textColor="@color/black" />
 
 </LinearLayout>

@@ -35,7 +35,7 @@ public class ControleurDashboard extends AppCompatActivity
     private Randonnee randonnee;
 
     private ViewPager2 viewPager2;
-    private TabLayout tabLayout;
+    public static TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

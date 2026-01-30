@@ -49,6 +49,7 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
      * et s'il y a des données à envoyer
      */
     public interface EcouteurGeneration {
+        /* Envoi la randonnée choisie par l'utilisateur */
         void recevoirRandonnee(Randonnee randonnee);
     }
 
@@ -110,6 +111,7 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.ajoutRandonnee) {
             activiteQuiMEcoute.recevoirRandonnee(null);
+            ControleurDashboard.tabLayout.getTabAt(1).select();
         }
     }
 
@@ -131,6 +133,8 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
             // Envoi des informations de la randonnée dans les paramêtres
             activiteQuiMEcoute.recevoirRandonnee(randonnees.get(information
                                                                 .position));
+            // On redirige vers l'onglet paramètres de la randonnée
+            ControleurDashboard.tabLayout.getTabAt(1).select();
         } else if (item.getItemId() == R.id.supprimer) {
             randonnees.remove(information.position);
             listeRandonnee.setAdapter(adaptateur);

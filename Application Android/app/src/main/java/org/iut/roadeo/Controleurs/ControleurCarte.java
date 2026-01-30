@@ -56,6 +56,11 @@ public class ControleurCarte extends Fragment {
     // TODO manipulation du cache après appel API.
     // TODO appel API
 
+
+    // Le dernier chiffre et le celui affiché en dernier.
+    private final int ORDRE_DESSIN_POINT_UTILISATEUR = 0;
+    private final int ORDRE_DESSIN_POINT_INTERET = 1;
+
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
     private IMapController controleurMapView;
@@ -206,7 +211,7 @@ public class ControleurCarte extends Fragment {
             return true;
         });
 
-        mapView.getOverlays().add(pointInteret);
+        mapView.getOverlays().add(ORDRE_DESSIN_POINT_INTERET, pointInteret);
 
         return pointInteret;
     }
@@ -280,7 +285,8 @@ public class ControleurCarte extends Fragment {
                         marqueurUtilisateur.setIcon(getResources()
                                 .getDrawable(R.drawable.utilisateur_marqueur));
 
-                        mapView.getOverlays().add(marqueurUtilisateur);
+                        mapView.getOverlays().add(ORDRE_DESSIN_POINT_UTILISATEUR,
+                                marqueurUtilisateur);
                     }
                 },
                 Looper.getMainLooper());

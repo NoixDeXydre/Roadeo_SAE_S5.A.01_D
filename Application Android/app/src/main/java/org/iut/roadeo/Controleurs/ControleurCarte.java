@@ -58,8 +58,6 @@ public class ControleurCarte extends Fragment {
 
 
     // Le dernier chiffre et le celui affiché en dernier.
-    private final int ORDRE_DESSIN_POINT_UTILISATEUR = 0;
-    private final int ORDRE_DESSIN_POINT_INTERET = 1;
 
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
 
@@ -212,7 +210,7 @@ public class ControleurCarte extends Fragment {
             return true;
         });
 
-        mapView.getOverlays().add(ORDRE_DESSIN_POINT_INTERET, pointInteret);
+        mapView.getOverlays().add(pointInteret);
 
         return pointInteret;
     }
@@ -287,8 +285,7 @@ public class ControleurCarte extends Fragment {
                                 .getDrawable(R.drawable.utilisateur_marqueur));
                         marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
-                        mapView.getOverlays().add(ORDRE_DESSIN_POINT_UTILISATEUR,
-                                marqueurUtilisateur);
+                        mapView.getOverlays().add(0, marqueurUtilisateur);
                     }
                 },
                 Looper.getMainLooper());

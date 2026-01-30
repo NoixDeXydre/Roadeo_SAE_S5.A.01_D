@@ -194,6 +194,7 @@ public class ControleurCarte extends Fragment {
         Marker pointInteret = new Marker(mapView);
         pointInteret.setPosition(position);
         pointInteret.setTitle("Point d'intérêt Roadeo");
+        pointInteret.setIcon(getResources().getDrawable(R.drawable.point_interet_marqueur));
 
         // Ecriture dans le cache
         parcoursAfficheUtilisateur.ajouterPointInteret(position);
@@ -268,7 +269,8 @@ public class ControleurCarte extends Fragment {
 
                         derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
 
-                        marqueurUtilisateur.remove(mapView);
+                        if (marqueurUtilisateur != null)
+                            marqueurUtilisateur.remove(mapView);
 
                         marqueurUtilisateur = new Marker(mapView);
                         marqueurUtilisateur.setPosition(new GeoPoint

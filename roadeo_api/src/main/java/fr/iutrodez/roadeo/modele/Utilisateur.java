@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+/** Utilisateur de l'application */
 @Document(collection = "utilisateur")
 public class Utilisateur extends Participant {
 
@@ -17,8 +18,10 @@ public class Utilisateur extends Participant {
 
     private String domicile;
 
+    /** Crée un utilisateur, utilisé par MongoDB */
     public Utilisateur(){super();}
 
+    /** Crée un utilisateur manuellement */
     public Utilisateur(String id, String mdp, String adresseMail, String domicile,
                        String nom, String prenom,  int age, String niveauEntrainement,
                        String morphologie) {

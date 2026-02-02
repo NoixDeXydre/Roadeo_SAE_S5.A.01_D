@@ -17,13 +17,12 @@ import java.util.Optional;
 public class RandonneeService {
     private final RandoneeInterfaceMongoDB repository;
     private final ParcoursInterfaceMongoDB parcoursRepository;
-    private final ParticipantInterfaceMongoDB participantRepository;
+    //private final ParticipantInterfaceMongoDB participantRepository;
 
-    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository,
-                            ParticipantInterfaceMongoDB participantRepository) {
+    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository) {
         this.repository = repository;
         this.parcoursRepository = parcoursRepository;
-        this.participantRepository = participantRepository;
+        //this.participantRepository = participantRepository;
     }
 
     public List<Randonnee> getAllRandonnees() {

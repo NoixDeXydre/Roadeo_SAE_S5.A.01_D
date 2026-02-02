@@ -71,7 +71,7 @@ public class Randonnee {
         }
         if (participantsMax<=0) {
             throw new IllegalArgumentException("Il doit y avoir au moins 1"
-                                               + " participant à la raandonée");
+                                               + " participant à la randonnée");
         }
         if (nombreJours<NB_JOURS_MIN) {
             throw new IllegalArgumentException("La durée de la randonnée doit"

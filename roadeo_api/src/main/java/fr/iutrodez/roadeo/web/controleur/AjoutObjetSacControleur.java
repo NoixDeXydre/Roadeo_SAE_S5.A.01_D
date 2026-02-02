@@ -45,7 +45,7 @@ public class AjoutObjetSacControleur {
 
         // Initialisation (Simulation d'un ID "2")
         this.parcours = randonneeService.getParcoursByIdRando("2").get(0);
-        this.poidsMax = parcours.poidsMax()*1000;
+        this.poidsMax = parcours.poidsRando()*1000;
         this.sacReserve = new SacADos(poidsMax*1.20, 0);
 
         this.objetSac = objetService.recupListeObjet();
@@ -137,7 +137,7 @@ public class AjoutObjetSacControleur {
 
         for (Participant participant : parcours.getParticipants()) {
             if (participant.getAge() > 8) {
-                sacADosParticipants.add(new SacADos((participant.poidsApproximatif() + 1.0)*1000, 0));
+                sacADosParticipants.add(new SacADos((participant.poidsRando() + 1.0)*1000, 0));
                 participantsEligibles.add(participant);
             }
         }

@@ -39,10 +39,14 @@ public class Utilisateur extends Randonneur {
                        NiveauEntrainement niveauEntrainement,
                        Morphologie morphologie, String mDP, String email,
                        String domicile) {
+
         super(nom, prenom, age, niveauEntrainement, morphologie);
+
         setMotDePasse(mDP);
         setEmail(email);
         setDomicile(domicile);
+
+        parcours = new ArrayList<>();
     }
 
     /**
@@ -100,6 +104,17 @@ public class Utilisateur extends Randonneur {
             throw new IllegalArgumentException("Le domicile incorrect");
         }
         this.domicile = domicile;
+    }
+
+    /**
+     * Ajoute un parcours dans la liste des parcours utilisateur.
+     * @param parcours
+     */
+    public void ajouterParcours(Parcours parcours) {
+
+        if (parcours != null) {
+            this.parcours.add(parcours);
+        }
     }
 
     public ArrayList<Parcours> getParcours() {

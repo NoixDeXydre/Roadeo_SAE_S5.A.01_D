@@ -75,6 +75,14 @@
         <item name="fort">Fort</item>
     </string-array>
 
+    <!-- Informations carte -->
+    <string name="label_carte_randonnee">Randonnée</string>
+    <string name="date_carte_parcours_formatage">Parcours crée le : %s</string>
+    <string name="label_point_interet_proche">"Distance du Point D'intérêt le plus Proche"</string>
+    <string name="distance_point_interet_proche_formatage">"%s m"</string>
+    <string name="label_participants_carte">Participants</string>
+    <string name="label_status_parcours">Status Parcours</string>
+
     <!-- Messages succès -->
 
     <string name="message_succes_creation_compte">"Votre compte a été crée avec succès.\nBienvenue, %s !"</string>

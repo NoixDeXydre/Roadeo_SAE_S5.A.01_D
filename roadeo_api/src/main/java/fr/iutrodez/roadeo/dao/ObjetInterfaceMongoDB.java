@@ -18,4 +18,5 @@ public interface ObjetInterfaceMongoDB extends MongoRepository<Produits, String>
 
     ArrayList<Produits> findByCategorie(String Categorie);
 
+    Produits findProduitsById(String idObjet);
 }

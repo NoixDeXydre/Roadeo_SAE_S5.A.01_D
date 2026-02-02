@@ -122,4 +122,13 @@ public class SacADos {
     public boolean supprimeProduits(Produits produits) {
         return this.contenu.remove(produits);
     }
+
+    public void supprimeProduitsById(String idObjet) {
+        for (Produits produit : this.contenu) {
+            if (produit.getId().equals(idObjet)) {
+                this.contenu.remove(produit);
+                break;
+            }
+        }
+    }
 }

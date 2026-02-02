@@ -6,14 +6,16 @@
 </head>
 <body>
 <div style="display: flex; gap: 30px;">
-
+    <div th:if="${messageErreur}" style="color: white; background-color: #e74c3c; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+        <strong>Attention : </strong> <span th:text="${messageErreur}"></span>
+    </div>
     <!-- Conteneur pour visualiser le sac actuel -->
     <div class="container" id="sac-container" style="flex: 1;">
         <!-- récapitulatif (poids total des objets/ poids max, kcal total/ kcal requis, prix -->
         <h2>Récapitulatif du sac</h2>
         <p id="poids-summary">Poids total / Poids max :
-            <span th:text="${poidsTotal}"></span> kg /
-            <span th:text="${poidsMax}"></span> kg
+            <span th:text="${poidsTotal}"></span> g /
+            <span th:text="${poidsMax}"></span> g
         </p>
         <p id="kcal-summary">Calories total / Calories requises :
             <span th:text="${caloriesTotal}"></span> kcal /
@@ -71,20 +73,24 @@
         </div>
 
         <!-- Présentation détaillée de l'objet -->
-        <div th:each="objet : ${objetsDetail}" style="margin-top: 15px; border: 1px solid #ccc; padding: 10px;">
-            <h3 th:text="${objet.denomination}"></h3>
-            <p th:text="${objet.description}"></p>
+        <div th:if="${objetsDetail != null}" style="margin-top: 15px; border: 1px solid #ccc; padding: 10px;">
+            <h3 th:text="${objetsDetail.denomination}"></h3>
+            <p th:text="${objetsDetail.description}"></p>
             <div class="info-horizontal">
-                <span>Poids :<span th:text="${objet.masse}"></span> kg</span>
-                <span id="objet-kcal">Calories : <span th:text="${objet.nutrition}"></span> kcal</span>
-                <span>Utilité :<span th:text="${objet.utilite}"></span></span>
-                <span id="objet-prix">Prix : <span th:text="${objet.prix}"></span> €</span>
-                <span id="objet-priorite">Priorité : <span th:text="${objet.utilite}"></span></span>
+                <span>Poids : <span th:text="${objetsDetail.masse}"></span> kg</span>
+                <span>Calories : <span th:text="${objetsDetail.nutrition}"></span> kcal</span>
+                <span>Prix : <span th:text="${objetsDetail.prix}"></span> €</span>
+                <span>Priorité : <span th:text="${objetsDetail.utilite}"></span></span>
             </div>
+
             <form th:action="@{/sac/ajouter}" method="post">
                 <input type="hidden" name="idObjet" th:value="${objetsDetail.id}">
                 <button type="submit">Ajouter au sac</button>
             </form>
+        </div>
+
+        <div th:unless="${objetsDetail != null}">
+            <p>Veuillez sélectionner un objet pour voir les détails.</p>
         </div>
     </div>
 

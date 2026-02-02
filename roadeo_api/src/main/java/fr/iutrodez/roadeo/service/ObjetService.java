@@ -43,4 +43,8 @@ public class ObjetService {
     public List<Produits> recupListeCategorie(String categorie) {
         return this.objetRepository.findByCategorie(categorie);
     }
+
+    public Produits getProduitById(String idObjet) {
+        return this.objetRepository.findProduitsById(idObjet);
+    }
 }

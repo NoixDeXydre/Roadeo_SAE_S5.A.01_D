@@ -4,10 +4,7 @@ import fr.iutrodez.roadeo.dao.ObjetInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.ParcoursInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.RandoneeInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.UtilisateurInterfaceMongoDB;
-import fr.iutrodez.roadeo.modele.Produits;
-import fr.iutrodez.roadeo.modele.Parcours;
-import fr.iutrodez.roadeo.modele.Participant;
-import fr.iutrodez.roadeo.modele.SacADos;
+import fr.iutrodez.roadeo.modele.*;
 import fr.iutrodez.roadeo.service.ObjetService;
 import fr.iutrodez.roadeo.service.RandonneeService;
 import org.springframework.stereotype.Controller;
@@ -15,178 +12,145 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
 public class AjoutObjetSacControleur {
 
-    private ObjetService objetService;
-    private RandonneeService randonneeService;
+    private final ObjetService objetService;
+    private final RandonneeService randonneeService;
 
+    // Attention : ces variables d'instance devraient idéalement être en Session
+    // ou gérées via une base de données pour éviter les conflits entre utilisateurs.
     private Parcours parcours;
-    private ArrayList<Produits> objetSac = new ArrayList<>();
-    private List<Produits> produitsCategorie;
+    private List<Produits> objetSac;
+    private List<Produits> produitsCategorie = new ArrayList<>();
     private SacADos sacReserve;
     private String categorieSelectionne;
     private Produits detailProduit;
-    List<String> categorie;
-    private double prixTotal;
-    private double calorieTotal;
-    private double caloriesAttentues;
+    private List<String> categories;
     private double poidsMax;
+    private double kcalMax;
+    private double poidsTotal;
+    private double kcalTotal;
 
-    /**
-     * Crée le controleur et initialise les variables avec les données de mongodb
-     * @param serviceO
-     * @param serviceR
-     */
+
     public AjoutObjetSacControleur(ObjetService serviceO, RandonneeService serviceR) {
-        // Récupération des objets en paramètre
         this.objetService = serviceO;
         this.randonneeService = serviceR;
 
-        // Données initiales
+        // Initialisation (Simulation d'un ID "2")
         this.parcours = randonneeService.getParcoursByIdRando("2").get(0);
-        this.sacReserve = new SacADos(parcours.poidsMax(), 0);
-        this.caloriesAttentues = parcours.calculKcalTotal(1);
-        this.poidsMax = parcours.poidsMax();
-        this.prixTotal = 0;
-        this.calorieTotal = 0;
-        this.objetSac = new ArrayList<>();
-
-        this.categorieSelectionne = "";
-        this.detailProduit = null;
+        this.poidsMax = parcours.poidsMax()*1000;
+        this.sacReserve = new SacADos(poidsMax*1.20, 0);
 
         this.objetSac = objetService.recupListeObjet();
-        this.categorie = objetService.listeCategorie();
-        categorieSelectionne = categorie.get(0);
-        selectionCategorie();
-        selectionProduit(produitsCategorie.get(0));
+        this.categories = objetService.listeCategorie();
 
+        if (!categories.isEmpty()) {
+            this.categorieSelectionne = categories.get(0);
+            updateProduitsCategorie(); // Met à jour la liste filtrée
+        }
+
+
+        this.kcalMax =  500;//parcours.calculKcalTotal(1);
     }
 
-    /**
-     * Page appelé à chaque rafraichissement pour mettre les données de la page à jour
-     * @param model
-     * @return
-     */
     @GetMapping("/ajoutObjet")
     public String afficherSac(Model model) {
-        model.addAttribute("objetsSac", sacReserve.getContenu()); // Chargement des données du sac
-        model.addAttribute("poidsTotal", sacReserve.poidsTotal()); // poids total du sac
-        model.addAttribute("poidsMax", poidsMax); // poids max du sac
-
-        model.addAttribute("caloriesTotal", calorieTotal); // total calories dans le sac
-        model.addAttribute("caloriesRequise", caloriesAttentues); // calories
-
-        model.addAttribute("prixTotal", prixTotal);
-
-        model.addAttribute("typesObjets", categorie);
-
-
-        //model.addAttribute("objet", new Produits());
-        model.addAttribute("objetsListe", produitsCategorie);
-        model.addAttribute("objetsDetail", detailProduit);
-        return "ajoutObjet"; // ajoutObjet.html
-    }
-
-    public void supprimerObjetSac(Produits produits) {
-        sacReserve.supprimeProduits(produits);
-    }
-
-    public void ajouteObjetSac(Produits produits) {
-        sacReserve.addObjet(produits);
-    }
-
-    private void selectionCategorie() {
-        produitsCategorie = new ArrayList<>();
-        if (categorieSelectionne != "") {
-            for (Produits prod : objetSac) {
-                if(prod != null && prod.getCategorie().equals(categorieSelectionne)) {
-                    produitsCategorie.add(prod);
-                }
-            }
-        }
-    }
-
-    private void selectionProduit(Produits prod) {
-        detailProduit = prod;
-    }
-
-    // à supprimer
-    private void rafraichirDonnee(Model model) {
-        objetSac = objetService.recupListeObjet();
-        List<String> categorie = objetService.listeCategorie();
+        // Mise à jour des totaux avant affichage
+        double prixTotal = sacReserve.getContenu().stream().mapToDouble(Produits::getPrix).sum();
+        kcalTotal = sacReserve.getContenu().stream().mapToDouble(Produits::getNutrition).sum();
+        poidsTotal = sacReserve.poidsTotal();
 
         model.addAttribute("objetsSac", sacReserve.getContenu());
-        model.addAttribute("poidsTotal", sacReserve.poidsTotal());
-        model.addAttribute("poidsMax", parcours.poidsMax());
+        model.addAttribute("poidsTotal", poidsTotal);
+        model.addAttribute("poidsMax", poidsMax);
+        model.addAttribute("caloriesTotal", kcalTotal);
+        model.addAttribute("caloriesRequise",kcalMax);
+        model.addAttribute("prixTotal", prixTotal);
 
-        model.addAttribute("caloriesTotal", 0);
-        model.addAttribute("caloriesRequise", parcours.calculKcalTotal(1));
-
-        model.addAttribute("prixTotal", 0);
-
-        model.addAttribute("typesObjets", categorie);
-        categorieSelectionne = categorie.get(0); //STUB
-        selectionCategorie();
-        model.addAttribute("objet", new Produits());
-        System.out.println(produitsCategorie);
+        model.addAttribute("typesObjets", categories);
+        model.addAttribute("categorieSelectionne", categorieSelectionne);
         model.addAttribute("objetsListe", produitsCategorie);
-        selectionProduit(produitsCategorie.get(1));
         model.addAttribute("objetsDetail", detailProduit);
-        System.out.print(objetService.listeCategorie());
+
+        return "ajoutObjet";
     }
 
-    private void ajouterSac() {
-        sacReserve.addObjet(detailProduit);
-    }
-
-    // AJOUTER UN OBJET
-    // doit récupérer l'objet pour l'ajouter dans le sac réserve
     @PostMapping("/sac/ajouter")
     public String ajouterObjet(@RequestParam String idObjet) {
-        // On cherche l'objet dans la liste globale par son ID
-        Produits aAjouter = objetService.getObjetById(idObjet);
+        Produits aAjouter = objetService.getProduitById(idObjet);
         if (aAjouter != null) {
             sacReserve.addObjet(aAjouter);
         }
-        return "redirect:/ajoutObjet"; // Recharge la page pour voir les changements
+        return "redirect:/ajoutObjet";
     }
 
-    // SUPPRIMER UN OBJET
-    // prend l'objet en paramètre pour être supprimer du sac de reserve
     @PostMapping("/sac/supprimer")
     public String supprimerObjet(@RequestParam String idObjet) {
-        // Logique pour trouver et supprimer l'objet du sac
         sacReserve.supprimeProduitsById(idObjet);
         return "redirect:/ajoutObjet";
     }
 
-    // CHANGER DE CATÉGORIE
-    // s'active dès que la catégorie sélectionné change et mes à jour la liste des objets (objetSac)
     @GetMapping("/sac/selectionnerType")
     public String selectionnerType(@RequestParam(required = false) String categorie) {
-        if (categorie != null) this.categorieSelectionne = categorie;
+        if (categorie != null) {
+            this.categorieSelectionne = categorie;
+            updateProduitsCategorie();
+            // On réinitialise le détail si on change de catégorie
+            this.detailProduit = produitsCategorie.isEmpty() ? null : produitsCategorie.get(0);
+        }
         return "redirect:/ajoutObjet";
     }
 
-    //Selon l'objet sélectionnée récupère l'objet selon l'id pour le mettre dans détailProduit
     @GetMapping("/sac/selectionnerObjet")
     public String selectionnerObjet(@RequestParam(required = false) String idProduit) {
-        if (idProduit != null) this.detailProduit =
-                objetSac.stream().filter(produits -> produits.getCategorie().equals(categorieSelectionne));
+        if (idProduit != null) {
+            this.detailProduit = objetSac.stream()
+                    .filter(p -> p.getId().equals(idProduit))
+                    .findFirst()
+                    .orElse(null);
+        }
         return "redirect:/ajoutObjet";
     }
 
-    // VALIDER LE SAC
-    // Vérifie que les kcal total ne sont pas inférieur au kcal max et que le poids des objets ne dépasse pas plus de 10% du poids max
+    private void updateProduitsCategorie() {
+        this.produitsCategorie = objetSac.stream()
+                .filter(p -> p.getCategorie().equals(this.categorieSelectionne))
+                .toList();
+    }
+
     @PostMapping("/sac/valider")
-    public String validerSac() {
-        // Logique de sauvegarde finale (ex: mettre à jour le parcours en base)
-        System.out.println("Sac validé !");
-        return "redirect:/accueil";
+    public String valider(RedirectAttributes attribut) {
+        if ((poidsMax * 1.10 < poidsTotal) || (kcalTotal < kcalMax)) {
+            attribut.addFlashAttribute("messageErreur",
+                    "Validation impossible : Le total des objets sélectionnées est trop lourd ou les calories sont insuffisantes.");
+        }
+
+        ArrayList<SacADos> sacADosParticipants = new ArrayList<>();
+        List<Participant> participantsEligibles = new ArrayList<>();
+
+        for (Participant participant : parcours.getParticipants()) {
+            if (participant.getAge() > 8) {
+                sacADosParticipants.add(new SacADos((participant.poidsApproximatif() + 1.0)*1000, 0));
+                participantsEligibles.add(participant);
+            }
+        }
+
+        ArrayList<SacADos> sacsRemplis = AlgoSacADos.algoGlouton(sacReserve.getContenu(), sacADosParticipants);
+
+        HashMap<String, SacADos> sacsParParticipant = new HashMap<>();
+        for (int i = 0; i < participantsEligibles.size(); i++) {
+            // On associe le nom du participant au sac correspondant retourné par l'algo
+            sacsParParticipant.put(participantsEligibles.get(i).getNom(), sacsRemplis.get(i));
+        }
+
+        attribut.addFlashAttribute("sacsDistribues", sacsParParticipant);
+        return "redirect:/recapSac";
     }
 }

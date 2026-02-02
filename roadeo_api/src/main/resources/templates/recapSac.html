@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="grid-sacs">
+    <div class="sac-card" th:each="entry : ${sacsDistribues}">
+        <div class="header-sac">
+            <h3 th:text="'Sac à dos de ' + ${entry.key}"></h3>
+        </div>
+
+        <div class="liste-objets">
+            <strong>Contenu optimisé :</strong>
+            <ul>
+                <li th:each="obj : ${entry.value.getContenu()}" th:text="${obj.denomination}"></li>
+            </ul>
+        </div>
+
+        <div class="poids-total">
+            Poids final : <span th:text="${entry.value.poidsTotal()}"></span> kg
+        </div>
+
+        <div class="actions">
+            <form th:action="@{/sac/validerAction}" method="post">
+                <input type="hidden" name="nomParticipant" th:value="${entry.key}">
+                <button type="submit" class="btn-valider">Confirmer</button>
+            </form>
+            <a href="/ajoutObjet" class="btn-refuser" style="text-decoration: none; display: inline-block;">Modifier</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

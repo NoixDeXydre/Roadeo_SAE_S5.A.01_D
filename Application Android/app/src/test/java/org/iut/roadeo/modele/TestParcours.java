@@ -107,4 +107,26 @@ public class TestParcours {
         assertEquals(parcours.getTrajetRealise().size(), points.size());
         assertArrayEquals(parcours.getTrajetRealise().toArray(), points.toArray());
     }
+
+    @Test
+    public void testSupprimerPointInteretNull() {
+
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
+                null, null), new Date());
+
+        parcours.ajouterPointInteret(new GeoPoint(0.0f, 0.0f));
+        parcours.supprimerPointInteret(null);
+        assertEquals(parcours.getPointsInteret().size(), parcours.getPointsInteret().size());
+    }
+    @Test
+    public void testSupprimerPointInteret() {
+
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
+                null, null), new Date());
+
+        GeoPoint point = new GeoPoint(0.0f, 0.0f);
+        parcours.ajouterPointInteret(point);
+        parcours.supprimerPointInteret(point);
+        assertEquals(parcours.getPointsInteret().size(), 0);
+    }
 }

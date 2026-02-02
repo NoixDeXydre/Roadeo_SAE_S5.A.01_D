@@ -39,7 +39,7 @@
             <!-- Les lignes seront générées dynamiquement avec une liste d'objet -->
             <tr th:each="objet : ${objetsSac}">
                 <td th:text="${objet.denomination}"></td>
-                <td th:text="${objet.masse} + ' kg'"></td>
+                <td th:text="${objet.masse} + ' g'"></td>
                 <td th:text="${objet.nutrition} + ' kcal'"></td>
                 <td th:text="${objet.prix} + ' €'"></td>
                 <td th:text="${objet.utilite}"></td>
@@ -77,7 +77,7 @@
             <h3 th:text="${objetsDetail.denomination}"></h3>
             <p th:text="${objetsDetail.description}"></p>
             <div class="info-horizontal">
-                <span>Poids : <span th:text="${objetsDetail.masse}"></span> kg</span>
+                <span>Poids : <span th:text="${objetsDetail.masse}"></span> g</span>
                 <span>Calories : <span th:text="${objetsDetail.nutrition}"></span> kcal</span>
                 <span>Prix : <span th:text="${objetsDetail.prix}"></span> €</span>
                 <span>Priorité : <span th:text="${objetsDetail.utilite}"></span></span>

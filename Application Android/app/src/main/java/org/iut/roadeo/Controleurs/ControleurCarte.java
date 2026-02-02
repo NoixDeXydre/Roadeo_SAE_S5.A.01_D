@@ -70,7 +70,10 @@ public class ControleurCarte extends Fragment {
     private TextView titreRandonnee;
     private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
+
     private Marker marqueurUtilisateur;
+    private Marker marqueurDepart;
+    private Marker marqueurArrive;
 
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -90,7 +93,9 @@ public class ControleurCarte extends Fragment {
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
-                ("Ma randonnée", 3, null, null),
+                ("Ma randonnée", 3,
+                        new GeoPoint(44.360287526289454, 2.575853338825084),
+                        new GeoPoint(44.35970734903577, 2.576335155660985)),
                 new Date());
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;
@@ -260,6 +265,28 @@ public class ControleurCarte extends Fragment {
         }
     }
 
+    // Point départ et point arrivée
+    private void mettreAJourPointsExtremes() {
+
+        if (marqueurDepart != null)
+            marqueurDepart.remove(mapView);
+        if (marqueurArrive != null)
+            marqueurArrive.remove(mapView);
+
+        marqueurDepart = new Marker(mapView);
+        marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointDepart());
+        marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+        marqueurArrive = new Marker(mapView);
+        marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointArrive());
+        marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+        mapView.getOverlays().add(marqueurDepart);
+        mapView.getOverlays().add(marqueurArrive);
+    }
+
     // Met à jour la position de l'utilisateur en temps réel.
     private void mettreAJourPositionUtilisateur() throws SecurityException {
 
@@ -309,6 +336,8 @@ public class ControleurCarte extends Fragment {
         for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
             creerPointInteret(positionPointInteret);
         }
+
+        mettreAJourPointsExtremes();
 
         // Mise à jour des informations de la page.
 

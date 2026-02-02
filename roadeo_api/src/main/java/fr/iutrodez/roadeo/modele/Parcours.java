@@ -148,4 +148,12 @@ public class Parcours {
         }
         return result;
     }
+
+    public double poidsRando() {
+        double result = 0.0;
+        for (Participant participant : this.participants) {
+            result += participant.poidsRando();
+        }
+        return result;
+    }
 }

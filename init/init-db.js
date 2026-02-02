@@ -197,7 +197,7 @@ categorie: "nourriture",
 denomination: "Repas lyophilisé - pâtes à la bolognaise - 120g",
 nom : "pâte bolognaise",
 description : "Notre équipe passionnée de trekking a conçu ce repas pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 140 g.",
-masse : 140.0, // en gramme
+masse : 140, // en gramme
 nutrition: 381, // kcal
 prix : 8.49 // euros
 })
@@ -207,7 +207,7 @@ db.produits.insertOne({
   denomination: "Soupe lyophilisée - Goulash au poulet - 50 g",
   nom: "Goulash",
   description: "Notre équipe passionnée de trekking a conçu cette soupe lyophilisée pour vos activités physiques avec un apport énergétique adapté pour un poids minimal : 70 g.",
-  masse: 70,
+  masse: 700,
   nutrition: 190,
   prix: 7.49
 })
@@ -217,7 +217,7 @@ db.produits.insertOne({
   denomination: "Dessert lyophilisé - Riz au lait à la vanille - 45 g",
   nom: "Riz au lait",
   description: "Notre équipe passionnée de trekking a conçu ce dessert pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 57 g.",
-  masse: 57,
+  masse: 570,
   nutrition: 191,
   prix: 4.99
 })
@@ -237,7 +237,7 @@ db.produits.insertOne({
   denomination: "Appareil photo compact Thomson THR317",
   nom: "appareil photo",
   description: "Ne loupait plus jamais de licorne, grâce à cette appareil performant.",
-  masse: 0.8,
+  masse: 800,
   nutrition: 0,
   prix: 100
 })
@@ -247,7 +247,7 @@ db.produits.insertOne({
   denomination: "Raclette Bougie à Revêtement Antiadhésif",
   nom: "appareil à raclette",
   description: "Fini le fil électrique qui gêne pour passer,fini les odeurs de raclette et la chaleur étouffante dans toute la maison. ipow appareil raclette à la bougie est parfait pour une petite raclette en intérieur comme à table, devant télé, au bureau, dans le fourgon aménagé/camping cars/vans; ou en extérieur, tels que dans le jardin, sur la plage, en bivouac, au sommet des pistes après la randonnée en raquettes.",
-  masse: 0.7,
+  masse: 700,
   nutrition: 0,
   prix: 23.56
 })
@@ -257,7 +257,7 @@ db.produits.insertOne({
   denomination: "Couteau Suisse 7,5cm 14 fonctions Victorinox CLIMBER",
   nom: "couteau suisse",
   description: "Conçu pour avoir sous la main tous les outils nécessaire pendant la chasse et toutes les activités outdoor",
-  masse: 0.082,
+  masse: 82,
   nutrition: 0,
   prix: 34.99
 })
@@ -267,7 +267,7 @@ db.produits.insertOne({
   denomination: "Sac de couchage de camping 20°C, Basic",
   nom: "sac de couchage",
   description: "Nos concepteurs campeurs ont conçu ce sac de couchage Arpenaz 20° pour dormir confortablement en camping à des températures proches de 20°C.",
-  masse: 0.75,
+  masse: 750,
   nutrition: 0,
   prix: 13.99
 })
@@ -287,7 +287,7 @@ db.produits.insertOne({
   denomination: "POMPE À PIED POUR LE CAMPING - RECOMMANDÉE POUR LES MATELAS GONFLABLES",
   nom: "pompe à pied",
   description: "Nos concepteurs campeurs ont conçu cette pompe à pied pour gonfler vos matelas de camping.",
-  masse: 0.822,
+  masse: 822,
   nutrition: 0,
   prix: 9.99
 })
@@ -297,7 +297,17 @@ db.produits.insertOne({
   denomination: "Popote 100 de camping et bivouac en acier inox - 1 personne - 6 éléments.",
   nom: "Popote",
   description: "Nos concepteurs passionnés ont développé une popote simple, complète et astucieuse pour permettre à 1 personne de cuisiner et de manger dehors.",
-  masse: 0.300,
+  masse: 300,
+  nutrition: 0,
+  prix: 11.99
+})
+
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "Objet très lours pour test",
+  nom: "15 000",
+  description: "Pas de détail.",
+  masse: 15000,
   nutrition: 0,
   prix: 11.99
 })

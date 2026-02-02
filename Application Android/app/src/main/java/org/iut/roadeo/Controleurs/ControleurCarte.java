@@ -277,11 +277,13 @@ public class ControleurCarte extends Fragment {
         marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
                 .getPointDepart());
         marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
 
         marqueurArrive = new Marker(mapView);
         marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
                 .getPointArrive());
         marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
 
         mapView.getOverlays().add(marqueurDepart);
         mapView.getOverlays().add(marqueurArrive);

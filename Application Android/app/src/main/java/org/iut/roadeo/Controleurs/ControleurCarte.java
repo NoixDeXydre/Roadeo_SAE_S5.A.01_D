@@ -317,6 +317,7 @@ public class ControleurCarte extends Fragment {
                                 derniereLocalisationUtilisateur.getAltitude());
 
                         trajetRealise.addPoint(pointDerniereLocalisation);
+                        parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
 
                         if (marqueurUtilisateur != null)
                             marqueurUtilisateur.remove(mapView);

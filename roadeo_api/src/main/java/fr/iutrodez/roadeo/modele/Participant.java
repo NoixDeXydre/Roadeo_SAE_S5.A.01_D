@@ -112,7 +112,7 @@ public class Participant {
     }
 
     /**
-     *
+     * Mise à jour de la morphologie du participant
      * @param morphologie
      */
     public void setMorphologie(String morphologie) {
@@ -121,6 +121,7 @@ public class Participant {
 
     /**
      * Renvoie une estimation de la taille moyenne selon l'âge
+     * TODO Simplifier
      * 8 - 10 = 133
      * 11 - 15 = 155,5
      * 16 - 75 = 170
@@ -141,9 +142,10 @@ public class Participant {
 
     /**
      * Renvoie une estimation de la taille moyenne selon l'âge
+     * TODO Simplifier
      * @return la taille
      */
-    public double poidsApproximative() {
+    public double poidsApproximatif() {
         double corpulence = 1.0;
 
         if (this.morphologie.equals("Legere")) {

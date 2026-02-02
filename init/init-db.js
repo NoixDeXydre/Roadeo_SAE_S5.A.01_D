@@ -53,6 +53,7 @@ db.createCollection("randonnee");
 
 db.randonnee.insertOne({
   _id: '1', 
+  id_utilisateur: '1', 
   libelle: "La montagne Noire",
   participants_max: 2,
   point_depart: {libelle: "depart", geo:[43.408308198518846, 2.4458198213038966]},
@@ -62,6 +63,7 @@ db.randonnee.insertOne({
 
 db.randonnee.insertOne({
   _id: '2', 
+  id_utilisateur: '3', 
   libelle: "Le Pacific Crest Trail (pour les nuls)",
   participants_max: 3,
   point_depart: {libelle: "depart", geo:[44.34974473375299, 2.5764601949018444]},
@@ -70,7 +72,8 @@ db.randonnee.insertOne({
 });
 
 db.randonnee.insertOne({
-  _id: '3', 
+  _id: '3',
+  id_utilisateur: '3',  
   libelle: "Balade insolite d'Aveyron",
   participants_max: 3,
   point_depart: {libelle: "depart", geo:[44.360123830300076, 2.575580735324156]},
@@ -92,7 +95,6 @@ db.createCollection("parcours");
 db.parcours.insertOne({
   _id: '1',
   idRando: '1', 
-  id_utilisateur: '1', 
   libelle_randonnee: 'La montagne Noire', 
   etat: 2,
   date_realisation: new ISODate("2026-01-18T14:10:30.123Z"),
@@ -118,8 +120,7 @@ db.parcours.insertOne({
 
 db.parcours.insertOne({
   _id: '2',
-  idRando: '2', 
-  id_utilisateur: '3', 
+  idRando: '2',
   libelle_randonnee: "Parcours Découverte", 
   etat: 1,
   pointInterets: [{libelle : "Rodez", geo:[2.5730260710644473,44.35083409171523]},
@@ -162,7 +163,6 @@ db.parcours.insertOne({
 db.parcours.insertOne({
   _id: '3',
   idRando: '3', 
-  id_utilisateur: '3', 
   libelle_randonnee: "Décourverte exceptionnelle des bâtiments universitaires",
   etat: 1, 
   pointInterets: [{libelle : "Entrée IUT", geo:[2.575503749917175, 44.360080320786864]},
@@ -193,6 +193,7 @@ db.parcours.insertOne({
 db.createCollection("produits");
 
 db.produits.insertOne({
+categorie: "nourriture",
 denomination: "Repas lyophilisé - pâtes à la bolognaise - 120g",
 nom : "pâte bolognaise",
 description : "Notre équipe passionnée de trekking a conçu ce repas pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 140 g.",
@@ -202,6 +203,7 @@ prix : 8.49 // euros
 })
 
 db.produits.insertOne({
+  categorie: "nourriture",
   denomination: "Soupe lyophilisée - Goulash au poulet - 50 g",
   nom: "Goulash",
   description: "Notre équipe passionnée de trekking a conçu cette soupe lyophilisée pour vos activités physiques avec un apport énergétique adapté pour un poids minimal : 70 g.",
@@ -211,6 +213,7 @@ db.produits.insertOne({
 })
 
 db.produits.insertOne({
+  categorie: "nourriture",
   denomination: "Dessert lyophilisé - Riz au lait à la vanille - 45 g",
   nom: "Riz au lait",
   description: "Notre équipe passionnée de trekking a conçu ce dessert pour vos activités physiques (trek) avec un apport énergétique adapté pour un poids minimal : 57 g.",
@@ -219,3 +222,82 @@ db.produits.insertOne({
   prix: 4.99
 })
 
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "Tente de camping 2 places, MH100",
+  nom: "tente",
+  description: "Une tente accessible. Sa structure en dôme autoportante vous permet de la déplacer une fois montée pour choisir le meilleur emplacement.",
+  masse: 2600,
+  nutrition: 0,
+  prix: 29.99
+})
+
+db.produits.insertOne({
+  categorie: "extra",
+  denomination: "Appareil photo compact Thomson THR317",
+  nom: "appareil photo",
+  description: "Ne loupait plus jamais de licorne, grâce à cette appareil performant.",
+  masse: 0.8,
+  nutrition: 0,
+  prix: 100
+})
+
+db.produits.insertOne({
+  categorie: "extra",
+  denomination: "Raclette Bougie à Revêtement Antiadhésif",
+  nom: "appareil à raclette",
+  description: "Fini le fil électrique qui gêne pour passer,fini les odeurs de raclette et la chaleur étouffante dans toute la maison. ipow appareil raclette à la bougie est parfait pour une petite raclette en intérieur comme à table, devant télé, au bureau, dans le fourgon aménagé/camping cars/vans; ou en extérieur, tels que dans le jardin, sur la plage, en bivouac, au sommet des pistes après la randonnée en raquettes.",
+  masse: 0.7,
+  nutrition: 0,
+  prix: 23.56
+})
+
+db.produits.insertOne({
+  categorie: "extra",
+  denomination: "Couteau Suisse 7,5cm 14 fonctions Victorinox CLIMBER",
+  nom: "couteau suisse",
+  description: "Conçu pour avoir sous la main tous les outils nécessaire pendant la chasse et toutes les activités outdoor",
+  masse: 0.082,
+  nutrition: 0,
+  prix: 34.99
+})
+
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "Sac de couchage de camping 20°C, Basic",
+  nom: "sac de couchage",
+  description: "Nos concepteurs campeurs ont conçu ce sac de couchage Arpenaz 20° pour dormir confortablement en camping à des températures proches de 20°C.",
+  masse: 0.75,
+  nutrition: 0,
+  prix: 13.99
+})
+
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "Matelas gonflable de camping 2 personnes, 190x120 cm, Air basic",
+  nom: "matelas gonflable",
+  description: "Nos concepteurs campeurs ont conçu ce matelas Air Basic pour deux campeurs recherchant le confort d'un matelas gonflable au prix le plus accessible.",
+  masse: 3500,
+  nutrition: 0,
+  prix: 23.99
+})
+
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "POMPE À PIED POUR LE CAMPING - RECOMMANDÉE POUR LES MATELAS GONFLABLES",
+  nom: "pompe à pied",
+  description: "Nos concepteurs campeurs ont conçu cette pompe à pied pour gonfler vos matelas de camping.",
+  masse: 0.822,
+  nutrition: 0,
+  prix: 9.99
+})
+
+db.produits.insertOne({
+  categorie: "bivoique",
+  denomination: "Popote 100 de camping et bivouac en acier inox - 1 personne - 6 éléments.",
+  nom: "Popote",
+  description: "Nos concepteurs passionnés ont développé une popote simple, complète et astucieuse pour permettre à 1 personne de cuisiner et de manger dehors.",
+  masse: 0.300,
+  nutrition: 0,
+  prix: 11.99
+})

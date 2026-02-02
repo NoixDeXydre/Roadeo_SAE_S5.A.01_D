@@ -17,13 +17,12 @@ import java.util.Optional;
 public class RandonneeService {
     private final RandoneeInterfaceMongoDB repository;
     private final ParcoursInterfaceMongoDB parcoursRepository;
-    private final ParticipantInterfaceMongoDB participantRepository;
+    //private final ParticipantInterfaceMongoDB participantRepository;
 
-    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository,
-                            ParticipantInterfaceMongoDB participantRepository) {
+    public RandonneeService(RandoneeInterfaceMongoDB repository,  ParcoursInterfaceMongoDB parcoursRepository) {
         this.repository = repository;
         this.parcoursRepository = parcoursRepository;
-        this.participantRepository = participantRepository;
+        //this.participantRepository = participantRepository;
     }
 
     public List<Randonnee> getAllRandonnees() {
@@ -40,18 +39,10 @@ public class RandonneeService {
      * @return la liste de participant
      */
     public List<Participant> getParticipantParcours(String id) {
-<<<<<<< HEAD
-        // info changement (à supprimer) : ArrayList est devenu Optional car on ne veut qu'un parcours à la fois
-        Optional<Parcours> result = parcoursRepository.findById(id); // Récupère le résultat mongoDB
-
-        // info à supprimer : Optional devient parcours pour pouvoir utiliser les méthode et renvoyer le json
-        Parcours parcours = result.orElse(null); // Renvoie le parcours ou null si rien trouvé
-=======
         /* Récupère le résultat mongoDB */
         Optional<Parcours> result = parcoursRepository.findById(id);
         /* Renvoie le parcours ou null si rien trouvé */
         Parcours parcours = result.orElse(null);
->>>>>>> 179536d0ba00639dfc7f3212ce849060fc68c5d7
         if (parcours == null) {
             return null;
         }

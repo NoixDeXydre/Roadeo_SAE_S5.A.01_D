@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -58,6 +59,7 @@ public class ControleurCarte extends Fragment {
     // TODO manipulation du cache après appel API.
     // TODO appel API
 
+    private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
 
     // Le dernier chiffre et le celui affiché en dernier.
 
@@ -316,6 +318,17 @@ public class ControleurCarte extends Fragment {
                                 derniereLocalisationUtilisateur.getLongitude(),
                                 derniereLocalisationUtilisateur.getAltitude());
 
+                        for (Marker p : pointsInteretCarte) {
+
+                            if (getDistanceDeuxPoints(p.getPosition(), pointDerniereLocalisation)
+                                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET) {
+
+                                Toast.makeText(getView().getContext(),
+                                        "Point d'intérêt à moins de 200 m de vous !",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        }
+
                         trajetRealise.addPoint(pointDerniereLocalisation);
                         parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
 
@@ -376,5 +389,25 @@ public class ControleurCarte extends Fragment {
         titreRandonnee.setText(randonnee.getLibelle());
         dateParcours.setText(getString(R.string.date_carte_parcours_formatage,
                 parcoursAfficheUtilisateur.getDate().toLocaleString()));
+    }
+
+    // Calcule la distance entre deux points, en mètres.
+    // https://www.movable-type.co.uk/scripts/latlong.html
+    private double getDistanceDeuxPoints(GeoPoint p1, GeoPoint p2) {
+
+        double R = 6371e3; // Rayon en metres
+
+        double degres = Math.PI / 180;
+        double φ1 = p1.getLatitude() * degres; // φ, λ in radians
+        double φ2 = p2.getLatitude() * degres;
+        double Δφ = (p2.getLatitude() - p1.getLatitude()) * degres;
+        double Δλ = (p2.getLongitude() - p1.getLongitude()) * degres;
+
+        double a = Math.sin(Δφ * 0.5) * Math.sin(Δφ * 0.5) +
+                        Math.cos(φ1) * Math.cos(φ2) *
+                                Math.sin(Δλ * 0.5) * Math.sin(Δλ * 0.5);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // in metres
     }
 }

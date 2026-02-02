@@ -10,13 +10,13 @@ import java.util.ArrayList;
 public class Randonnee {
 
     /** Le nombre maximum de paticipants possible à une randonnée */
-    public int NB_MAX_PARTICIPANT = 3;
+    private final int NB_MAX_PARTICIPANT = 3;
 
     /** La durée minimale d'une randonnée en jour */
-    public int NB_JOURS_MIN = 1;
+    private final int NB_JOURS_MIN = 1;
 
     /** La durée maximale d'une randonnée en jour */
-    public int NB_JOURS_MAX = 3;
+    private final int NB_JOURS_MAX = 3;
 
     @Id
     private String id;
@@ -36,6 +36,13 @@ public class Randonnee {
     private int nombreJours;
 
     private ArrayList<Parcours> parcours;
+
+    /**
+     * Controleur vide pour mongo DB
+     */
+    public Randonnee() {
+
+    }
 
     /**
      * Crée une nouvelle randonnée avec les paramètres saisis

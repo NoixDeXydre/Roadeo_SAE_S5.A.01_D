@@ -97,5 +97,6 @@
     <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
+    <string name="voir_liste_participants">Voir la liste des participants</string>
 
 </resources>

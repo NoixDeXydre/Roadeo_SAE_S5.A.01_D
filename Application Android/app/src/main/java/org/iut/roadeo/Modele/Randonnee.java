@@ -2,6 +2,8 @@ package org.iut.roadeo.Modele;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.util.ArrayList;
+
 /**
  * Représente une randonnée pouvant être sélectionnée.
  *
@@ -20,6 +22,9 @@ public class Randonnee {
     /** La durée maximale d'une randonnée en jour */
     public static final int NB_JOURS_MAX = 3;
 
+    /** L'id de la randonnée */
+    private  int id;
+
     /** Titre de la randonnée */
     private String libelle;
 
@@ -28,6 +33,9 @@ public class Randonnee {
 
     /** Durée en jours de la randonnée */
     private int nbJours;
+
+    /** Les randonneurs inscrits au parcours. */
+    private ArrayList<Randonneur> randonneurs;
 
     /** Point de départ de la randonnée */
     private GeoPoint pointDepart;
@@ -43,13 +51,19 @@ public class Randonnee {
      * @param pointArrive le point d'arrivé de la randonnée
      * @throws IllegalArgumentException si le labelle est vide ou null.
      */
-    public Randonnee(String libelle, int nbJours, GeoPoint pointDepart, GeoPoint pointArrive)
+    public Randonnee(int id, String libelle, int nbJours, GeoPoint pointDepart, GeoPoint pointArrive)
             throws IllegalArgumentException {
+        this.id = id;
         setLibelle(libelle);
         this.nbParticpantsMax = NB_MAX_PARTICIPANT;
         setNbJours(nbJours);
         setPointDepart(pointDepart);
         setPointArrive(pointArrive);
+        randonneurs = new ArrayList<>();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getLibelle() {
@@ -102,6 +116,26 @@ public class Randonnee {
                     " jours");
         }
         this.nbJours = nbJours;
+    }
+
+    public ArrayList<Randonneur> getRandonneurs() {
+        return new ArrayList<>(randonneurs);
+    }
+
+    /**
+     * Ajoute un randonneur dans le parcours.
+     * @param nouveauRandonneur
+     */
+    public void ajouterRandonneur(Randonneur nouveauRandonneur) {
+        // TODO méthode
+    }
+
+    /**
+     * Supprime un randonneur du parcours.
+     * @param randonneur
+     */
+    public void supprimerRandonneur(Randonneur randonneur) {
+        // TODO méthode
     }
 
     @Override

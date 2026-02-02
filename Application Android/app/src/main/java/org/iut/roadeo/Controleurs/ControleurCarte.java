@@ -90,7 +90,7 @@ public class ControleurCarte extends Fragment {
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
-                ("Ma randonnée", 3, null, null),
+                (1, "Ma randonnée", 3, null, null),
                 new Date());
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;

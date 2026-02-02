@@ -1,5 +1,6 @@
 package org.iut.roadeo.Controleurs;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
@@ -45,6 +46,7 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
         saisieJours = vue.findViewById(R.id.labelDureeJours);
 
         vue.findViewById(R.id.voirListeParcours).setOnClickListener(this);
+        vue.findViewById(R.id.voirListeParticipants).setOnClickListener(this);
         vue.findViewById(R.id.confirmerRandonnee).setOnClickListener(this);
 
         randonnee = ((ControleurDashboard) getActivity()).getRandonneeCommunique();
@@ -58,10 +60,17 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.voirListeParcours) {
             // TODO lien vers la liste des parcours
-        }
-        if (view.getId() == R.id.confirmerRandonnee) {
-            // TODO retour vers la liste des randonnées
+        } else if (view.getId() == R.id.confirmerRandonnee) {
+            // TODO appel API pour ajouter la randonnée
             ControleurDashboard.tabLayout.getTabAt(0).select();
+        } else if (view.getId() == R.id.voirListeParticipants) {
+            Intent intention = new Intent(getContext(),
+                                          ControleurListeParticipant.class);
+            if (randonnee != null) {
+                intention.putExtra("RANDONNEE", randonnee.getId());
+            }
+
+            startActivity(intention);
         }
     }
 

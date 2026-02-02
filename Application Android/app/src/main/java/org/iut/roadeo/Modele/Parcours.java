@@ -35,9 +35,6 @@ public class Parcours {
     /** Points d'intérêts enregistrés par l'utilisateur. */
     private ArrayList<GeoPoint> pointsInteret;
 
-    /** Les randonneurs inscrits au parcours. */
-    private ArrayList<Randonneur> randonneurs;
-
     /** Trajet composé de plusieurs coordonnées. */
     private ArrayList<GeoPoint> trajetRealise;
 
@@ -58,7 +55,6 @@ public class Parcours {
         this.date = date;
 
         pointsInteret = new ArrayList<>();
-        randonneurs = new ArrayList<>();
         trajetRealise = new ArrayList<>();
     }
 
@@ -80,14 +76,6 @@ public class Parcours {
         // TODO méthode
     }
 
-    /**
-     * Ajoute un randonneur dans le parcours.
-     * @param nouveauRandonneur
-     */
-    public void ajouterRandonneur(Randonneur nouveauRandonneur) {
-        // TODO méthode
-    }
-
     public Randonnee getRandonneeParcours() {
         return randonneeParcours;
     }
@@ -102,10 +90,6 @@ public class Parcours {
 
     public Date getDate() {
         return date;
-    }
-
-    public ArrayList<Randonneur> getRandonneurs() {
-        return new ArrayList<>(randonneurs);
     }
 
     public boolean isParcoursEnArret() {
@@ -139,14 +123,6 @@ public class Parcours {
      * @param pointInteret le point d'intérêt à supprimer.
      */
     public void supprimerPointInteret(GeoPoint pointInteret) {
-        // TODO méthode
-    }
-
-    /**
-     * Supprime un randonneur du parcours.
-     * @param randonneur
-     */
-    public void supprimerRandonneur(Randonneur randonneur) {
         // TODO méthode
     }
 }

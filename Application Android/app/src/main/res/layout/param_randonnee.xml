@@ -59,13 +59,29 @@
             android:inputType="number" />
     </TableRow>
 
-    <Button
+    <TableRow
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/voirListeParcours"
-        android:text="@string/voir_liste_parcours"
-        android:textColor="@color/black"/>
+        android:layout_gravity="center">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+            android:id="@+id/voirListeParcours"
+            android:text="@string/voir_liste_parcours"
+            android:backgroundTint="@color/vert_kaki"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/voirListeParticipants"
+            android:text="@string/voir_liste_participants"
+            android:backgroundTint="@color/vert_kaki"
+            android:textColor="@color/black"/>
+    </TableRow>
 
     <androidx.constraintlayout.widget.Placeholder
         android:layout_width="match_parent"

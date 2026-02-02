@@ -289,6 +289,7 @@ public class APIRequeteur {
             aCreer = reponse.getJSONObject(i);
 
             /* On récupère les différents paramètres de la randonnée */
+            int id = aCreer.getInt("id");
             String libelle = aCreer.getString("libelle");
             int participantsMax = aCreer.getInt("participantsMax");
             int nombreJours = aCreer.getInt("nombreJours");
@@ -314,7 +315,7 @@ public class APIRequeteur {
             GeoPoint pointArrivee = new GeoPoint(latitudeArrivee, longitudeArrivee);
 
             /* On crée la randonnée et on l'ajoute à la liste */
-            randonnee = new Randonnee(libelle, participantsMax,
+            randonnee = new Randonnee(id, libelle, participantsMax,
                                       pointDepart, pointArrivee);
             aRetourner.add(randonnee);
         }

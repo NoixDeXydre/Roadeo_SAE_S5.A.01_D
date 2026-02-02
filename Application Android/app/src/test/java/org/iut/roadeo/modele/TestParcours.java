@@ -80,4 +80,31 @@ public class TestParcours {
         assertEquals(parcours.getPointsInteret().size(), points.size());
         assertArrayEquals(parcours.getPointsInteret().toArray(), points.toArray());
     }
+
+    @Test
+    public void testAjouterPointTrajetNull() {
+
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
+                null, null), new Date());
+
+        parcours.ajouterPointTrajet(null);
+        assertEquals(parcours.getTrajetRealise().size(), 0);
+    }
+
+    @Test
+    public void testAjouterPointTrajet() {
+
+        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
+                null, null), new Date());
+
+        ArrayList<GeoPoint> points = new ArrayList<>
+                (Arrays.asList(new GeoPoint(0.0f, 0.1f),
+                        new GeoPoint(0.1f, 0.0f)));
+
+        parcours.ajouterPointTrajet(points.get(0));
+        parcours.ajouterPointTrajet(points.get(1));
+
+        assertEquals(parcours.getTrajetRealise().size(), points.size());
+        assertArrayEquals(parcours.getTrajetRealise().toArray(), points.toArray());
+    }
 }

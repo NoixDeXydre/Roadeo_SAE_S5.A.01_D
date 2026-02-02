@@ -77,7 +77,9 @@ public class Parcours {
      * @param nouveauPoint
      */
     public void ajouterPointTrajet(GeoPoint nouveauPoint) {
-        // TODO méthode
+
+        if (nouveauPoint != null)
+            trajetRealise.add(nouveauPoint);
     }
 
     /**

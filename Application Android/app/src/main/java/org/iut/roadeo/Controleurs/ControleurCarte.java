@@ -3,6 +3,7 @@ package org.iut.roadeo.Controleurs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -37,6 +38,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,6 +76,8 @@ public class ControleurCarte extends Fragment {
     private Marker marqueurUtilisateur;
     private Marker marqueurDepart;
     private Marker marqueurArrive;
+
+    private Polyline trajetRealise;
 
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -173,6 +177,10 @@ public class ControleurCarte extends Fragment {
                 2.57556698405f));
         parcoursAfficheUtilisateur.ajouterPointInteret(new GeoPoint(44.360054998826f,
                 2.57556698405f));
+        parcoursAfficheUtilisateur.ajouterPointTrajet
+                (parcoursAfficheUtilisateur.getRandonneeParcours().getPointArrive());
+        parcoursAfficheUtilisateur.ajouterPointTrajet
+                (parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart());
 
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
         mettreAJourPositionUtilisateur();
@@ -303,15 +311,18 @@ public class ControleurCarte extends Fragment {
                     public void onLocationResult(LocationResult resultatLocalisation) {
 
                         derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
+                        GeoPoint pointDerniereLocalisation = new GeoPoint
+                                (derniereLocalisationUtilisateur.getLatitude(),
+                                derniereLocalisationUtilisateur.getLongitude(),
+                                derniereLocalisationUtilisateur.getAltitude());
+
+                        trajetRealise.addPoint(pointDerniereLocalisation);
 
                         if (marqueurUtilisateur != null)
                             marqueurUtilisateur.remove(mapView);
 
                         marqueurUtilisateur = new Marker(mapView);
-                        marqueurUtilisateur.setPosition(new GeoPoint
-                                (derniereLocalisationUtilisateur.getLatitude(),
-                                 derniereLocalisationUtilisateur.getLongitude(),
-                                 derniereLocalisationUtilisateur.getAltitude()));
+                        marqueurUtilisateur.setPosition(pointDerniereLocalisation);
                         marqueurUtilisateur.setIcon(getResources()
                                 .getDrawable(R.drawable.utilisateur_marqueur));
                         marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
@@ -337,11 +348,25 @@ public class ControleurCarte extends Fragment {
         }
 
         // Puis on met ceux du cache.
-        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
+        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret())
             creerPointInteret(positionPointInteret);
-        }
 
+        // MAJ du trajet réalisé
+
+        if (trajetRealise != null)
+            mapView.getOverlays().remove(trajetRealise);
+
+        trajetRealise = new Polyline();
+        trajetRealise.setPoints(parcoursAfficheUtilisateur.getTrajetRealise());
+        System.out.println(parcoursAfficheUtilisateur.getTrajetRealise().size());
+        trajetRealise.setWidth(35f);
+        trajetRealise.setColor(getResources().getColor(R.color.marron_boue));
+        mapView.getOverlays().add(trajetRealise);
+
+        // Départ et arrivé
         mettreAJourPointsExtremes();
+
+        mapView.invalidate();
 
         // Mise à jour des informations de la page.
 

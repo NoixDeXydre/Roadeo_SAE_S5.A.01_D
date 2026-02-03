@@ -37,8 +37,6 @@ public class ChangeVue {
             intention = new Intent(activite, ControleurDashboard.class);
         } else if (item.getItemId() == R.id.afficheCompte){
             intention = new Intent(activite, ControleurCompteUtilisateur.class);
-        } else if (item.getItemId() == R.id.afficheListeParticipants){
-            intention = new Intent(activite, ControleurListeParticipant.class);
         } else if (item.getItemId() == R.id.seDeconnecter) {
             intention = new Intent(activite, ControleurPageConnexion.class);
             CacheApplication.detruireCache();

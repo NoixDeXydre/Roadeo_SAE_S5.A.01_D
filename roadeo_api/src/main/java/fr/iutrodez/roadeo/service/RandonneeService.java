@@ -1,12 +1,10 @@
 package fr.iutrodez.roadeo.service;
 
 import fr.iutrodez.roadeo.dao.ParcoursInterfaceMongoDB;
-import fr.iutrodez.roadeo.dao.ParticipantInterfaceMongoDB;
 import fr.iutrodez.roadeo.dao.RandoneeInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Parcours;
 import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
-import fr.iutrodez.roadeo.modele.Utilisateur;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -67,7 +65,7 @@ public class RandonneeService {
         if (rando == null) {
             throw new IllegalArgumentException();
         }
-        return repository.save(rando);
+        return repository.insert(rando);
     }
 
     public Randonnee addParcours(String id, Parcours parcours) {
@@ -84,6 +82,42 @@ public class RandonneeService {
         }
         randonnee.addParcours(parcours);
         return repository.save(randonnee);
+    }
+
+    public boolean deleteRandonee(String id) {
+        if (!repository.existsById(id)) {
+           throw new IllegalArgumentException("La randonnée n'existe pas.");
+        }
+        repository.deleteById(id);
+        return !repository.existsById(id);
+    }
+
+    public Randonnee modifRandonnee(Randonnee rando) {
+        //System.out.println(rando);
+        //if (rando == null) {
+        //    throw new IllegalArgumentException();
+        //}
+        return repository.save(rando);
+    }
+
+    public boolean deleteParcours(String id) {
+        if (!parcoursRepository.existsById(id)) {
+            throw new IllegalArgumentException("Le parcours n'existe pas.");
+        }
+        parcoursRepository.deleteById(id);
+        return !parcoursRepository.existsById(id);
+    }
+
+    public void modifParcours() {
+
+    }
+
+    public void ajoutParcours() {
+
+    }
+
+    public void ajoutRandonnee(Randonnee rando) {
+        repository.insert(rando);
     }
 
 }

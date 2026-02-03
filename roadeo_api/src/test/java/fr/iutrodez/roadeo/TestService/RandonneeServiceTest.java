@@ -24,6 +24,8 @@ public class RandonneeServiceTest {
 
     @Mock
     private RandoneeInterfaceMongoDB repository;
+
+    @Mock
     private ParcoursInterfaceMongoDB parcoursRepository;
 
     private RandonneeService service;
@@ -77,12 +79,19 @@ public class RandonneeServiceTest {
         List<Parcours> result = service.getParcoursByIdRando("2");
 
         assertEquals(listeParcours, result);
-        verify(repository, times(1)).findAll();
+        verify(parcoursRepository, times(1)).findByIdRando("2");
     }
 
     @Test
     void testGetParticipantRandonnee() {
-        //todo getParticipantRandonnee
+        //todo getParticipantRandonnee()
+        Randonnee rando = null;
+        when(repository.findById("2")).thenReturn(Optional.ofNullable(rando));
+
+        List<Participant> result = service.getParticipantRandonnee("2");
+
+        assertEquals(rando.getParticipants(), result);
+        //verify(repository, times(1)).findAll();
         fail();
     }
 

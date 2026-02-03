@@ -76,7 +76,7 @@ public class RandoneeApiControleur {
     }
 
     @PostMapping("/ajoutRandonnee/{id}")
-    public ResponseEntity<Randonnee>  ajoutParcoursRando(@PathVariable String id, @RequestBody Parcours parcours) {
+    public ResponseEntity<Randonnee> ajoutParcoursRando(@PathVariable String id, @RequestBody Parcours parcours) {
         try {
             Randonnee randonnee = randonneeService.addParcours(id,parcours);
             if (randonnee != null) {
@@ -89,59 +89,31 @@ public class RandoneeApiControleur {
         }
     }
 
-    // TODO suppression randonnée
-    @DeleteMapping("")
-    public void deleteRandonee() {
-
+    @DeleteMapping("/supprime/{id}")
+    public ResponseEntity<Randonnee> deleteRandonee(@PathVariable String id) {
+        try {
+            if(randonneeService.deleteRandonee(id)) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // TODO modifier randonnée
-    @PostMapping("")
-    public void modifRandonnee() {
-
+    @PutMapping("/modif")
+    public ResponseEntity<Randonnee> modifRandonnee(@RequestBody Randonnee rando) {
+        try {
+            Randonnee randonnee = randonneeService.modifRandonnee(rando);
+            if (randonnee != null) {
+                return ResponseEntity.ok(randonnee);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
-
-    // TODO suppression parcours
-    @DeleteMapping("")
-    public void deleteParcours() {
-
-    }
-
-    // TODO modifier parcours
-    @PostMapping("")
-    public void modifParcours() {
-
-    }
-
-    // TODO ajouter parcours
-    @PostMapping("")
-    public void ajoutParcours() {
-
-    }
-
-    // TODO ajouter randonnée
-    @PostMapping("")
-    public void ajoutRandonnee() {
-
-    }
-
-    // TODO ajouter produits / objet
-    @PostMapping("")
-    public void ajoutProduits() {
-
-    }
-
-    // TODO modifier produits / objet
-    @PutMapping("")
-    public void modifProduits() {
-
-    }
-
-    // TODO supprimer produits / objet
-    @DeleteMapping("")
-    public void deleteProduits() {
-
-    }
-
-    // TODO ajouter les points d'intérêt
 }

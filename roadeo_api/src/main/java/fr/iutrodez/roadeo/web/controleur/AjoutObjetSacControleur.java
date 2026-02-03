@@ -40,7 +40,7 @@ public class AjoutObjetSacControleur {
         this.randonneeService = serviceR;
 
         // Initialisation (Simulation d'un ID "2")
-        this.rando = randonneeService.getRandonnee("1");
+        this.rando = randonneeService.getRandonnee("2");
         this.poidsMax = rando.poidsMax()*1000;
         this.sacReserve = new SacADos(poidsMax*1.20, 0);
 

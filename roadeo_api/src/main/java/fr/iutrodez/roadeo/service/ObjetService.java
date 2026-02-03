@@ -47,4 +47,16 @@ public class ObjetService {
     public Produits getProduitById(String idObjet) {
         return this.objetRepository.findProduitsById(idObjet);
     }
+
+
+    public void ajoutProduits() {
+
+    }
+
+    public void modifProduits() {
+    }
+
+    public void deleteProduits(String id) {
+        objetRepository.deleteById(id);
+    }
 }

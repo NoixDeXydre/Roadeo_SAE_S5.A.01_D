@@ -280,4 +280,29 @@ public class Randonnee {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Randonnee{" +
+                "NB_MAX_PARTICIPANT=" + NB_MAX_PARTICIPANT +
+                ", NB_JOURS_MIN=" + NB_JOURS_MIN +
+                ", NB_JOURS_MAX=" + NB_JOURS_MAX +
+                ", id='" + id + '\'' +
+                ", libelle='" + libelle + '\'' +
+                ", participantsMax=" + participantsMax +
+                ", depart=" + depart +
+                ", arrive=" + arrive +
+                ", nombreJours=" + nombreJours +
+                ", parcours=" + parcours +
+                ", participants=" + participants +
+                '}';
+    }
+
+    public void setDepart(PointInteret depart) {
+        this.depart = depart;
+    }
+
+    public void setArrive(PointInteret arrive) {
+        this.arrive = arrive;
+    }
 }

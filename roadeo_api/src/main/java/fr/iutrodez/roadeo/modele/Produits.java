@@ -160,4 +160,6 @@ public class Produits {
     public void setPresenceSac(boolean presenceSac) {
         this.presenceSac = presenceSac;
     }
+
+
 }

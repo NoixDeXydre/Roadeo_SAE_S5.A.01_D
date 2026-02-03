@@ -79,6 +79,8 @@ public class ControleurCarte extends Fragment {
     private Marker marqueurDepart;
     private Marker marqueurArrive;
 
+    private Marker dernierPointInteretNotification;
+
     private Polyline trajetRealise;
 
     private ArrayList<Marker> pointsInteretCarte;
@@ -226,6 +228,7 @@ public class ControleurCarte extends Fragment {
         });
 
         mapView.getOverlays().add(pointInteret);
+        mapView.invalidate();
 
         return pointInteret;
     }
@@ -235,9 +238,12 @@ public class ControleurCarte extends Fragment {
      * @param pointInteret
      */
     private void supprimerPointInteret(Marker pointInteret) {
+
         parcoursAfficheUtilisateur.supprimerPointInteret(pointInteret.getPosition());
         pointInteret.remove(mapView);
         pointsInteretCarte.remove(pointInteret);
+
+        mapView.invalidate();
     }
 
     @Override
@@ -318,17 +324,6 @@ public class ControleurCarte extends Fragment {
                                 derniereLocalisationUtilisateur.getLongitude(),
                                 derniereLocalisationUtilisateur.getAltitude());
 
-                        for (Marker p : pointsInteretCarte) {
-
-                            if (getDistanceDeuxPoints(p.getPosition(), pointDerniereLocalisation)
-                                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET) {
-
-                                Toast.makeText(getView().getContext(),
-                                        "Point d'intérêt à moins de 200 m de vous !",
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        }
-
                         trajetRealise.addPoint(pointDerniereLocalisation);
                         parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
 
@@ -342,6 +337,30 @@ public class ControleurCarte extends Fragment {
                         marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
                         mapView.getOverlays().add(0, marqueurUtilisateur);
+                        mapView.invalidate();
+
+                        // Notification du point d'intérêt
+
+                        int i = 0;
+                        boolean isPointTrouve = false;
+                        Marker pointTraite = null;
+                        while (i < pointsInteretCarte.size() && !isPointTrouve) {
+                            pointTraite = pointsInteretCarte.get(i);
+                            isPointTrouve = getDistanceDeuxPoints(pointTraite
+                                    .getPosition(), pointDerniereLocalisation)
+                                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
+                            i++;
+                        }
+
+                        if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
+
+                            dernierPointInteretNotification = pointTraite;
+                            Toast.makeText(getView().getContext(),
+                                    "Point d'intérêt à moins de 200 m de vous !",
+                                    Toast.LENGTH_LONG).show();
+                        } else {
+                            dernierPointInteretNotification = null;
+                        }
                     }
                 },
                 Looper.getMainLooper());

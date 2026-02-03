@@ -56,7 +56,7 @@ import java.util.Date;
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class ControleurCarte extends Fragment {
+public class ControleurCarte extends Fragment implements View.OnClickListener {
 
     // TODO manipulation du cache après appel API.
     // TODO appel API
@@ -77,6 +77,11 @@ public class ControleurCarte extends Fragment {
     private ImageView avertissementPointInteret;
     private TextView titreRandonnee;
     private TextView dateParcours;
+
+    private ImageView boutonDemarrer;
+    private ImageView boutonPause;
+    private ImageView boutonStop;
+
     private Parcours parcoursAfficheUtilisateur;
 
     private Marker marqueurUtilisateur;
@@ -123,6 +128,14 @@ public class ControleurCarte extends Fragment {
         avertissementPointInteret = vue.findViewById(R.id.avertissement_point_interet);
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
         dateParcours = vue.findViewById(R.id.date_parcours);
+
+        boutonDemarrer = vue.findViewById(R.id.bouton_demarrer_carte);
+        boutonPause = vue.findViewById(R.id.bouton_pause_carte);
+        boutonStop = vue.findViewById(R.id.bouton_stop_carte);
+
+        boutonDemarrer.setOnClickListener(this);
+        boutonPause.setOnClickListener(this);
+        boutonStop.setOnClickListener(this);
 
         Configuration.getInstance().load(
                 vue.getContext(),
@@ -286,6 +299,31 @@ public class ControleurCarte extends Fragment {
         }
     }
 
+    private void mettreAJourAffichageControles() {
+
+        // Si pause
+        // On affiche le bouton stop et demarrer.
+        if (parcoursAfficheUtilisateur.isParcoursEnPause()) {
+            boutonPause.setAlpha(0.0f);
+            boutonDemarrer.setAlpha(1.0f);
+            boutonStop.setAlpha(1.0f);
+
+        // Si arret
+        // On affiche le bouton demarrer
+        } else if (parcoursAfficheUtilisateur.isParcoursEnArret()) {
+            boutonStop.setAlpha(0.0f);
+            boutonPause.setAlpha(0.0f);
+            boutonDemarrer.setAlpha(1.0f);
+
+        // Sinon
+        // On affiche le bouton stop et pause. (Parcours en fonctionnement)
+        } else {
+            boutonDemarrer.setAlpha(0.0f);
+            boutonStop.setAlpha(1.0f);
+            boutonPause.setAlpha(1.0f);
+        }
+    }
+
     // Point départ et point arrivée
     private void mettreAJourPointsExtremes() {
 
@@ -425,6 +463,8 @@ public class ControleurCarte extends Fragment {
         titreRandonnee.setText(randonnee.getLibelle());
         dateParcours.setText(getString(R.string.date_carte_parcours_formatage,
                 parcoursAfficheUtilisateur.getDate().toLocaleString()));
+
+        mettreAJourAffichageControles();
     }
 
     // Calcule la distance entre deux points, en mètres.
@@ -445,5 +485,24 @@ public class ControleurCarte extends Fragment {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c; // in metres
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        // On met à jour l'état du parcours.
+
+        if (view.getId() == R.id.bouton_demarrer_carte) {
+            parcoursAfficheUtilisateur.setParcoursEnArret(false);
+            parcoursAfficheUtilisateur.setParcoursEnPause(false);
+        }
+        else if (view.getId() == R.id.bouton_pause_carte)
+            parcoursAfficheUtilisateur.setParcoursEnPause(true);
+        else if (view.getId() == R.id.bouton_stop_carte) {
+            parcoursAfficheUtilisateur.setParcoursEnArret(true);
+            parcoursAfficheUtilisateur.setParcoursEnPause(false);
+        }
+
+        mettreAJourAffichageControles();
     }
 }

@@ -24,7 +24,7 @@ public class Randonnee {
     private String libelle;
 
     @Field("participants_max")
-    private int participantsMax;
+    private int participantsMax = 3;
 
     @Field("point_depart")
     private PointInteret depart;
@@ -37,6 +37,8 @@ public class Randonnee {
 
     private ArrayList<Parcours> parcours;
 
+    private ArrayList<Participant> participants;
+
     /**
      * Controleur vide pour mongo DB
      */
@@ -48,7 +50,6 @@ public class Randonnee {
      * Crée une nouvelle randonnée avec les paramètres saisis
      * @param id L'id de la randonnée
      * @param libelle Le nom de la randonnée
-     * @param participantsMax Le nombre max de participant à la randonnée
      * @param nombreJours La durée en jours de la randonnée
      * @param depart Le point de départ de la randonnée
      * @param arrive Le point d'arrivée de la randonnée
@@ -59,20 +60,17 @@ public class Randonnee {
      *     <li>nombreJours<1 || nombreJours>3</li>
      * </ul>
      */
-    public Randonnee(String id, String libelle, int participantsMax,
+    public Randonnee(String id, String libelle,
                      int nombreJours, PointInteret depart,
-                     PointInteret arrive) {
+                     PointInteret arrive, ArrayList<Participant> participants) {
         if (libelle.isBlank()) {
             throw new IllegalArgumentException("Le libellé est vide");
         }
-        if (participantsMax>NB_MAX_PARTICIPANT) {
+        if (participants.size()>NB_MAX_PARTICIPANT) {
             throw new IllegalArgumentException("Il y a trop de participants"
                                                + " dans la randonnée");
         }
-        if (participantsMax<=0) {
-            throw new IllegalArgumentException("Il doit y avoir au moins 1"
-                                               + " participant à la randonnée");
-        }
+
         if (nombreJours<NB_JOURS_MIN) {
             throw new IllegalArgumentException("La durée de la randonnée doit"
                                                + "être d'au moins 1 jour");
@@ -83,11 +81,11 @@ public class Randonnee {
         }
         this.id = id;
         this.libelle = libelle;
-        this.participantsMax = participantsMax;
         this.nombreJours = nombreJours;
         this.depart = depart;
         this.arrive = arrive;
         this.parcours = new ArrayList<>();
+        this.participants = participants;
     }
 
     /**
@@ -234,5 +232,52 @@ public class Randonnee {
      */
     public void removeParcours(Parcours parcours) {
         this.parcours.remove(parcours);
+    }
+
+    public void setParticipants(ArrayList<Participant> participants) {
+        this.participants = participants;
+    }
+
+    /** liste des randonnées */
+    public ArrayList<Participant> getParticipants() {
+        return this.participants;
+    }
+
+    /**
+     * Calcul le nombre Kcal total pour l'ensemble des participants du parcours
+     * @param jour durée de la randonnée en jour
+     * @return les besoins en Kcal pour tout le parcours
+     */
+    public double calculKcalTotal(int jour) {
+        double result = 0.0;
+        for (Participant participant : this.participants) {
+            result += calculKcalParticipant(participant.poidsApproximatif(),
+                    participant.tailleApproximative(),
+                    participant.getAge());
+        }
+        return result * jour;
+    }
+
+    /**
+     * Calcul de Kcal selon la formule de Mifflin–St Jeor
+     * MB = 10 × poids(kg) + 6,25 × taille(cm) − 5 × âge + 5
+     * -> on prend la formule du calcul de Mifflin-St Jeor pour un homme au repos
+     * et on ultiplie par 1,9 pour simuler l'activité sportive
+     * @return le nombre de kilo calorie d'une personne
+     */
+    private double calculKcalParticipant(double poids, double taille, int age) {
+        return (10 * poids + 6.25 * taille - 5 * age + 5) * 1.9;
+    }
+
+    /**
+     * Calcul le poids max emportable par les participants du parcours
+     * @return le poids maximum
+     */
+    public double poidsMax() {
+        double result = 0.0;
+        for (Participant participant : this.participants) {
+            result += participant.poidsApproximatif();
+        }
+        return result;
     }
 }

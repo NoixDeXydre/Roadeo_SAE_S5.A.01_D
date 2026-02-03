@@ -6,6 +6,7 @@ import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.RandonneeService;
 import fr.iutrodez.roadeo.service.UtilisateurService;
+import org.springframework.data.mongodb.repository.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class RandoneeApiControleur {
      */
     @GetMapping("/listeParticipant/{id}") //Utilisation de GetMapping car seul une variable String est passée en argument
     public List<Participant> getParticipant(@PathVariable String id) {
-        return randonneeService.getParticipantParcours(id); // Renvoie la liste des participants
+        return randonneeService.getParticipantRandonnee(id); // Renvoie la liste des participants
     }
 
     @PostMapping("/infoRandoUtil")
@@ -87,4 +88,60 @@ public class RandoneeApiControleur {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    // TODO suppression randonnée
+    @DeleteMapping("")
+    public void deleteRandonee() {
+
+    }
+
+    // TODO modifier randonnée
+    @PostMapping("")
+    public void modifRandonnee() {
+
+    }
+
+    // TODO suppression parcours
+    @DeleteMapping("")
+    public void deleteParcours() {
+
+    }
+
+    // TODO modifier parcours
+    @PostMapping("")
+    public void modifParcours() {
+
+    }
+
+    // TODO ajouter parcours
+    @PostMapping("")
+    public void ajoutParcours() {
+
+    }
+
+    // TODO ajouter randonnée
+    @PostMapping("")
+    public void ajoutRandonnee() {
+
+    }
+
+    // TODO ajouter produits / objet
+    @PostMapping("")
+    public void ajoutProduits() {
+
+    }
+
+    // TODO modifier produits / objet
+    @PutMapping("")
+    public void modifProduits() {
+
+    }
+
+    // TODO supprimer produits / objet
+    @DeleteMapping("")
+    public void deleteProduits() {
+
+    }
+
+    // TODO ajouter les points d'intérêt
 }

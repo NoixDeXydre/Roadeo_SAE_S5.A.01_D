@@ -38,15 +38,15 @@ public class RandonneeService {
      * @param id id du parcours
      * @return la liste de participant
      */
-    public List<Participant> getParticipantParcours(String id) {
+    public List<Participant> getParticipantRandonnee(String id) {
         /* Récupère le résultat mongoDB */
-        Optional<Parcours> result = parcoursRepository.findById(id);
+        Optional<Randonnee> result = repository.findById(id);
         /* Renvoie le parcours ou null si rien trouvé */
-        Parcours parcours = result.orElse(null);
-        if (parcours == null) {
+        Randonnee rando = result.orElse(null);
+        if (rando == null) {
             return null;
         }
-        return parcours.getParticipants(); // return liste participants
+        return rando.getParticipants(); // return liste participants
     }
 
     public ArrayList<Parcours> getParcoursByIdRando(String idRando) {

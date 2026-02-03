@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,6 +72,7 @@ public class ControleurCarte extends Fragment {
     private FusedLocationProviderClient clientDeLocalisation;
     private Location derniereLocalisationUtilisateur;
 
+    private ImageView avertissementPointInteret;
     private TextView titreRandonnee;
     private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
@@ -116,6 +118,7 @@ public class ControleurCarte extends Fragment {
 
         View vue = inflater.inflate(R.layout.carte, container, false);
 
+        avertissementPointInteret = vue.findViewById(R.id.avertissement_point_interet);
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
         dateParcours = vue.findViewById(R.id.date_parcours);
 
@@ -355,10 +358,14 @@ public class ControleurCarte extends Fragment {
                         if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
 
                             dernierPointInteretNotification = pointTraite;
+
                             Toast.makeText(getView().getContext(),
                                     "Point d'intérêt à moins de 200 m de vous !",
                                     Toast.LENGTH_LONG).show();
+                            avertissementPointInteret.setImageAlpha(0);
+
                         } else {
+                            avertissementPointInteret.setImageAlpha(1);
                             dernierPointInteretNotification = null;
                         }
                     }

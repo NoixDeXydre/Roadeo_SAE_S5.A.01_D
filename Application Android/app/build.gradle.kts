@@ -2,8 +2,8 @@ plugins {
     id("com.android.application")
 }
 
-// TODO mettre l'URL du serveur distant
-val URL_API by extra("http://10.0.2.2:8080/api/")
+val URL_API_DEBUG by extra("http://10.0.2.2/api/")
+val URL_API_PROD by extra("http://13.60.253.54/api/")
 
 android {
     namespace = "org.iut.roadeo"
@@ -12,7 +12,6 @@ android {
     defaultConfig {
 
         android.buildFeatures.buildConfig = true
-        buildConfigField("String", "API_URL", "\"${extra["URL_API"]}\"")
 
         applicationId = "org.iut.roadeo"
         minSdk = 24
@@ -24,13 +23,18 @@ android {
     }
 
     buildTypes {
+
         release {
-            isMinifyEnabled = false
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             enableUnitTestCoverage = true
+
+            buildConfigField("String", "API_URL", "\"$URL_API_PROD\"")
         }
+
         debug {
             enableUnitTestCoverage = true
+            buildConfigField("String", "API_URL", "\"$URL_API_DEBUG\"")
         }
     }
     compileOptions {

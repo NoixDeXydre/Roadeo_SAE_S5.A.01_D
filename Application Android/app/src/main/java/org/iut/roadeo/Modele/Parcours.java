@@ -73,7 +73,9 @@ public class Parcours {
      * @param nouveauPoint
      */
     public void ajouterPointTrajet(GeoPoint nouveauPoint) {
-        // TODO méthode
+
+        if (nouveauPoint != null)
+            trajetRealise.add(nouveauPoint);
     }
 
     public Randonnee getRandonneeParcours() {
@@ -123,6 +125,8 @@ public class Parcours {
      * @param pointInteret le point d'intérêt à supprimer.
      */
     public void supprimerPointInteret(GeoPoint pointInteret) {
-        // TODO méthode
+
+        if (pointInteret != null)
+            pointsInteret.remove(pointInteret);
     }
 }

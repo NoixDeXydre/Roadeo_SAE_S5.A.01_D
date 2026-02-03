@@ -76,12 +76,17 @@
     </string-array>
 
     <!-- Informations carte -->
+
     <string name="label_carte_randonnee">Randonnée</string>
     <string name="date_carte_parcours_formatage">Parcours crée le : %s</string>
     <string name="label_point_interet_proche">"Distance du Point D'intérêt le plus Proche"</string>
     <string name="distance_point_interet_proche_formatage">"%s m"</string>
     <string name="label_participants_carte">Participants</string>
     <string name="label_status_parcours">Status Parcours</string>
+
+    <!-- Infobulles carte -->
+    <string name="infobulle_point_depart">"Point de départ"</string>
+    <string name="infobulle_point_arrive">"Point d'arrivé"</string>
 
     <!-- Messages succès -->
 

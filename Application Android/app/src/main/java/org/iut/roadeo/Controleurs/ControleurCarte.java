@@ -337,14 +337,14 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                 .getPointDepart());
         marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
         marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
-        marqueurDepart.setTitle(getString(R.string.infobulle_point_depart));
+        marqueurDepart.setInfoWindow(null);
 
         marqueurArrive = new Marker(mapView);
         marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
                 .getPointArrive());
         marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
         marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
-        marqueurArrive.setTitle(getString(R.string.infobulle_point_arrive));
+        marqueurArrive.setInfoWindow(null);
 
         mapView.getOverlays().add(marqueurDepart);
         mapView.getOverlays().add(marqueurArrive);
@@ -498,14 +498,32 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         // On met à jour l'état du parcours.
 
         if (view.getId() == R.id.bouton_demarrer_carte) {
+
             parcoursAfficheUtilisateur.setParcoursEnArret(false);
             parcoursAfficheUtilisateur.setParcoursEnPause(false);
+
+            Toast.makeText(getView().getContext(),
+                    getString(R.string.demarrage_parcours),
+                    Toast.LENGTH_SHORT).show();
         }
-        else if (view.getId() == R.id.bouton_pause_carte)
+
+        else if (view.getId() == R.id.bouton_pause_carte) {
+
             parcoursAfficheUtilisateur.setParcoursEnPause(true);
+
+            Toast.makeText(getView().getContext(),
+                    getString(R.string.mise_en_pause_parcours),
+                    Toast.LENGTH_SHORT).show();
+        }
+
         else if (view.getId() == R.id.bouton_stop_carte) {
+
             parcoursAfficheUtilisateur.setParcoursEnArret(true);
             parcoursAfficheUtilisateur.setParcoursEnPause(false);
+
+            Toast.makeText(getView().getContext(),
+                    getString(R.string.mise_en_arret_parcours),
+                    Toast.LENGTH_SHORT).show();
         }
 
         mettreAJourAffichageControles();

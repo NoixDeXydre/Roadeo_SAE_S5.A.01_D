@@ -366,6 +366,11 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                     @Override
                     public void onLocationResult(LocationResult resultatLocalisation) {
 
+                        // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
+                        if (parcoursAfficheUtilisateur.isParcoursEnArret()
+                                || parcoursAfficheUtilisateur.isParcoursEnPause())
+                            return;
+
                         derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
                         GeoPoint pointDerniereLocalisation = new GeoPoint
                                 (derniereLocalisationUtilisateur.getLatitude(),

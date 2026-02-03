@@ -23,7 +23,7 @@
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
             android:adjustViewBounds="true"
-            android:text=""
+            android:text="Modifier"
             android:layout_column="2" />
     </TableRow>
     <TableRow>

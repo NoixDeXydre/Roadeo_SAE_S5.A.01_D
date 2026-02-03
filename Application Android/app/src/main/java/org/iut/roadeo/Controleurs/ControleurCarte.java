@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.Parcours;
@@ -189,6 +190,12 @@ public class ControleurCarte extends Fragment {
         parcoursAfficheUtilisateur.ajouterPointTrajet
                 (parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart());
 
+        requestPermissionsIfNecessary
+                (new String[] {
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                });
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
         mettreAJourPositionUtilisateur();
 
@@ -313,8 +320,12 @@ public class ControleurCarte extends Fragment {
     // Met à jour la position de l'utilisateur en temps réel.
     private void mettreAJourPositionUtilisateur() throws SecurityException {
 
-        LocationRequest requeteLocalisation = new LocationRequest.Builder
-                (10000).setMinUpdateIntervalMillis(5000).build();
+        LocationRequest requeteLocalisation =
+                new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
+                        .setMinUpdateIntervalMillis(5000)
+                        .setWaitForAccurateLocation(false)
+                        .build();
+
         clientDeLocalisation.requestLocationUpdates(
                 requeteLocalisation,
                 new LocationCallback() {
@@ -362,11 +373,14 @@ public class ControleurCarte extends Fragment {
                             Toast.makeText(getView().getContext(),
                                     "Point d'intérêt à moins de 200 m de vous !",
                                     Toast.LENGTH_LONG).show();
-                            avertissementPointInteret.setImageAlpha(0);
 
+                            avertissementPointInteret.setAlpha(1.0f);
+
+                        } else if (isPointTrouve) {
+                            // Corps vide
                         } else {
-                            avertissementPointInteret.setImageAlpha(1);
                             dernierPointInteretNotification = null;
+                            avertissementPointInteret.setAlpha(0.0f);
                         }
                     }
                 },

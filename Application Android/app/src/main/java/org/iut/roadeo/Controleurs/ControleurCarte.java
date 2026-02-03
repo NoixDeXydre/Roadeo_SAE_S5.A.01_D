@@ -3,6 +3,7 @@ package org.iut.roadeo.Controleurs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -11,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,6 +25,7 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
 
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.Parcours;
@@ -37,6 +41,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +61,8 @@ public class ControleurCarte extends Fragment {
     // TODO manipulation du cache après appel API.
     // TODO appel API
 
+    private final int TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION = 1000;
+    private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
 
     // Le dernier chiffre et le celui affiché en dernier.
 
@@ -67,10 +74,18 @@ public class ControleurCarte extends Fragment {
     private FusedLocationProviderClient clientDeLocalisation;
     private Location derniereLocalisationUtilisateur;
 
+    private ImageView avertissementPointInteret;
     private TextView titreRandonnee;
     private TextView dateParcours;
     private Parcours parcoursAfficheUtilisateur;
+
     private Marker marqueurUtilisateur;
+    private Marker marqueurDepart;
+    private Marker marqueurArrive;
+
+    private Marker dernierPointInteretNotification;
+
+    private Polyline trajetRealise;
 
     private ArrayList<Marker> pointsInteretCarte;
 
@@ -90,7 +105,9 @@ public class ControleurCarte extends Fragment {
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
-                (1, "Ma randonnée", 3, null, null),
+                (1, "Ma randonnée", 3,
+                        new GeoPoint(44.360287526289454, 2.575853338825084),
+                        new GeoPoint(44.35970734903577, 2.576335155660985)),
                 new Date());
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;
@@ -103,6 +120,7 @@ public class ControleurCarte extends Fragment {
 
         View vue = inflater.inflate(R.layout.carte, container, false);
 
+        avertissementPointInteret = vue.findViewById(R.id.avertissement_point_interet);
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
         dateParcours = vue.findViewById(R.id.date_parcours);
 
@@ -166,9 +184,13 @@ public class ControleurCarte extends Fragment {
         // FIXME Juste pour les tests :3
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
-        parcoursAfficheUtilisateur.ajouterPointInteret(new GeoPoint(44.360054998826f,
-                2.57556698405f));
 
+        requestPermissionsIfNecessary
+                (new String[] {
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                });
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
         mettreAJourPositionUtilisateur();
 
@@ -211,6 +233,7 @@ public class ControleurCarte extends Fragment {
         });
 
         mapView.getOverlays().add(pointInteret);
+        mapView.invalidate();
 
         return pointInteret;
     }
@@ -220,9 +243,12 @@ public class ControleurCarte extends Fragment {
      * @param pointInteret
      */
     private void supprimerPointInteret(Marker pointInteret) {
+
         parcoursAfficheUtilisateur.supprimerPointInteret(pointInteret.getPosition());
         pointInteret.remove(mapView);
         pointsInteretCarte.remove(pointInteret);
+
+        mapView.invalidate();
     }
 
     @Override
@@ -260,11 +286,42 @@ public class ControleurCarte extends Fragment {
         }
     }
 
+    // Point départ et point arrivée
+    private void mettreAJourPointsExtremes() {
+
+        if (marqueurDepart != null)
+            marqueurDepart.remove(mapView);
+        if (marqueurArrive != null)
+            marqueurArrive.remove(mapView);
+
+        marqueurDepart = new Marker(mapView);
+        marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointDepart());
+        marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
+        marqueurDepart.setTitle(getString(R.string.infobulle_point_depart));
+
+        marqueurArrive = new Marker(mapView);
+        marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointArrive());
+        marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
+        marqueurArrive.setTitle(getString(R.string.infobulle_point_arrive));
+
+        mapView.getOverlays().add(marqueurDepart);
+        mapView.getOverlays().add(marqueurArrive);
+    }
+
     // Met à jour la position de l'utilisateur en temps réel.
     private void mettreAJourPositionUtilisateur() throws SecurityException {
 
-        LocationRequest requeteLocalisation = new LocationRequest.Builder
-                (10000).setMinUpdateIntervalMillis(5000).build();
+        LocationRequest requeteLocalisation =
+                new LocationRequest.Builder
+                        (Priority.PRIORITY_HIGH_ACCURACY, TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
+                        .setMinUpdateIntervalMillis(TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
+                        .setWaitForAccurateLocation(false)
+                        .build();
+
         clientDeLocalisation.requestLocationUpdates(
                 requeteLocalisation,
                 new LocationCallback() {
@@ -272,20 +329,55 @@ public class ControleurCarte extends Fragment {
                     public void onLocationResult(LocationResult resultatLocalisation) {
 
                         derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
+                        GeoPoint pointDerniereLocalisation = new GeoPoint
+                                (derniereLocalisationUtilisateur.getLatitude(),
+                                derniereLocalisationUtilisateur.getLongitude(),
+                                derniereLocalisationUtilisateur.getAltitude());
+
+                        trajetRealise.addPoint(pointDerniereLocalisation);
+                        parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
 
                         if (marqueurUtilisateur != null)
                             marqueurUtilisateur.remove(mapView);
 
                         marqueurUtilisateur = new Marker(mapView);
-                        marqueurUtilisateur.setPosition(new GeoPoint
-                                (derniereLocalisationUtilisateur.getLatitude(),
-                                 derniereLocalisationUtilisateur.getLongitude(),
-                                 derniereLocalisationUtilisateur.getAltitude()));
+                        marqueurUtilisateur.setPosition(pointDerniereLocalisation);
                         marqueurUtilisateur.setIcon(getResources()
                                 .getDrawable(R.drawable.utilisateur_marqueur));
                         marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
                         mapView.getOverlays().add(0, marqueurUtilisateur);
+                        mapView.invalidate();
+
+                        // Notification du point d'intérêt
+
+                        int i = 0;
+                        boolean isPointTrouve = false;
+                        Marker pointTraite = null;
+                        while (i < pointsInteretCarte.size() && !isPointTrouve) {
+                            pointTraite = pointsInteretCarte.get(i);
+                            isPointTrouve = getDistanceDeuxPoints(pointTraite
+                                    .getPosition(), pointDerniereLocalisation)
+                                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
+                            i++;
+                        }
+
+                        if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
+
+                            dernierPointInteretNotification = pointTraite;
+
+                            Toast.makeText(getView().getContext(),
+                                    getString(R.string.avertissement_point_interet),
+                                    Toast.LENGTH_LONG).show();
+
+                            avertissementPointInteret.setAlpha(1.0f);
+
+                        } else if (isPointTrouve) {
+                            // Corps vide
+                        } else {
+                            dernierPointInteretNotification = null;
+                            avertissementPointInteret.setAlpha(0.0f);
+                        }
                     }
                 },
                 Looper.getMainLooper());
@@ -306,9 +398,25 @@ public class ControleurCarte extends Fragment {
         }
 
         // Puis on met ceux du cache.
-        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
+        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret())
             creerPointInteret(positionPointInteret);
-        }
+
+        // MAJ du trajet réalisé
+
+        if (trajetRealise != null)
+            mapView.getOverlays().remove(trajetRealise);
+
+        trajetRealise = new Polyline();
+        trajetRealise.setPoints(parcoursAfficheUtilisateur.getTrajetRealise());
+        System.out.println(parcoursAfficheUtilisateur.getTrajetRealise().size());
+        trajetRealise.setWidth(35f);
+        trajetRealise.setColor(getResources().getColor(R.color.marron_boue));
+        mapView.getOverlays().add(trajetRealise);
+
+        // Départ et arrivé
+        mettreAJourPointsExtremes();
+
+        mapView.invalidate();
 
         // Mise à jour des informations de la page.
 
@@ -317,5 +425,25 @@ public class ControleurCarte extends Fragment {
         titreRandonnee.setText(randonnee.getLibelle());
         dateParcours.setText(getString(R.string.date_carte_parcours_formatage,
                 parcoursAfficheUtilisateur.getDate().toLocaleString()));
+    }
+
+    // Calcule la distance entre deux points, en mètres.
+    // https://www.movable-type.co.uk/scripts/latlong.html
+    private double getDistanceDeuxPoints(GeoPoint p1, GeoPoint p2) {
+
+        double R = 6371e3; // Rayon en metres
+
+        double degres = Math.PI / 180;
+        double φ1 = p1.getLatitude() * degres; // φ, λ in radians
+        double φ2 = p2.getLatitude() * degres;
+        double Δφ = (p2.getLatitude() - p1.getLatitude()) * degres;
+        double Δλ = (p2.getLongitude() - p1.getLongitude()) * degres;
+
+        double a = Math.sin(Δφ * 0.5) * Math.sin(Δφ * 0.5) +
+                        Math.cos(φ1) * Math.cos(φ2) *
+                                Math.sin(Δλ * 0.5) * Math.sin(Δλ * 0.5);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+        return R * c; // in metres
     }
 }

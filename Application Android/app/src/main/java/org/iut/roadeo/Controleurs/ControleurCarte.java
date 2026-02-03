@@ -61,6 +61,7 @@ public class ControleurCarte extends Fragment {
     // TODO manipulation du cache après appel API.
     // TODO appel API
 
+    private final int TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION = 1000;
     private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
 
     // Le dernier chiffre et le celui affiché en dernier.
@@ -183,12 +184,6 @@ public class ControleurCarte extends Fragment {
         // FIXME Juste pour les tests :3
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
-        parcoursAfficheUtilisateur.ajouterPointInteret(new GeoPoint(44.360054998826f,
-                2.57556698405f));
-        parcoursAfficheUtilisateur.ajouterPointTrajet
-                (parcoursAfficheUtilisateur.getRandonneeParcours().getPointArrive());
-        parcoursAfficheUtilisateur.ajouterPointTrajet
-                (parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart());
 
         requestPermissionsIfNecessary
                 (new String[] {
@@ -321,8 +316,9 @@ public class ControleurCarte extends Fragment {
     private void mettreAJourPositionUtilisateur() throws SecurityException {
 
         LocationRequest requeteLocalisation =
-                new LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 5000)
-                        .setMinUpdateIntervalMillis(5000)
+                new LocationRequest.Builder
+                        (Priority.PRIORITY_HIGH_ACCURACY, TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
+                        .setMinUpdateIntervalMillis(TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
                         .setWaitForAccurateLocation(false)
                         .build();
 
@@ -371,7 +367,7 @@ public class ControleurCarte extends Fragment {
                             dernierPointInteretNotification = pointTraite;
 
                             Toast.makeText(getView().getContext(),
-                                    "Point d'intérêt à moins de 200 m de vous !",
+                                    getString(R.string.avertissement_point_interet),
                                     Toast.LENGTH_LONG).show();
 
                             avertissementPointInteret.setAlpha(1.0f);

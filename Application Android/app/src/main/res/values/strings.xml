@@ -75,6 +75,11 @@
         <item name="fort">Fort</item>
     </string-array>
 
+    <!-- -->
+    <string name="avertissement_point_interet">
+        "Vous êtes à moins de 200m d'un point d'intérêt !"
+    </string>
+
     <!-- Informations carte -->
 
     <string name="label_carte_randonnee">Randonnée</string>

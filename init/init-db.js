@@ -15,7 +15,7 @@ db.utilisateur.insertOne({
   prenom: "Marcel", 
   age: 40, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Forte",
+  morphologie: "Fort",
   sac: []
 })
 
@@ -29,7 +29,7 @@ db.utilisateur.insertOne({
   prenom: "Jean-Michel", 
   age: 23, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Moyenne",
+  morphologie: "Moyen",
   sac: []
 })
 
@@ -43,7 +43,7 @@ db.utilisateur.insertOne({
   prenom: "Un", 
   age: 39, 
   niveauEntrainement: "Debutant", 
-  morphologie: "Legere",
+  morphologie: "Leger",
   sac: []
 })
 
@@ -65,7 +65,7 @@ db.randonnee.insertOne({
     prenom: "Pierre", 
     age: 61, 
     niveauEntrainement: "Sportif", 
-    morphologie: "Moyenne",
+    morphologie: "Moyen",
     sac: []
   }, 
   {
@@ -73,7 +73,7 @@ db.randonnee.insertOne({
     prenom: "M Tournesol", 
     age: 67, 
     niveauEntrainement: "Debutant", 
-    morphologie: "Legere",
+    morphologie: "Leger",
     sac: []
   }]
 });
@@ -92,7 +92,7 @@ db.randonnee.insertOne({
       prenom: "Pierre", 
       age: 61, 
       niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne",
+      morphologie: "Moyen",
       sac: []
     }, 
     {
@@ -100,7 +100,7 @@ db.randonnee.insertOne({
       prenom: "M Tournesol", 
       age: 67, 
       niveauEntrainement: "Debutant", 
-      morphologie: "Legere",
+      morphologie: "Leger",
       sac: []
     },
     {
@@ -108,7 +108,7 @@ db.randonnee.insertOne({
       prenom: "Marcel", 
       age: 23, 
       niveauEntrainement: "sportif", 
-      morphologie: "Legere",
+      morphologie: "Leger",
       sac: []
     }
   ]
@@ -128,7 +128,7 @@ db.randonnee.insertOne({
       prenom: "Pierre", 
       age: 61, 
       niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne",
+      morphologie: "Moyen",
       sac: []
     }, 
     {
@@ -136,7 +136,7 @@ db.randonnee.insertOne({
       prenom: "M Tournesol", 
       age: 67, 
       niveauEntrainement: "Debutant", 
-      morphologie: "Legere",
+      morphologie: "Leger",
       sac: []
     }
   ]

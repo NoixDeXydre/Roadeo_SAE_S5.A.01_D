@@ -3,6 +3,7 @@ package fr.iutrodez.roadeo.controleur;
 import fr.iutrodez.roadeo.modele.Produits;
 import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.service.ObjetService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,12 +19,12 @@ public class ObjetApiControleur {
         this.objetService = serviceO;
     }
 
-    @RequestMapping("/liste")
-    public List<Produits> getRandonnee() {
+    @GetMapping("/liste")
+    public List<Produits> getProduits() {
         return objetService.recupListeObjet();
     }
 
-    @RequestMapping("/categorie")
+    @GetMapping("/categorie")
     public List<String> getCategorie() {
         return objetService.listeCategorie();
     }

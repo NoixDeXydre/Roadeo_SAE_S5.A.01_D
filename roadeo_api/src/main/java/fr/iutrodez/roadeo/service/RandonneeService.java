@@ -93,10 +93,9 @@ public class RandonneeService {
     }
 
     public Randonnee modifRandonnee(Randonnee rando) {
-        //System.out.println(rando);
-        //if (rando == null) {
-        //    throw new IllegalArgumentException();
-        //}
+        if (rando == null) {
+            throw new IllegalArgumentException();
+        }
         return repository.save(rando);
     }
 
@@ -108,16 +107,17 @@ public class RandonneeService {
         return !parcoursRepository.existsById(id);
     }
 
-    public void modifParcours() {
-
+    public Parcours modifParcours(Parcours parcours) {
+        if (parcours == null) {
+            throw new IllegalArgumentException();
+        }
+        return parcoursRepository.save(parcours);
     }
 
-    public void ajoutParcours() {
-
+    public Parcours ajoutParcours(Parcours parcours) {
+        if (parcours == null || !repository.existsById(parcours.getIdRando())) {
+            throw new IllegalArgumentException();
+        }
+        return parcoursRepository.insert(parcours);
     }
-
-    public void ajoutRandonnee(Randonnee rando) {
-        repository.insert(rando);
-    }
-
 }

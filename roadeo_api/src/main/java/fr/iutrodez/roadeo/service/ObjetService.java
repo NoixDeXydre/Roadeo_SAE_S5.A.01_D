@@ -49,14 +49,25 @@ public class ObjetService {
     }
 
 
-    public void ajoutProduits() {
-
+    public Produits ajoutProduits(Produits prod) {
+        if (prod == null) {
+            throw new IllegalArgumentException();
+        }
+        return objetRepository.insert(prod);
     }
 
-    public void modifProduits() {
+    public Produits modifProduits(Produits prod) {
+        if (prod == null || !objetRepository.existsById(prod.getId())) {
+            throw new IllegalArgumentException();
+        }
+        return objetRepository.insert(prod);
     }
 
-    public void deleteProduits(String id) {
+    public boolean deleteProduits(String id) {
+        if (!objetRepository.existsById(id)) {
+            throw new IllegalArgumentException();
+        }
         objetRepository.deleteById(id);
+        return objetRepository.existsById(id);
     }
 }

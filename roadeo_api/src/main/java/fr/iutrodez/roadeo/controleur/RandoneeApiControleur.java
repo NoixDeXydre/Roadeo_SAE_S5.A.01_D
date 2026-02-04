@@ -102,16 +102,14 @@ public class RandoneeApiControleur {
         }
     }
 
-    // TODO modifier randonnée
     @PutMapping("/modif")
     public ResponseEntity<Randonnee> modifRandonnee(@RequestBody Randonnee rando) {
         try {
             Randonnee randonnee = randonneeService.modifRandonnee(rando);
-            if (randonnee != null) {
-                return ResponseEntity.ok(randonnee);
-            } else {
+            if (randonnee == null) {
                 return ResponseEntity.notFound().build();
             }
+            return ResponseEntity.ok(randonnee);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }

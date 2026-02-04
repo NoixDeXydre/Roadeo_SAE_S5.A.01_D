@@ -73,6 +73,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
     private FusedLocationProviderClient clientDeLocalisation;
     private Location derniereLocalisationUtilisateur;
+    private LocationCallback callbackDeLocalisation;
 
     private ImageView avertissementPointInteret;
     private TextView titreRandonnee;
@@ -360,70 +361,70 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                         .setWaitForAccurateLocation(false)
                         .build();
 
-        clientDeLocalisation.requestLocationUpdates(
-                requeteLocalisation,
-                new LocationCallback() {
-                    @Override
-                    public void onLocationResult(LocationResult resultatLocalisation) {
+        callbackDeLocalisation = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult resultatLocalisation) {
 
-                        // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
-                        if (parcoursAfficheUtilisateur.isParcoursEnArret()
-                                || parcoursAfficheUtilisateur.isParcoursEnPause())
-                            return;
+                // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
+                if (parcoursAfficheUtilisateur.isParcoursEnArret()
+                        || parcoursAfficheUtilisateur.isParcoursEnPause())
+                    return;
 
-                        derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
-                        GeoPoint pointDerniereLocalisation = new GeoPoint
-                                (derniereLocalisationUtilisateur.getLatitude(),
+                derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
+                GeoPoint pointDerniereLocalisation = new GeoPoint
+                        (derniereLocalisationUtilisateur.getLatitude(),
                                 derniereLocalisationUtilisateur.getLongitude(),
                                 derniereLocalisationUtilisateur.getAltitude());
 
-                        trajetRealise.addPoint(pointDerniereLocalisation);
-                        parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
+                trajetRealise.addPoint(pointDerniereLocalisation);
+                parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
 
-                        if (marqueurUtilisateur != null)
-                            marqueurUtilisateur.remove(mapView);
+                if (marqueurUtilisateur != null)
+                    marqueurUtilisateur.remove(mapView);
 
-                        marqueurUtilisateur = new Marker(mapView);
-                        marqueurUtilisateur.setPosition(pointDerniereLocalisation);
-                        marqueurUtilisateur.setIcon(getResources()
-                                .getDrawable(R.drawable.utilisateur_marqueur));
-                        marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+                marqueurUtilisateur = new Marker(mapView);
+                marqueurUtilisateur.setPosition(pointDerniereLocalisation);
+                marqueurUtilisateur.setIcon(getResources()
+                        .getDrawable(R.drawable.utilisateur_marqueur));
+                marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
-                        mapView.getOverlays().add(0, marqueurUtilisateur);
-                        mapView.invalidate();
+                mapView.getOverlays().add(0, marqueurUtilisateur);
+                mapView.invalidate();
 
-                        // Notification du point d'intérêt
+                // Notification du point d'intérêt
 
-                        int i = 0;
-                        boolean isPointTrouve = false;
-                        Marker pointTraite = null;
-                        while (i < pointsInteretCarte.size() && !isPointTrouve) {
-                            pointTraite = pointsInteretCarte.get(i);
-                            isPointTrouve = getDistanceDeuxPoints(pointTraite
-                                    .getPosition(), pointDerniereLocalisation)
-                                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
-                            i++;
-                        }
+                int i = 0;
+                boolean isPointTrouve = false;
+                Marker pointTraite = null;
+                while (i < pointsInteretCarte.size() && !isPointTrouve) {
+                    pointTraite = pointsInteretCarte.get(i);
+                    isPointTrouve = getDistanceDeuxPoints(pointTraite
+                            .getPosition(), pointDerniereLocalisation)
+                            < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
+                    i++;
+                }
 
-                        if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
+                if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
 
-                            dernierPointInteretNotification = pointTraite;
+                    dernierPointInteretNotification = pointTraite;
 
-                            Toast.makeText(getView().getContext(),
-                                    getString(R.string.avertissement_point_interet),
-                                    Toast.LENGTH_LONG).show();
+                    Toast.makeText(getView().getContext(),
+                            getString(R.string.avertissement_point_interet),
+                            Toast.LENGTH_LONG).show();
 
-                            avertissementPointInteret.setAlpha(1.0f);
+                    avertissementPointInteret.setAlpha(1.0f);
 
-                        } else if (isPointTrouve) {
-                            // Corps vide
-                        } else {
-                            dernierPointInteretNotification = null;
-                            avertissementPointInteret.setAlpha(0.0f);
-                        }
-                    }
-                },
-                Looper.getMainLooper());
+                } else if (isPointTrouve) {
+                    // Corps vide
+                } else {
+                    dernierPointInteretNotification = null;
+                    avertissementPointInteret.setAlpha(0.0f);
+                }
+            }
+        };
+
+        clientDeLocalisation.requestLocationUpdates(requeteLocalisation,
+                callbackDeLocalisation, Looper.getMainLooper());
     }
 
     // À appeler à chaque fois qu'on change de parcours.

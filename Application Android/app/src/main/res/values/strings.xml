@@ -75,10 +75,13 @@
         <item name="fort">Fort</item>
     </string-array>
 
-    <!-- -->
+    <!-- Carte -->
     <string name="avertissement_point_interet">
         "Vous êtes à moins de 200m d'un point d'intérêt !"
     </string>
+    <string name="mise_en_pause_parcours">Le parcours a été mis en pause.</string>
+    <string name="demarrage_parcours">Démarrage / continuation de la randonnée</string>
+    <string name="mise_en_arret_parcours">Arrêt de la randonnée</string>
 
     <!-- Informations carte -->
 
@@ -88,10 +91,6 @@
     <string name="distance_point_interet_proche_formatage">"%s m"</string>
     <string name="label_participants_carte">Participants</string>
     <string name="label_status_parcours">Status Parcours</string>
-
-    <!-- Infobulles carte -->
-    <string name="infobulle_point_depart">"Point de départ"</string>
-    <string name="infobulle_point_arrive">"Point d'arrivé"</string>
 
     <!-- Messages succès -->
 

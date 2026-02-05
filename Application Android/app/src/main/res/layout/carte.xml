@@ -122,6 +122,36 @@
             android:scaleY="0.5"
             android:src="@drawable/point_interet_avertissement" />
 
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="84dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/bouton_demarrer_carte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="10dp"
+                android:src="@drawable/continuer_parcours" />
+
+            <ImageView
+                android:id="@+id/bouton_pause_carte"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pause_parcours" />
+
+            <ImageView
+                android:id="@+id/bouton_stop_carte"
+                android:layout_width="85dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:src="@drawable/arreter_parcours" />
+        </LinearLayout>
+
     </FrameLayout>
 
 </LinearLayout>

@@ -26,6 +26,9 @@ public class Parcours {
     /** Défini la complétion du parcours. */
     private boolean isParcoursTermine;
 
+    /** Défini si le parcours est en fonctionnement. */
+    private boolean isParcoursEnFonctionnement;
+
     /** La randonnée liée au parcours. */
     private Randonnee randonneeParcours;
 
@@ -98,6 +101,10 @@ public class Parcours {
         return isParcoursEnArret;
     }
 
+    public boolean isParcoursEnFonctionnement() {
+        return isParcoursEnFonctionnement;
+    }
+
     public boolean isParcoursEnPause() {
         return isParcoursEnPause;
     }
@@ -106,12 +113,46 @@ public class Parcours {
         return isParcoursTermine;
     }
 
+    /**
+     * Met le parcours en arret.
+     * Cela enlève par ailleurs le status pause et fonctionnement du parcours.
+     * @param parcoursEnArret
+     */
     public void setParcoursEnArret(boolean parcoursEnArret) {
+
         isParcoursEnArret = parcoursEnArret;
+        if (isParcoursEnArret) {
+            setParcoursEnPause(false);
+            setParcoursEnFonctionnement(false);
+        }
     }
 
+    /**
+     * Démarre le parcours
+     * Cela enlève par ailleurs le status arrêt et pause du parcours.
+     * @param parcoursEnFonctionnement
+     */
+    public void setParcoursEnFonctionnement(boolean parcoursEnFonctionnement) {
+
+        isParcoursEnFonctionnement = parcoursEnFonctionnement;
+        if (parcoursEnFonctionnement) {
+            setParcoursEnArret(false);
+            setParcoursEnPause(false);
+        }
+    }
+
+    /**
+     * Met le parcours en pause.
+     * Cela enlève par ailleurs le status arrêt et fonctionnement du parcours.
+     * @param parcoursEnPause
+     */
     public void setParcoursEnPause(boolean parcoursEnPause) {
+
         isParcoursEnPause = parcoursEnPause;
+        if (isParcoursEnPause) {
+            setParcoursEnArret(false);
+            setParcoursEnFonctionnement(false);
+        }
     }
 
     public void setParcoursTermine(boolean parcoursTermine) {

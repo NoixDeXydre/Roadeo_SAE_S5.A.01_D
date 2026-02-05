@@ -376,8 +376,13 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                                 derniereLocalisationUtilisateur.getLongitude(),
                                 derniereLocalisationUtilisateur.getAltitude());
 
-                trajetRealise.addPoint(pointDerniereLocalisation);
-                parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
+                // On met à jour le parcours seulement la position de l'utilisateur change.
+                ArrayList<GeoPoint> trajetActuel = parcoursAfficheUtilisateur.getTrajetRealise();
+                if (trajetActuel.size() == 0 || !trajetActuel.get(trajetActuel.size() - 1)
+                        .equals(pointDerniereLocalisation)) {
+                    trajetRealise.addPoint(pointDerniereLocalisation);
+                    parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
+                }
 
                 if (marqueurUtilisateur != null)
                     marqueurUtilisateur.remove(mapView);

@@ -3,7 +3,6 @@ package org.iut.roadeo.Controleurs;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
@@ -62,18 +61,47 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
     // TODO appel API
 
     private final int TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION = 1000;
-    private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
-
-    // Le dernier chiffre et le celui affiché en dernier.
-
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
+    private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
+    private final String[] DROITS_REQUIS_CARTE = new String[] {
+        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    };
+
+    LocationRequest requeteLocalisation =
+            new LocationRequest.Builder
+                    (Priority.PRIORITY_HIGH_ACCURACY, TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
+                    .setMinUpdateIntervalMillis(TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
+                    .setWaitForAccurateLocation(true)
+                    .build();
+
+    LocationCallback callbackDeLocalisation = new LocationCallback() {
+        @Override
+        public void onLocationResult(LocationResult resultatLocalisation) {
+
+            // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
+            if (parcoursAfficheUtilisateur.isParcoursEnArret()
+                    || parcoursAfficheUtilisateur.isParcoursEnPause())
+                return;
+
+            Location pointActuelUtilisateur = resultatLocalisation.getLastLocation();
+            derniereLocalisationUtilisateur = new GeoPoint
+                    (pointActuelUtilisateur.getLatitude(),
+                            pointActuelUtilisateur.getLongitude(),
+                            pointActuelUtilisateur.getAltitude());
+
+            // On met à jour tout ce qui concerne la position du randonneur.
+            mettreAJourMarqueurEtTrajetUtilisateur();
+            mettreAJourEtatNotificationPointInteret();
+        }
+    };
 
     private IMapController controleurMapView;
     private MapView mapView;
 
     private FusedLocationProviderClient clientDeLocalisation;
-    private Location derniereLocalisationUtilisateur;
-    private LocationCallback callbackDeLocalisation;
+    private GeoPoint derniereLocalisationUtilisateur;
 
     private ImageView avertissementPointInteret;
     private TextView titreRandonnee;
@@ -122,7 +150,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState) throws SecurityException {
 
         View vue = inflater.inflate(R.layout.carte, container, false);
 
@@ -199,14 +227,16 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
 
-        requestPermissionsIfNecessary
-                (new String[] {
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION
-                });
+        requestPermissionsIfNecessary(DROITS_REQUIS_CARTE);
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
-        mettreAJourPositionUtilisateur();
+
+        //
+        // Fréquente plusieurs fois le GPS pour mettre à jour la position de l'utilisateur.
+        //
+        // On en profite pour mettre à jour le tracé
+        // et le marqueur représentant la position de l'utilisateur.
+        clientDeLocalisation.requestLocationUpdates(requeteLocalisation,
+                callbackDeLocalisation, Looper.getMainLooper());
 
         return vue;
     }
@@ -265,23 +295,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         mapView.invalidate();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
-
-        ArrayList<String> permissionsToRequest = new ArrayList<>();
-        for (int i = 0; i < grantResults.length; i++) {
-            permissionsToRequest.add(permissions[i]);
-        }
-
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    getActivity(),
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }
-
     private void requestPermissionsIfNecessary(String[] permissions) {
 
         ArrayList<String> permissionsToRequest = new ArrayList<>();
@@ -300,6 +313,64 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         }
     }
 
+    private void mettreAJourMarqueurEtTrajetUtilisateur() {
+
+        // On met à jour le parcours seulement la position de l'utilisateur change.
+        ArrayList<GeoPoint> trajetActuel = parcoursAfficheUtilisateur.getTrajetRealise();
+        if (trajetActuel.size() == 0 || !trajetActuel.get(trajetActuel.size() - 1)
+                .equals(derniereLocalisationUtilisateur)) {
+            trajetRealise.addPoint(derniereLocalisationUtilisateur);
+            parcoursAfficheUtilisateur.ajouterPointTrajet(derniereLocalisationUtilisateur);
+        }
+
+        if (marqueurUtilisateur != null)
+            marqueurUtilisateur.remove(mapView);
+
+        marqueurUtilisateur = new Marker(mapView);
+        marqueurUtilisateur.setPosition(derniereLocalisationUtilisateur);
+        marqueurUtilisateur.setIcon(getResources()
+                .getDrawable(R.drawable.utilisateur_marqueur));
+        marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+
+        mapView.getOverlays().add(0, marqueurUtilisateur);
+        mapView.invalidate();
+    }
+
+    // Met à jour l'affichage de la notification selon la position
+    // du randonneur et ses points d'intérêt.
+    private void mettreAJourEtatNotificationPointInteret() {
+
+        int i = 0;
+        boolean isPointTrouve = false;
+        Marker pointTraite = null;
+        while (derniereLocalisationUtilisateur != null
+                && i < pointsInteretCarte.size() && !isPointTrouve) {
+            pointTraite = pointsInteretCarte.get(i);
+            isPointTrouve = getDistanceDeuxPoints(pointTraite
+                    .getPosition(), derniereLocalisationUtilisateur)
+                    < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
+            i++;
+        }
+
+        if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
+
+            dernierPointInteretNotification = pointTraite;
+
+            Toast.makeText(getView().getContext(),
+                    getString(R.string.avertissement_point_interet),
+                    Toast.LENGTH_LONG).show();
+
+            avertissementPointInteret.setAlpha(1.0f);
+
+        } else if (isPointTrouve) {
+            // Corps vide
+        } else {
+            dernierPointInteretNotification = null;
+            avertissementPointInteret.setAlpha(0.0f);
+        }
+    }
+
+    // Met à jour l'état des contrôles en bas à droite de l'écran.
     private void mettreAJourAffichageControles() {
 
         // Si pause
@@ -349,87 +420,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         mapView.getOverlays().add(marqueurDepart);
         mapView.getOverlays().add(marqueurArrive);
-    }
-
-    // Met à jour la position de l'utilisateur en temps réel.
-    private void mettreAJourPositionUtilisateur() throws SecurityException {
-
-        LocationRequest requeteLocalisation =
-                new LocationRequest.Builder
-                        (Priority.PRIORITY_HIGH_ACCURACY, TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
-                        .setMinUpdateIntervalMillis(TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION)
-                        .setWaitForAccurateLocation(false)
-                        .build();
-
-        callbackDeLocalisation = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult resultatLocalisation) {
-
-                // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
-                if (parcoursAfficheUtilisateur.isParcoursEnArret()
-                        || parcoursAfficheUtilisateur.isParcoursEnPause())
-                    return;
-
-                derniereLocalisationUtilisateur = resultatLocalisation.getLastLocation();
-                GeoPoint pointDerniereLocalisation = new GeoPoint
-                        (derniereLocalisationUtilisateur.getLatitude(),
-                                derniereLocalisationUtilisateur.getLongitude(),
-                                derniereLocalisationUtilisateur.getAltitude());
-
-                // On met à jour le parcours seulement la position de l'utilisateur change.
-                ArrayList<GeoPoint> trajetActuel = parcoursAfficheUtilisateur.getTrajetRealise();
-                if (trajetActuel.size() == 0 || !trajetActuel.get(trajetActuel.size() - 1)
-                        .equals(pointDerniereLocalisation)) {
-                    trajetRealise.addPoint(pointDerniereLocalisation);
-                    parcoursAfficheUtilisateur.ajouterPointTrajet(pointDerniereLocalisation);
-                }
-
-                if (marqueurUtilisateur != null)
-                    marqueurUtilisateur.remove(mapView);
-
-                marqueurUtilisateur = new Marker(mapView);
-                marqueurUtilisateur.setPosition(pointDerniereLocalisation);
-                marqueurUtilisateur.setIcon(getResources()
-                        .getDrawable(R.drawable.utilisateur_marqueur));
-                marqueurUtilisateur.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-
-                mapView.getOverlays().add(0, marqueurUtilisateur);
-                mapView.invalidate();
-
-                // Notification du point d'intérêt
-
-                int i = 0;
-                boolean isPointTrouve = false;
-                Marker pointTraite = null;
-                while (i < pointsInteretCarte.size() && !isPointTrouve) {
-                    pointTraite = pointsInteretCarte.get(i);
-                    isPointTrouve = getDistanceDeuxPoints(pointTraite
-                            .getPosition(), pointDerniereLocalisation)
-                            < DISTANCE_MAX_NOTIFICATION_POINT_INTERET;
-                    i++;
-                }
-
-                if (isPointTrouve && !pointTraite.equals(dernierPointInteretNotification)) {
-
-                    dernierPointInteretNotification = pointTraite;
-
-                    Toast.makeText(getView().getContext(),
-                            getString(R.string.avertissement_point_interet),
-                            Toast.LENGTH_LONG).show();
-
-                    avertissementPointInteret.setAlpha(1.0f);
-
-                } else if (isPointTrouve) {
-                    // Corps vide
-                } else {
-                    dernierPointInteretNotification = null;
-                    avertissementPointInteret.setAlpha(0.0f);
-                }
-            }
-        };
-
-        clientDeLocalisation.requestLocationUpdates(requeteLocalisation,
-                callbackDeLocalisation, Looper.getMainLooper());
     }
 
     // À appeler à chaque fois qu'on change de parcours.
@@ -533,5 +523,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         }
 
         mettreAJourAffichageControles();
+        mettreAJourEtatNotificationPointInteret();
     }
 }

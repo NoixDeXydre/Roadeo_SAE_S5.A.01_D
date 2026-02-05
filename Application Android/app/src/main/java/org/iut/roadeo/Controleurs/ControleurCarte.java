@@ -80,12 +80,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         @Override
         public void onLocationResult(LocationResult resultatLocalisation) {
 
-            // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
-            if (parcoursAfficheUtilisateur.isParcoursEnArret()
-                    || parcoursAfficheUtilisateur.isParcoursEnPause()
-                    || !parcoursAfficheUtilisateur.isParcoursEnFonctionnement())
-                return;
-
             Location pointActuelUtilisateur = resultatLocalisation.getLastLocation();
             derniereLocalisationUtilisateur = new GeoPoint
                     (pointActuelUtilisateur.getLatitude(),
@@ -94,7 +88,10 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
             // On met à jour tout ce qui concerne la position du randonneur.
             mettreAJourMarqueurEtTrajetUtilisateur();
-            mettreAJourEtatNotificationPointInteret();
+
+            // Si false, on ne met pas à jour le tracé.
+            if (isParcoursEnFonctionnementWithControles())
+                mettreAJourEtatNotificationPointInteret();
         }
     };
 
@@ -156,6 +153,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         View vue = inflater.inflate(R.layout.carte, container, false);
 
         avertissementPointInteret = vue.findViewById(R.id.avertissement_point_interet);
+        avertissementPointInteret.setAlpha(0.0f);
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
         dateParcours = vue.findViewById(R.id.date_parcours);
 
@@ -316,14 +314,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
     private void mettreAJourMarqueurEtTrajetUtilisateur() {
 
-        // On met à jour le parcours seulement la position de l'utilisateur change.
-        ArrayList<GeoPoint> trajetActuel = parcoursAfficheUtilisateur.getTrajetRealise();
-        if (trajetActuel.size() == 0 || !trajetActuel.get(trajetActuel.size() - 1)
-                .equals(derniereLocalisationUtilisateur)) {
-            trajetRealise.addPoint(derniereLocalisationUtilisateur);
-            parcoursAfficheUtilisateur.ajouterPointTrajet(derniereLocalisationUtilisateur);
-        }
-
         if (marqueurUtilisateur != null)
             marqueurUtilisateur.remove(mapView);
 
@@ -335,6 +325,18 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         mapView.getOverlays().add(0, marqueurUtilisateur);
         mapView.invalidate();
+
+        // Si false, on ne met pas à jour le tracé.
+        if (!isParcoursEnFonctionnementWithControles())
+            return;
+
+        // On met à jour le parcours seulement la position de l'utilisateur change.
+        ArrayList<GeoPoint> trajetActuel = parcoursAfficheUtilisateur.getTrajetRealise();
+        if (trajetActuel.size() == 0 || !trajetActuel.get(trajetActuel.size() - 1)
+                .equals(derniereLocalisationUtilisateur)) {
+            trajetRealise.addPoint(derniereLocalisationUtilisateur);
+            parcoursAfficheUtilisateur.ajouterPointTrajet(derniereLocalisationUtilisateur);
+        }
     }
 
     // Met à jour l'affichage de la notification selon la position
@@ -473,6 +475,12 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                 parcoursAfficheUtilisateur.getDate().toLocaleString()));
 
         mettreAJourAffichageControles();
+    }
+
+    private boolean isParcoursEnFonctionnementWithControles() {
+        return !parcoursAfficheUtilisateur.isParcoursEnArret()
+                && !parcoursAfficheUtilisateur.isParcoursEnPause()
+                && parcoursAfficheUtilisateur.isParcoursEnFonctionnement();
     }
 
     // Calcule la distance entre deux points, en mètres.

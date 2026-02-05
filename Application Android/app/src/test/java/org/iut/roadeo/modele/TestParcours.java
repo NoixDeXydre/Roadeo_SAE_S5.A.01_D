@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 
+import org.iut.roadeo.Modele.PointInteret;
 import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Parcours;
 import org.junit.Test;
@@ -29,7 +30,8 @@ public class TestParcours {
 
         try {
             new Parcours(new Randonnee
-                    ("Ma randonnée",1, null, null), null);
+                    (1,"Ma randonnée",1, null, null),
+                    null, "test");
             fail("Le parcours ne devrait pas être valide si pas de date.");
         } catch (IllegalArgumentException e) { }
     }
@@ -38,8 +40,27 @@ public class TestParcours {
     public void testParcoursEchecRandonneeNull() {
 
         try {
-            new Parcours(null, new Date());
+            new Parcours(null, new Date(), "test");
             fail("Le parcours ne devrait pas être valide si pas de randonnée liée.");
+        } catch (IllegalArgumentException e) { }
+    }
+
+    @Test
+    public void testParcoursLibelleInvalide() {
+        try {
+            new Parcours(new Randonnee(1,"Ma randonnée", 1, null, null),
+                    new Date(), null);
+            fail("Le parcours ne devrait pas être valide si le libelle est null");
+        } catch (IllegalArgumentException e) { }
+        try {
+            new Parcours(new Randonnee(1,"Ma randonnée", 1, null, null),
+                    new Date(), "");
+            fail("Le parcours ne devrait pas être valide si le libelle est vide");
+        } catch (IllegalArgumentException e) { }
+        try {
+            new Parcours(new Randonnee(1,"Ma randonnée", 1, null, null),
+                    new Date(), "  ");
+            fail("Le parcours ne devrait pas être valide si le libelle est blanc");
         } catch (IllegalArgumentException e) { }
     }
 
@@ -47,8 +68,8 @@ public class TestParcours {
     public void testParcoursSucces() {
 
         try {
-            new Parcours(new Randonnee("Ma randonnée", 1, null, null),
-                    new Date());
+            new Parcours(new Randonnee(1,"Ma randonnée", 1, null, null),
+                    new Date(), "test");
         } catch (IllegalArgumentException e) {
             fail("Le parcours est en théorie valide et devrait se créer.");
         }
@@ -57,8 +78,8 @@ public class TestParcours {
     @Test
     public void testAjouterPointInteretNull() {
 
-        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
-                null, null), new Date());
+        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+                null, null), new Date(), "test");
 
         parcours.ajouterPointInteret(null);
         assertEquals(parcours.getPointsInteret().size(), 0);
@@ -67,12 +88,12 @@ public class TestParcours {
     @Test
     public void testAjouterPointInteret() {
 
-        Parcours parcours = new Parcours(new Randonnee("Mon parcours", 1,
-                null, null), new Date());
+        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+                null, null), new Date(), "test");
 
-        ArrayList<GeoPoint> points = new ArrayList<>
-                (Arrays.asList(new GeoPoint(0.0f, 0.1f),
-                        new GeoPoint(0.1f, 0.0f)));
+        ArrayList<PointInteret> points = new ArrayList<>
+                (Arrays.asList(new PointInteret("test", new double[]{0.0, 0.1}),
+                        new PointInteret("test", new double[]{0.1, 0.0})));
 
         parcours.ajouterPointInteret(points.get(0));
         parcours.ajouterPointInteret(points.get(1));

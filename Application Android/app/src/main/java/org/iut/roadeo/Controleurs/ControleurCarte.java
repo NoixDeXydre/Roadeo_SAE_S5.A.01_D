@@ -25,6 +25,7 @@ import com.google.android.gms.location.LocationServices;
 
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.Modele.Parcours;
+import org.iut.roadeo.Modele.PointInteret;
 import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Utilisateur;
 import org.iut.roadeo.R;
@@ -91,7 +92,7 @@ public class ControleurCarte extends Fragment {
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
                 (1, "Ma randonnée", 3, null, null),
-                new Date());
+                new Date(), "test");
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;
     }
@@ -166,8 +167,8 @@ public class ControleurCarte extends Fragment {
         // FIXME Juste pour les tests :3
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
-        parcoursAfficheUtilisateur.ajouterPointInteret(new GeoPoint(44.360054998826f,
-                2.57556698405f));
+        parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
+                                        new double[]{44.360054998826, 2.57556698405}));
 
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
         mettreAJourPositionUtilisateur();
@@ -201,7 +202,9 @@ public class ControleurCarte extends Fragment {
         pointInteret.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
 
         // Ecriture dans le cache
-        parcoursAfficheUtilisateur.ajouterPointInteret(position);
+        parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
+                                            new double[]{position.getLongitude(),
+                                                         position.getLatitude()}));
 
         pointsInteretCarte.add(pointInteret);
 
@@ -306,8 +309,9 @@ public class ControleurCarte extends Fragment {
         }
 
         // Puis on met ceux du cache.
-        for (GeoPoint positionPointInteret : parcoursAfficheUtilisateur.getPointsInteret()) {
-            creerPointInteret(positionPointInteret);
+        for (PointInteret positionPointInteret : parcoursAfficheUtilisateur
+                                                 .getPointsInteret()) {
+            creerPointInteret(positionPointInteret.getCoordonnees());
         }
 
         // Mise à jour des informations de la page.

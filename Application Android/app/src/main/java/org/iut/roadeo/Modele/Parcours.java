@@ -1,5 +1,7 @@
 package org.iut.roadeo.Modele;
 
+import android.graphics.Point;
+
 import org.iut.roadeo.Modele.Randonnee;
 import org.iut.roadeo.Modele.Randonneur;
 import org.osmdroid.util.GeoPoint;
@@ -32,8 +34,11 @@ public class Parcours {
     /** La date de début du parcours. */
     private Date date;
 
+    /** Nom de la randonnée */
+    private String libelle;
+
     /** Points d'intérêts enregistrés par l'utilisateur. */
-    private ArrayList<GeoPoint> pointsInteret;
+    private ArrayList<PointInteret> pointsInteret;
 
     /** Trajet composé de plusieurs coordonnées. */
     private ArrayList<GeoPoint> trajetRealise;
@@ -44,15 +49,17 @@ public class Parcours {
      * @param date la date de début du parcours.
      * @throws IllegalArgumentException Si la randonnée liée ou la date est null.
      */
-    public Parcours(Randonnee randonnee, Date date) throws IllegalArgumentException {
+    public Parcours(Randonnee randonnee, Date date, String libelle) throws IllegalArgumentException {
 
         if (randonnee == null || date == null) {
             throw new IllegalArgumentException("Erreur : la randonnée" +
-                    " ou la date de la randonnée est null.");
+                                               " ou la date de la randonnée" +
+                                               " est null.");
         }
 
         randonneeParcours = randonnee;
         this.date = date;
+        setLibelle(libelle);
 
         pointsInteret = new ArrayList<>();
         trajetRealise = new ArrayList<>();
@@ -62,10 +69,11 @@ public class Parcours {
      * Ajoute un point d'intérêt dans le parcours.
      * @param pointInteret
      */
-    public void ajouterPointInteret(GeoPoint pointInteret) {
+    public void ajouterPointInteret(PointInteret pointInteret) {
 
-        if (pointInteret != null)
+        if (pointInteret != null) {
             pointsInteret.add(pointInteret);
+        }
     }
 
     /**
@@ -76,11 +84,15 @@ public class Parcours {
         // TODO méthode
     }
 
+    public String getLibelle() {
+        return libelle;
+    }
+
     public Randonnee getRandonneeParcours() {
         return randonneeParcours;
     }
 
-    public ArrayList<GeoPoint> getPointsInteret() {
+    public ArrayList<PointInteret> getPointsInteret() {
         return new ArrayList<>(pointsInteret);
     }
 
@@ -90,6 +102,20 @@ public class Parcours {
 
     public Date getDate() {
         return date;
+    }
+
+    /**
+     * Définit le nom du parcours
+     * @param libelle le nouveau nom du parcours
+     * @throws IllegalArgumentException si le libellé est vide
+     */
+    public void setLibelle(String libelle) {
+        if (libelle == null || libelle.isBlank()) {
+            throw new IllegalArgumentException("Le libellé ne peut pas être" +
+                                               " vide");
+        }
+
+        this.libelle = libelle;
     }
 
     public boolean isParcoursEnArret() {

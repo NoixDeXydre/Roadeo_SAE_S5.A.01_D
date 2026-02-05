@@ -129,4 +129,70 @@ public class TestParcours {
         parcours.supprimerPointInteret(point);
         assertEquals(parcours.getPointsInteret().size(), 0);
     }
+
+    @Test
+    public void testIsParcoursEnFonctionnement() {
+
+        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+                null, null), new Date());
+
+        // Le parcours n'est pas en fonctionnement par défaut.
+        assertEquals(parcours.isParcoursEnFonctionnement(), false);
+
+        // Mettre en fonctionnement enlève le status arrêt et pause du parcours.
+
+        parcours.setParcoursEnPause(true);
+        parcours.setParcoursEnFonctionnement(true);
+        assertEquals(parcours.isParcoursEnFonctionnement(), true);
+        assertEquals(parcours.isParcoursEnPause(), false);
+
+        parcours.setParcoursEnArret(true);
+        parcours.setParcoursEnFonctionnement(true);
+        assertEquals(parcours.isParcoursEnFonctionnement(), true);
+        assertEquals(parcours.isParcoursEnArret(), false);
+    }
+
+    @Test
+    public void testIsParcoursEnPause() {
+
+        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+                null, null), new Date());
+
+        // Le parcours n'est pas en pause par défaut.
+        assertEquals(parcours.isParcoursEnPause(), false);
+
+        // Mettre en pause enlève le status arrêt et fonctionnement du parcours.
+
+        parcours.setParcoursEnArret(true);
+        parcours.setParcoursEnPause(true);
+        assertEquals(parcours.isParcoursEnFonctionnement(), true);
+        assertEquals(parcours.isParcoursEnArret(), false);
+
+        parcours.setParcoursEnFonctionnement(true);
+        parcours.setParcoursEnPause(true);
+        assertEquals(parcours.isParcoursEnPause(), true);
+        assertEquals(parcours.isParcoursEnFonctionnement(), false);
+    }
+
+    @Test
+    public void testIsParcoursEnArret() {
+
+        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+                null, null), new Date());
+
+        // Le parcours n'est pas en arrêt par défaut.
+        assertEquals(parcours.isParcoursEnArret(), false);
+
+        // Mettre en arrêt enlève le status pause et fonctionnement du parcours.
+
+        parcours.setParcoursEnPause(true);
+        parcours.setParcoursEnArret(true);
+        assertEquals(parcours.isParcoursEnArret(), true);
+        assertEquals(parcours.isParcoursEnPause(), false);
+
+        parcours.setParcoursEnFonctionnement(true);
+        parcours.setParcoursEnArret(true);
+        assertEquals(parcours.isParcoursEnArret(), true);
+        assertEquals(parcours.isParcoursEnFonctionnement(), false);
+    }
 }

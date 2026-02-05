@@ -82,7 +82,8 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
             // Si le parcours est en pause ou à l'arrêt on ne met pas à jour.
             if (parcoursAfficheUtilisateur.isParcoursEnArret()
-                    || parcoursAfficheUtilisateur.isParcoursEnPause())
+                    || parcoursAfficheUtilisateur.isParcoursEnPause()
+                    || !parcoursAfficheUtilisateur.isParcoursEnFonctionnement())
                 return;
 
             Location pointActuelUtilisateur = resultatLocalisation.getLastLocation();
@@ -389,10 +390,16 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         // Sinon
         // On affiche le bouton stop et pause. (Parcours en fonctionnement)
-        } else {
+        } else if (parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
             boutonDemarrer.setAlpha(0.0f);
             boutonStop.setAlpha(1.0f);
             boutonPause.setAlpha(1.0f);
+
+        // Cas particulier où le parcours n'est pas en fonctionnement.
+        } else if (!parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
+            boutonDemarrer.setAlpha(1.0f);
+            boutonStop.setAlpha(0.0f);
+            boutonPause.setAlpha(0.0f);
         }
     }
 
@@ -495,9 +502,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         if (view.getId() == R.id.bouton_demarrer_carte) {
 
-            parcoursAfficheUtilisateur.setParcoursEnArret(false);
-            parcoursAfficheUtilisateur.setParcoursEnPause(false);
-
+            parcoursAfficheUtilisateur.setParcoursEnFonctionnement(true);
             Toast.makeText(getView().getContext(),
                     getString(R.string.demarrage_parcours),
                     Toast.LENGTH_SHORT).show();
@@ -506,7 +511,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         else if (view.getId() == R.id.bouton_pause_carte) {
 
             parcoursAfficheUtilisateur.setParcoursEnPause(true);
-
             Toast.makeText(getView().getContext(),
                     getString(R.string.mise_en_pause_parcours),
                     Toast.LENGTH_SHORT).show();
@@ -515,8 +519,6 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         else if (view.getId() == R.id.bouton_stop_carte) {
 
             parcoursAfficheUtilisateur.setParcoursEnArret(true);
-            parcoursAfficheUtilisateur.setParcoursEnPause(false);
-
             Toast.makeText(getView().getContext(),
                     getString(R.string.mise_en_arret_parcours),
                     Toast.LENGTH_SHORT).show();

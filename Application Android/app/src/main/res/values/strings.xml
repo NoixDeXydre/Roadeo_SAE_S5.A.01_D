@@ -98,5 +98,6 @@
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
     <string name="voir_liste_participants">Voir la liste des participants</string>
+    <string name="texte_parcours">Liste des parcours</string>
 
 </resources>

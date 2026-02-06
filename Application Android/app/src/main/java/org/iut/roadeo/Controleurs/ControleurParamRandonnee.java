@@ -59,7 +59,13 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.voirListeParcours) {
-            // TODO lien vers la liste des parcours
+            Intent intention = new Intent(getContext(),
+                    ControleurListeParcours.class);
+            if (randonnee != null) {
+                intention.putExtra("RANDONNEE", randonnee.getId());
+            }
+
+            startActivity(intention);
         } else if (view.getId() == R.id.confirmerRandonnee) {
             // TODO appel API pour ajouter la randonnée
             ControleurDashboard.tabLayout.getTabAt(0).select();

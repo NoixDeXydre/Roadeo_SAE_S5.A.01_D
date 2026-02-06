@@ -14,6 +14,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.iut.roadeo.CacheApplication;
+import org.iut.roadeo.Modele.Interfaces.IAPIParcoursCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIRandonneesCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIRandonneursCallback;
 import org.iut.roadeo.Modele.Interfaces.IAPIUtilisateurCallback;
@@ -23,8 +25,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.util.IntegerAccepter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -69,6 +73,9 @@ public class APIRequeteur {
     private final static String SUFFIXE_API_RANDONNEE = "Randonnee";
     private final static String SUFFIXE_API_LISTE_PARTICIPANT = SUFFIXE_API_RANDONNEE
             + "/listeParticipant/";
+
+    private final static String SUFFIXE_API_LISTE_PARCOURS = SUFFIXE_API_RANDONNEE
+            + "/infoRandoUtil";
     private final static String SUFFIXE_API_LISTE_RANDONNEE = SUFFIXE_API_RANDONNEE
             + "/liste";
     private String prefixeUrl;
@@ -196,6 +203,50 @@ public class APIRequeteur {
         getFileRequete().add(requeteConnexion);
     }
 
+    public void listerParcours(int id, IAPIParcoursCallback callback) {
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARCOURS;
+
+        HashMap<String, String> entreesJsonRequete = new HashMap<>();
+        entreesJsonRequete.put("id", Integer.toString(1));
+
+        JsonArrayRequest requeteConnexion = new JsonArrayRequest(Request.Method.POST,
+                urlAppelAPI, new JSONObject(entreesJsonRequete).names(),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        ArrayList<Parcours> parcours = new ArrayList<>();
+                        try {
+                            parcours = construireParcoursWithReponse(
+                                    response, id);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+
+                        callback.onSuccess(parcours);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError
+                                                        error) {
+
+                        if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion);
+    }
+
     public void listerParticipant(String id, IAPIRandonneursCallback callback) {
         String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARTICIPANT + id;
         JsonArrayRequest requeteConnexion = new JsonArrayRequest(urlAppelAPI,
@@ -274,6 +325,120 @@ public class APIRequeteur {
         getFileRequete().add(requeteConnexion);
     }
 
+    private ArrayList<Parcours>
+            construireParcoursWithReponse(JSONArray reponse, int id)
+            throws JSONException {
+
+        ArrayList<Parcours> aRetourner;
+
+        JSONObject aCreer;
+        Parcours parcours;
+        Randonnee randonnee;
+
+        aRetourner = new ArrayList<>();
+        // Récupération des énums
+        for(int i=0; i<reponse.length(); i++) {
+            aCreer = reponse.getJSONObject(i);
+
+            /* On récupère les différents paramètres de la randonnée */
+            int idRando = aCreer.getInt("id");
+            if (id == idRando) {
+                /* On récupère les différents paramètres de la randonnée */
+                String libelleRando = aCreer.getString("libelle");
+                int nombreJours = aCreer.getInt("nombreJours");
+
+                /* On récupère le point de départ */
+                JSONObject depart = aCreer.getJSONObject("depart");
+
+                /* on récupère les coordonnées du point de départ */
+                JSONArray coordonneeDepart = depart.getJSONArray("coordonnees");
+                double latitudeDepart = coordonneeDepart.getDouble(0);
+                double longitudeDepart = coordonneeDepart.getDouble(1);
+
+                GeoPoint pointDepart = new GeoPoint(latitudeDepart,
+                                                    longitudeDepart);
+
+                /* On récupère le point de départ */
+                JSONObject arrivee = aCreer.getJSONObject("arrive");
+
+                /* on récupère les coordonnées du point de départ */
+                JSONArray coordonneeArrivee = arrivee.getJSONArray("coordonnees");
+                double latitudeArrivee = coordonneeArrivee.getDouble(0);
+                double longitudeArrivee = coordonneeArrivee.getDouble(1);
+
+                GeoPoint pointArrivee = new GeoPoint(latitudeArrivee,
+                                                     longitudeArrivee);
+
+                /* On crée la randonnée et on l'ajoute à la liste */
+                randonnee = new Randonnee(idRando, libelleRando, nombreJours,
+                        pointDepart, pointArrivee);
+
+                Date date = new Date();
+
+                /* On récupère la liste des parcours */
+                JSONArray listeParcours = aCreer.getJSONArray("parcours");
+
+                for(int j=0; j<listeParcours.length(); j++) {
+
+                    /* On récupère le parcours */
+                    JSONObject parcoursJSONObject = listeParcours.getJSONObject(j);
+
+                    /* On récupère le libellé du parcours */
+                    String libelle = parcoursJSONObject
+                                     .getString("libelleRandonnee");
+
+                    /* On crée le parcours */
+                    parcours = new Parcours(randonnee, date, libelle);
+
+                    JSONArray listePointInteret;
+                    listePointInteret = new JSONArray();
+
+                    /* On vérifie qu'il y a des points d'intérêt */
+                    if (!parcoursJSONObject.isNull("pointInterets")){
+                        /* On récupère la liste des points d'intérêt */
+                        listePointInteret = parcoursJSONObject
+                                                .getJSONArray("pointInterets");
+                    }
+
+                    /* S'il y a des points d'intérêts, on les ajoutes */
+                    if (listePointInteret.length() != 0) {
+                        for(int k=0;k<listePointInteret.length();k++) {
+                            JSONObject pointInteretJSON;
+                            JSONArray coordonneePointInteret;
+
+                            String nom;
+                            double[] tabCoord;
+
+                            PointInteret pointInteret;
+
+                            /* Récupère les données du point d'intérêt */
+                            pointInteretJSON = listePointInteret.getJSONObject(k);
+                            nom = pointInteretJSON.getString("libelle");
+                            coordonneePointInteret = pointInteretJSON
+                                                     .getJSONArray("coordonnees");
+                            tabCoord = new double[]
+                                       {coordonneePointInteret.getDouble(0),
+                                        coordonneePointInteret.getDouble(1)};
+
+                            /* On crée le point d'itérêt */
+                            pointInteret = new PointInteret(nom,tabCoord);
+
+                            /* On l'ajoute à la randonnée */
+                            parcours.ajouterPointInteret(pointInteret);
+                        }
+                    }
+
+                    /* On ajoute la randonnée à la liste */
+                    aRetourner.add(parcours);
+                }
+            }
+        }
+
+        // On retroune la liste des randonnées
+
+        return aRetourner;
+    }
+
     private ArrayList<Randonnee>
             construireRandonneesWithReponse(JSONArray reponse)
             throws JSONException {
@@ -291,7 +456,6 @@ public class APIRequeteur {
             /* On récupère les différents paramètres de la randonnée */
             int id = aCreer.getInt("id");
             String libelle = aCreer.getString("libelle");
-            int participantsMax = aCreer.getInt("participantsMax");
             int nombreJours = aCreer.getInt("nombreJours");
 
             /* On récupère le point de départ */
@@ -300,7 +464,7 @@ public class APIRequeteur {
             /* on récupère les coordonnées du point de départ */
             JSONArray coordonneeDepart = depart.getJSONArray("coordonnees");
             double latitudeDepart = coordonneeDepart.getDouble(0);
-            double longitudeDepart = coordonneeDepart.getDouble(0);
+            double longitudeDepart = coordonneeDepart.getDouble(1);
 
             GeoPoint pointDepart = new GeoPoint(latitudeDepart, longitudeDepart);
 
@@ -310,12 +474,12 @@ public class APIRequeteur {
             /* on récupère les coordonnées du point de départ */
             JSONArray coordonneeArrivee = arrivee.getJSONArray("coordonnees");
             double latitudeArrivee = coordonneeArrivee.getDouble(0);
-            double longitudeArrivee = coordonneeArrivee.getDouble(0);
+            double longitudeArrivee = coordonneeArrivee.getDouble(1);
 
             GeoPoint pointArrivee = new GeoPoint(latitudeArrivee, longitudeArrivee);
 
             /* On crée la randonnée et on l'ajoute à la liste */
-            randonnee = new Randonnee(id, libelle, participantsMax,
+            randonnee = new Randonnee(id, libelle, nombreJours,
                                       pointDepart, pointArrivee);
             aRetourner.add(randonnee);
         }

@@ -12,7 +12,7 @@
     <ImageView
         android:id="@+id/imageRoadeo"
         android:layout_width="match_parent"
-        android:layout_height="305dp"
+        android:layout_height="172dp"
         app:srcCompat="@drawable/icone_roadeo_full" />
 
     <TextView

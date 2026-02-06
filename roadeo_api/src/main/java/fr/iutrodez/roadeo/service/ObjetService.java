@@ -16,11 +16,9 @@ import java.util.List;
 @Service
 public class ObjetService {
     private final ObjetInterfaceMongoDB objetRepository;
-    private MongoTemplate template;
 
-    public ObjetService(ObjetInterfaceMongoDB repository, MongoTemplate template) {
+    public ObjetService(ObjetInterfaceMongoDB repository) {
         this.objetRepository = repository;
-        this.template = template;
     }
 
     /**

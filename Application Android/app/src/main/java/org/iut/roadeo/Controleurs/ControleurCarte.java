@@ -379,29 +379,29 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         // Si pause
         // On affiche le bouton stop et demarrer.
         if (parcoursAfficheUtilisateur.isParcoursEnPause()) {
-            boutonPause.setAlpha(0.0f);
-            boutonDemarrer.setAlpha(1.0f);
-            boutonStop.setAlpha(1.0f);
+            activerImage(boutonPause, false);
+            activerImage(boutonDemarrer, true);
+            activerImage(boutonStop, true);
 
         // Si arret
         // On affiche le bouton demarrer
         } else if (parcoursAfficheUtilisateur.isParcoursEnArret()) {
-            boutonStop.setAlpha(0.0f);
-            boutonPause.setAlpha(0.0f);
-            boutonDemarrer.setAlpha(1.0f);
+            activerImage(boutonPause, false);
+            activerImage(boutonDemarrer, true);
+            activerImage(boutonStop, false);
 
         // Sinon
         // On affiche le bouton stop et pause. (Parcours en fonctionnement)
         } else if (parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
-            boutonDemarrer.setAlpha(0.0f);
-            boutonStop.setAlpha(1.0f);
-            boutonPause.setAlpha(1.0f);
+            activerImage(boutonPause, true);
+            activerImage(boutonDemarrer, false);
+            activerImage(boutonStop, true);
 
         // Cas particulier où le parcours n'est pas en fonctionnement.
         } else if (!parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
-            boutonDemarrer.setAlpha(1.0f);
-            boutonStop.setAlpha(0.0f);
-            boutonPause.setAlpha(0.0f);
+            activerImage(boutonPause, false);
+            activerImage(boutonDemarrer, true);
+            activerImage(boutonStop, false);
         }
     }
 
@@ -501,6 +501,16 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c; // in metres
+    }
+
+    // Active et affiche l'image donné si true
+    private void activerImage(ImageView image, boolean isImageActive) {
+
+        image.setEnabled(isImageActive);
+        if (isImageActive)
+            image.setAlpha(1.0f);
+        else
+            image.setAlpha(0.0f);
     }
 
     @Override

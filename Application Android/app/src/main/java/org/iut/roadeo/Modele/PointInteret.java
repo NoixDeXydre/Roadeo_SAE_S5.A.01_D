@@ -63,6 +63,6 @@ public class PointInteret {
             throw new IllegalArgumentException("Les coordonnées ne peuvent" +
                                                " contenir que 2 données");
         }
-        new GeoPoint(coordonnees[0], coordonnees[1]);
+        this.coordonnees = new GeoPoint(coordonnees[0], coordonnees[1]);
     }
 }

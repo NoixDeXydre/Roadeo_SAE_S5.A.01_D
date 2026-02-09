@@ -25,7 +25,7 @@ public class Produit {
     private String description;
 
     /** poids de l'objet **/
-    private double masse;
+    private double poids;
 
     /** poids de l'objet **/
     private double nutrition;
@@ -56,7 +56,7 @@ public class Produit {
         this.categorie = categorie;
         this.denomination = denomination;
         this.presenceSac = false;
-        this.masse = poids;
+        this.poids = poids;
         this.description = description;
         this.nutrition = nutrition;
         this.prix = prix;
@@ -111,12 +111,12 @@ public class Produit {
         this.description = description;
     }
 
-    public double getMasse() {
-        return masse;
+    public double getPoids() {
+        return poids;
     }
 
-    public void setMasse(double masse) {
-        this.masse = masse;
+    public void setPoids(double poids) {
+        this.poids = poids;
     }
 
     public double getNutrition() {
@@ -151,7 +151,7 @@ public class Produit {
                 ", nom='" + nom + '\'' +
                 ", categorie='" + categorie + '\'' +
                 ", description='" + description + '\'' +
-                ", masse=" + masse +
+                ", masse=" + poids +
                 ", nutrition=" + nutrition +
                 ", prix=" + prix +
                 ", utilite=" + utilite +

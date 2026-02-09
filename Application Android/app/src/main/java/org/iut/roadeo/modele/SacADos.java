@@ -34,11 +34,11 @@ public class SacADos {
     }
 
     /** Calcule le poids total du sac */
-    public double poidsTotal() {
+    public double getPoidsTotal() {
 
         double poids = 0.0f;
         for (Produit o : this.contenu) {
-            poids += o.getMasse();
+            poids += o.getPoids();
         }
 
         return this.poids + poids;
@@ -72,22 +72,22 @@ public class SacADos {
             contenuObjet.append("    ").append(objet.toString()).append("\n");
         }
         return "SacADos{" +
-                "\n poids=" + this.poidsTotal() + " / " + this.poidsMax +
+                "\n poids=" + this.getPoidsTotal() + " / " + this.poidsMax +
                 "\ncontenu :\n" + contenuObjet +
                 '}';
     }
 
     /** Ajoute un objet au sac à dos */
-    public boolean addObjet(Produit objet) {
+    public boolean ajouterProduit(Produit objet) {
 
-        if (this.poidsTotal() + objet.getMasse() > this.poidsMax) {
+        if (this.getPoidsTotal() + objet.getPoids() > this.poidsMax) {
             return false;
         }
 
         return this.contenu.add(objet);
     }
 
-    public boolean supprimeProduits(Produit produits) {
+    public boolean supprimerProduit(Produit produits) {
         return this.contenu.remove(produits);
     }
 

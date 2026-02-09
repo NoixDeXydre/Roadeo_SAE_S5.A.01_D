@@ -124,12 +124,11 @@ public class ControleurListeParticipant extends AppCompatActivity {
 
             startActivity(intention);
             // TODO vue créer participant avec infos sur participant
-
-            //lanceCreation.launch(intention);
         } else if (item.getItemId() == R.id.supprimer
                     && information.position != 0) {
             participants.remove(information.position);
             listeParticipant.setAdapter(adaptateur);
+            // TODO ajouter suppression dans l'API
         } else {
             // l'utilisateur tente de supprimer le créateur de la randonnée
             Toast.makeText(this, "Vous ne pouvez pas supprimer le créateur de"

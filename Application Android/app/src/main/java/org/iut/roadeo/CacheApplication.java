@@ -1,6 +1,6 @@
 package org.iut.roadeo;
 
-import org.iut.roadeo.Modele.Utilisateur;
+import org.iut.roadeo.modele.Utilisateur;
 
 /**
  * Stocke des données globales après un appel API

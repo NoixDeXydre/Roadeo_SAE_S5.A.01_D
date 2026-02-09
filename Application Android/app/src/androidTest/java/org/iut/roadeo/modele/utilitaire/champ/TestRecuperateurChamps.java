@@ -1,6 +1,6 @@
 package org.iut.roadeo.modele.utilitaire.champ;
 
-import static org.iut.roadeo.Modele.Utilitaire.Champ.RecuperateurChamps.*;
+import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 
 import static org.junit.Assert.*;
 

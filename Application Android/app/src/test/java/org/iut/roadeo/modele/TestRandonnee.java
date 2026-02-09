@@ -2,7 +2,6 @@ package org.iut.roadeo.modele;
 
 import static org.junit.Assert.fail;
 
-import org.iut.roadeo.Modele.Randonnee;
 import org.junit.Test;
 
 /**

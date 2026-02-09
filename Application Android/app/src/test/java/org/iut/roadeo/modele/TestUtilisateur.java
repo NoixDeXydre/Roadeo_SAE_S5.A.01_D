@@ -3,11 +3,8 @@ package org.iut.roadeo.modele;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import org.iut.roadeo.Modele.Parcours;
-import org.iut.roadeo.Modele.Randonnee;
-import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
-import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
-import org.iut.roadeo.Modele.Utilisateur;
+import org.iut.roadeo.modele.typedonnees.Morphologie;
+import org.iut.roadeo.modele.typedonnees.NiveauEntrainement;
 import org.junit.Test;
 
 import java.util.Date;

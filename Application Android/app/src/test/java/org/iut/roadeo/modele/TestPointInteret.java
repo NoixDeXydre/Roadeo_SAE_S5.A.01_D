@@ -5,14 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.fail;
 
-import org.iut.roadeo.Modele.Parcours;
-import org.iut.roadeo.Modele.PointInteret;
-import org.iut.roadeo.Modele.Randonnee;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Classe de tests de la classe Parcours

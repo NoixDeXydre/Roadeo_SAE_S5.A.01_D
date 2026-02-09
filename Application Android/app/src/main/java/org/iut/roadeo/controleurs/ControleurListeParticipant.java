@@ -139,22 +139,6 @@ public class ControleurListeParticipant extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // On affiche le menu burger
-        new MenuInflater(this).inflate(R.menu.menu_activite, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // On envoi la vue choisie et le contexte à la méthode
-        // permettant de changer de vue
-
-        ChangeVue.changeurVue(item, ControleurListeParticipant.this);
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * Envoi vers la vue permettant de créer un participant

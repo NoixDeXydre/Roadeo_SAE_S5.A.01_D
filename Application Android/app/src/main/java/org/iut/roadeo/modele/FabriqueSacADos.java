@@ -39,11 +39,20 @@ public class FabriqueSacADos {
      * @param produits les produits à répartir.
      * @param algorithmeResolution l'algorithme de résolution
      *                             permettant de répartir les sacs à dos.
-     * @return les sacs répartis
+     * @return les sacs répartis ou null si poidsMaxSacs est null.
+     * @throws IllegalArgumentException si la liste des produits
+     * ou l'algorithme est null.
      */
     public static ArrayList<SacADos> creerSacADosRepartis
             (double[] poidsMaxSacs, ArrayList<Produit> produits,
-             IAlgorithmeSac algorithmeResolution) {
+             IAlgorithmeSac algorithmeResolution) throws IllegalArgumentException {
+
+        if (produits == null || algorithmeResolution == null)
+           throw new IllegalArgumentException("La liste des produits," +
+                   " ou l'algorithme de résolution ne peut être null.");
+        if (poidsMaxSacs == null)
+            return null;
+
         return algorithmeResolution.getSacADosRepartis(produits, creerSacADos(poidsMaxSacs));
     }
 }

@@ -17,9 +17,12 @@ public class FabriqueSacADos {
      * Créer plusieurs sacs vides.
      *
      * @param poidsMaxSacs le poids max pour chaque sac.
-     * @return des sacs vides.
+     * @return des sacs vides ou null si poidsMaxSacs == null
      */
     public static ArrayList<SacADos> creerSacADos(double[] poidsMaxSacs) {
+
+        if (poidsMaxSacs == null)
+            return null;
 
         ArrayList<SacADos> sacADos = new ArrayList<>();
         for (double poidsMaxSac : poidsMaxSacs) {

@@ -21,16 +21,23 @@ public class SacADos {
     /** Poids maximal du sac */
     private double poidsMax = 0;
 
-    /** Crée un sac à dos */
+    /**
+     *  Crée un sac à dos
+     *  @throws IllegalArgumentException si le poidsMax est négatif
+     *  ou si le contenu est null.
+     */
     public SacADos(ArrayList<Produit> contenu, double poidsMax) {
-        this.contenu = contenu;
-        this.poidsMax = poidsMax;
+        setContenu(contenu);
+        setPoidsMax(poidsMax);
     }
 
-    /** Crée un sac à dos avec un contenu vide */
-    public SacADos(double poidsMax) {
+    /**
+     * Crée un sac à dos avec un contenu vide
+     * @throws IllegalArgumentException si le poidsMax est négatif.
+     */
+    public SacADos(double poidsMax) throws IllegalArgumentException {
         this.contenu = new ArrayList<>();
-        this.poidsMax = poidsMax;
+        setPoidsMax(poidsMax);
     }
 
     /** Calcule le poids total du sac */
@@ -49,8 +56,16 @@ public class SacADos {
         return contenu;
     }
 
-    /** Modifie toute la liste des objets du sac */
+    /**
+     * Modifie toute la liste des objets du sac
+     * @throws IllegalArgumentException si le contenu est null.
+     */
     public void setContenu(ArrayList<Produit> contenu) {
+
+        if (contenu == null)
+            throw new IllegalArgumentException("La liste des produits du sac " +
+                    "ne peuvent pas être null.");
+
         this.contenu = contenu;
     }
 
@@ -61,6 +76,10 @@ public class SacADos {
 
     /** Modifie le poids du sac */
     public void setPoids(double poids) {
+
+        if (poids < 0.0f)
+            throw new IllegalArgumentException("Le poids du sac ne peut pas être négatif.");
+
         this.poids = poids;
     }
 
@@ -106,6 +125,10 @@ public class SacADos {
     }
 
     public void setPoidsMax(double poidsMax) {
+
+        if (poidsMax < 0.0f)
+            throw new IllegalArgumentException("Le poids max du sac ne peut pas être négatif.");
+
         this.poidsMax = poidsMax;
     }
 }

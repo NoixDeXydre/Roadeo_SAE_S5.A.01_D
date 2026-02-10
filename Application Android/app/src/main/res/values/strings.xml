@@ -27,10 +27,17 @@
     <string name="label_compte_domicile">Adresse Personnelle</string>
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
+
+    <!-- Liés aux informations de la randonnée -->
     <string name="nom_randonnee">Nom de la randonnée</string>
     <string name="duree_jours">Durée de la randonnée en jours</string>
     <string name="texte_randonee">Liste des randonnées</string>
     <string name="details_randonnee">Détails de la randonnée</string>
+
+    <!-- Liés aux informations du parcours -->
+    <string name="texte_parcours">Liste des parcours</string>
+    <string name="details_parcours">Détails du parcours</string>
+    <string name="nom_parcours">Nom du parcours</string>
 
     <string name="asterix">*</string>
 
@@ -45,6 +52,8 @@
     <string name="supprimer">Supprimer</string>
     <string name="details">Détails…</string>
     <string name="voir_liste_parcours">Voir la liste des parcours</string>
+    <string name="voir_liste_participants">Voir la liste des participants</string>
+    <string name="bouton_carte_parcours">Voir la carte du parcours</string>
 
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>
@@ -60,6 +69,7 @@
     <string name="se_deconnecter">Se déconnecter</string>
     <string name="placeholder_nom_randonnee">Écrivez le nom de la randonnee</string>
     <string name="placeholder_nb_max_personne">Entrez un nombre entre 1 et 3</string>
+    <string name="placeholder_nom_parcours">Écrivez le nom du parcours</string>
 
     <!-- Spinners -->
 
@@ -106,7 +116,5 @@
     <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
-    <string name="voir_liste_participants">Voir la liste des participants</string>
-    <string name="texte_parcours">Liste des parcours</string>
 
 </resources>

@@ -86,7 +86,13 @@ public class ControleurListeParcours extends AppCompatActivity {
 
         // On regarde l'option choisie par l'utilisateur
         if(item.getItemId() == R.id.detail){
-            // TODO vue ParamParcours avec infos sur parcours choisi
+            Parcours parcoursChoisi;
+            Intent intention = new Intent(this, ControleurParamParcours.class);
+
+            parcoursChoisi = parcours.get(information.position);
+            intention.putExtra("NOM", parcoursChoisi.getLibelle());
+
+            startActivity(intention);
         } else if (item.getItemId() == R.id.supprimer) {
             parcours.remove(information.position);
             listeParcours.setAdapter(adaptateur);
@@ -99,6 +105,8 @@ public class ControleurListeParcours extends AppCompatActivity {
      * @param view non utilisé
      */
     public void ajouterParcours(View view) {
-        // TODO Envoyer vers ControleurParamParcours
+        Intent intention = new Intent(this, ControleurParamParcours.class);
+
+        startActivity(intention);
     }
 }

@@ -67,6 +67,12 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".controleurs.ControleurParamParcours"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

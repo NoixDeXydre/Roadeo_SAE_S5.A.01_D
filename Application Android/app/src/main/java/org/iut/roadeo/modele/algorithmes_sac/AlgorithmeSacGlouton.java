@@ -5,6 +5,7 @@ import org.iut.roadeo.modele.SacADos;
 import org.iut.roadeo.modele.interfaces.IAlgorithmeSac;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 /**
@@ -23,8 +24,9 @@ public class AlgorithmeSacGlouton implements IAlgorithmeSac {
     public ArrayList<SacADos> getSacADosRepartis(ArrayList<Produit> produits,
                                                  ArrayList<SacADos> sacADos) {
 
-        ArrayList<Produit> produitsTraitement = new ArrayList<>();
-        ArrayList<SacADos> sacADosTraitement = new ArrayList<>();
+        ArrayList<Produit> produitsTraitement = new ArrayList<>(produits);
+        ArrayList<SacADos> sacADosTraitement = new ArrayList<>(sacADos);
+        produitsTraitement.sort(Comparator.comparingInt(Produit::getUtilite).reversed());
 
         Produit produit;
         for (int i = 0; i < produitsTraitement.size(); i++) { // Pour chaque objet sélectionné.

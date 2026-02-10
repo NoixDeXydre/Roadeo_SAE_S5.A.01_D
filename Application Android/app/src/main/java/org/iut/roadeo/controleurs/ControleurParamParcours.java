@@ -37,7 +37,15 @@ public class ControleurParamParcours extends AppCompatActivity {
     }
 
     /**
-     * Verifie si le parcours et ok puis termine l'activitée
+     * Renvoi vers la carte avec le parcours associé
+     * @param view non utilisé
+     */
+    public void voirCarteParcours(View view) {
+        // TODO renvoyer vers la carte
+    }
+
+    /**
+     * Verifie si le parcours est ok puis termine l'activitée
      * @param view non utilisé
      */
     public void confirmerParcours(View view) {

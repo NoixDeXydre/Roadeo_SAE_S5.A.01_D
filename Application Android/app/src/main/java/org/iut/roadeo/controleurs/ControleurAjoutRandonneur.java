@@ -31,7 +31,6 @@ public class ControleurAjoutRandonneur extends AppCompatActivity {
     private Spinner champsNiveauRandonneur;
     private Spinner champsMorphologieRandonneur;
 
-    @SuppressLint("SetTextI18n")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

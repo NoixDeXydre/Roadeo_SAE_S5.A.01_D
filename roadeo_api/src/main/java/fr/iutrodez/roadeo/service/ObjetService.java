@@ -38,15 +38,40 @@ public class ObjetService {
         return objetRepository.findDistinctCategorie();
     }
 
+    /**
+     * Permet de récupérer la liste des objets
+     * @return liste des catégories sans doublons;
+     */
+    public List<String> listeNom() {
+        //return this.objetRepository.findDistinctByCategorie();
+        return objetRepository.findDistinctNom();
+    }
+
+    /**
+     * Récupère la liste des produits selon la catégorie demandé
+     * @param categorie recherché
+     * @return la liste des objets par catégories
+     */
     public List<Produits> recupListeCategorie(String categorie) {
         return this.objetRepository.findByCategorie(categorie);
     }
 
+    /**
+     * Récupère un produit selon l'id
+     * @param idObjet id de l'objet cherché
+     * @return l'objet si l'id existe,
+     *          null sinon
+     */
     public Produits getProduitById(String idObjet) {
         return this.objetRepository.findProduitsById(idObjet);
     }
 
-
+    /**
+     * Ajoute des produits à la base de données
+     * @param prod produit à ajouter
+     * @return le produit ajouté
+     * @throws IllegalArgumentException si le produit à ajouter est null
+     */
     public Produits ajoutProduits(Produits prod) {
         if (prod == null) {
             throw new IllegalArgumentException();
@@ -54,13 +79,26 @@ public class ObjetService {
         return objetRepository.insert(prod);
     }
 
+    /**
+     * Modifie un produit de la base de données
+     * @param prod produit à modifier
+     * @return le produit à modifier
+     * @throws IllegalArgumentException si le produit à modifier et null
+     *                        ou si le produit n'existe pas
+     */
     public Produits modifProduits(Produits prod) {
         if (prod == null || !objetRepository.existsById(prod.getId())) {
             throw new IllegalArgumentException();
         }
-        return objetRepository.insert(prod);
+        return objetRepository.save(prod);
     }
 
+    /**
+     * Supprime un produit de la base de données
+     * @param id id du produit à supprimer
+     * @return false
+     * @throws IllegalArgumentException si le produit à supprimer n'existe pas
+     */
     public boolean deleteProduits(String id) {
         if (!objetRepository.existsById(id)) {
             throw new IllegalArgumentException();

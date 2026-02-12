@@ -54,8 +54,8 @@
     <string name="voir_liste_parcours">Voir la liste des parcours</string>
     <string name="voir_liste_participants">Voir la liste des participants</string>
     <string name="bouton_carte_parcours">Voir la carte du parcours</string>
-    <string name="depart">départ</string>
-    <string name="arrivee">arrivée</string>
+    <string name="depart">Placer le point de départ</string>
+    <string name="arrivee">Placer le point d\'arrivée</string>
 
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>

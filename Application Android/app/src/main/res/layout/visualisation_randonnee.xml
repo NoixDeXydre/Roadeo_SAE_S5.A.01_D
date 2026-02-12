@@ -20,18 +20,10 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/bouton_changer_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="clickModeDepart"
-                android:text="@string/depart"
-                android:textColor="@color/black" />
-
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="clickModeArrive"
+                android:onClick="clickChangementMode"
                 android:text="@string/arrivee"
                 android:textColor="@color/black" />
         </LinearLayout>

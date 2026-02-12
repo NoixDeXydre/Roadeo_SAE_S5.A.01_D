@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -26,6 +27,8 @@ import org.osmdroid.views.overlay.Marker;
  */
 public class ControleurVisualisationRandonnee extends AppCompatActivity {
 
+    private Button boutonChangerPoint;
+
     /** Carte sur laquelle interragir */
     private MapView mapView;
 
@@ -39,8 +42,10 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.visualisation_randonnee);
 
-        // On crée les paramètres de la carte
         mapView = findViewById(R.id.map_view_randonnee);
+        boutonChangerPoint = findViewById(R.id.bouton_changer_mode);
+
+        // On crée les paramètres de la carte
         mapView.getController().setCenter(new GeoPoint(44.360054998826f,
                                                        2.57556698405f));
         mapView.getController().setZoom(18.0);
@@ -116,15 +121,12 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
      * Quand le bouton est cliqué, on peut placer le point de départ
      * @param view inutilisé
      */
-    public void clickModeDepart(View view) {
-        modeDepart = true;
-    }
-
-    /**
-     * Quand le bouton est cliqué, on peut placer le point d'arrivé
-     * @param view inutilisé
-     */
-    public void clickModeArrive(View view) {
-        modeDepart = false;
+    public void clickChangementMode(View view) {
+        modeDepart = !modeDepart;
+        if (modeDepart) {
+            boutonChangerPoint.setText(R.string.arrivee);
+        } else {
+            boutonChangerPoint.setText(R.string.depart);
+        }
     }
 }

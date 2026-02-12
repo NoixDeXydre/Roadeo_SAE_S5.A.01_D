@@ -95,7 +95,7 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
             /* Si on modifie une randonnée existante, on envoi le point
              * de départ et d'arrivée
              */
-            if (randonnee.getPointDepart() != null) {
+            if (randonnee != null) {
                 intention.putExtra("LATITUDE_DEPART",
                                    randonnee.getPointDepart().getLatitude());
                 intention.putExtra("LONGITUDE_DEPART",

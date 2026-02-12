@@ -54,6 +54,7 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
         vue.findViewById(R.id.voirListeParcours).setOnClickListener(this);
         vue.findViewById(R.id.voirListeParticipants).setOnClickListener(this);
         vue.findViewById(R.id.confirmerRandonnee).setOnClickListener(this);
+        vue.findViewById(R.id.ajoutDepartArrivee).setOnClickListener(this);
 
         randonnee = ((ControleurDashboard) getActivity()).getRandonneeCommunique();
 
@@ -66,7 +67,9 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.voirListeParcours) {
             Intent intention = new Intent(getContext(),
-                    ControleurListeParcours.class);
+                                          ControleurListeParcours.class);
+
+            // Si on modifie une randonnée existante, on envoi son id
             if (randonnee != null) {
                 intention.putExtra("RANDONNEE", randonnee.getId());
             }
@@ -78,8 +81,29 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
         } else if (view.getId() == R.id.voirListeParticipants) {
             Intent intention = new Intent(getContext(),
                                           ControleurListeParticipant.class);
+
+            // Si on modifie une randonnée existante, on envoi son id
             if (randonnee != null) {
                 intention.putExtra("RANDONNEE", randonnee.getId());
+            }
+
+            startActivity(intention);
+        } else if (view.getId() == R.id.ajoutDepartArrivee) {
+            Intent intention = new Intent(getContext(),
+                                          ControleurVisualisationRandonnee.class);
+
+            /* Si on modifie une randonnée existante, on envoi le point
+             * de départ et d'arrivée
+             */
+            if (randonnee.getPointDepart() != null) {
+                intention.putExtra("LATITUDE_DEPART",
+                                   randonnee.getPointDepart().getLatitude());
+                intention.putExtra("LONGITUDE_DEPART",
+                                   randonnee.getPointDepart().getLongitude());
+                intention.putExtra("LATITUDE_ARRIVE",
+                                   randonnee.getPointArrive().getLatitude());
+                intention.putExtra("LONGITUDE_ARRIVE",
+                                   randonnee.getPointArrive().getLongitude());
             }
 
             startActivity(intention);

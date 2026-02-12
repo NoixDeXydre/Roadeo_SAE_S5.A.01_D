@@ -41,12 +41,7 @@ public class ControleurParamParcours extends AppCompatActivity {
      * @param view non utilisé
      */
     public void voirCarteParcours(View view) {
-        // TODO renvoyer vers la carte
-        Intent intention;
-
-        intention = new Intent(this, ControleurVisualisationRandonnee.class);
-
-        startActivity(intention);
+        // TODO renvoyer vers la carte pour ajouter des points clés
     }
 
     /**

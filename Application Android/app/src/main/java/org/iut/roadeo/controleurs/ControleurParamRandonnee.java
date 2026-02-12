@@ -14,6 +14,13 @@ import org.iut.roadeo.modele.Randonnee;
 import org.iut.roadeo.R;
 import org.osmdroid.config.Configuration;
 
+/**
+ * Affiche les différents paramètres d'une randonnée.
+ *
+ * @author BOYER Djedline
+ * @author M'TIMA LESNIAK Noa
+ * @author VIGUE Adrien
+ */
 public class ControleurParamRandonnee extends Fragment implements View.OnClickListener {
 
     private Randonnee randonnee;

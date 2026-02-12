@@ -127,7 +127,9 @@ public class Randonnee {
      * @param nouveauRandonneur
      */
     public void ajouterRandonneur(Randonneur nouveauRandonneur) {
-        // TODO méthode
+
+        if (nouveauRandonneur != null)
+            randonneurs.add(nouveauRandonneur);
     }
 
     /**
@@ -135,7 +137,9 @@ public class Randonnee {
      * @param randonneur
      */
     public void supprimerRandonneur(Randonneur randonneur) {
-        // TODO méthode
+
+        if (randonneur != null)
+            randonneurs.remove(randonneur);
     }
 
     /**

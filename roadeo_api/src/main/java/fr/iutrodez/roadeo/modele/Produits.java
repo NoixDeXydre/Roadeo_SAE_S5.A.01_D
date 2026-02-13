@@ -93,18 +93,6 @@ public class Produits {
         this.utilite = utilite;
     }
 
-    @Override
-    public String toString() {
-        return "Objet{" +
-                "nom='" + nom + '\'' +
-                ", categorie='" + categorie + '\'' +
-                ", detail='" + denomination + '\'' +
-                ", prix=" + prix +
-                ", poids=" + masse +
-                ", utilite=" + utilite +
-                '}';
-    }
-
     public String getId() {
         return id;
     }
@@ -159,5 +147,21 @@ public class Produits {
 
     public void setPresenceSac(boolean presenceSac) {
         this.presenceSac = presenceSac;
+    }
+
+    @Override
+    public String toString() {
+        return "Produits{" +
+                "id='" + id + '\'' +
+                ", denomination='" + denomination + '\'' +
+                ", nom='" + nom + '\'' +
+                ", categorie='" + categorie + '\'' +
+                ", description='" + description + '\'' +
+                ", masse=" + masse +
+                ", nutrition=" + nutrition +
+                ", prix=" + prix +
+                ", utilite=" + utilite +
+                ", presenceSac=" + presenceSac +
+                '}';
     }
 }

@@ -7,6 +7,9 @@
 
 # Roadeo
 
+Logo libre de droit, présenté par l'équipe Roadeo.  
+Supervisé par l'IUT de Rodez.
+
 ## **Présentation**
 
 (Voir le cahier des charges)
@@ -17,14 +20,26 @@
 
 Ce dépôt contient les éléments suivants :  
 
-- Le code source de l'application Android
-- Le code source du serveur API
-- Les données initiales de la base de données MongoDB.
+- Le code source de l'application Android **Roadeo**.
+- Le code source du serveur API **RandoAPI**.
+- Les données initiales de la base de données MongoDB **RandoDB**.
 
 ## **Dépendances**
 
-Le site requiert les composants suivants pour fonctionner :  
+Roadeo fonctionne actuellement avec la version Android Studio suivante : 2022.3.1 Patch 4  
+
+Le site et l'application en locale requiert les composants suivants pour fonctionner :  
 - Docker
+
+## ** Docker **
+
+À la racine du projet, lancer docker compose up  
+- l'API s'accède avec http://localhost/api  
+- Le créateur de produits se trouve dans http://localhost/produits
+
+## **Roadeo**
+
+Pour que l'application Roadeo communique avec le [serveur distant](https://ec2-13-60-253-54.eu-north-1.compute.amazonaws.com), il suffit de compiler le projet en mode **release**.
 
 ## **Contribuer**
 
@@ -46,10 +61,6 @@ Pour être à jour dans une branche, privilégier `git pull --rebase`
 - Djedline BOYER (djedline) : djedline.boyer@iut-rodez.fr  
 - Noa M'TIMA LESNIAK (NoixDeXydre) : noa.mtimalesniak@iut-rodez.fr  
 - Adrien VIGUE (Enjien320) : adrien.vigue@iut-rodez.fr  
-
-Rôles par sprint :
-   
-TODO
 
 ### Liens
 

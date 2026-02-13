@@ -56,7 +56,7 @@ public class UtilisateurServiceTests {
         // Simuler le comportement du repository
         when(repository.findOne(any(Example.class))).thenReturn(Optional.of(expectedList.get(0)));
 
-        Utilisateur result = service.validerConnexion("test@example.com", "mdp123");
+        Utilisateur result = service.validerConnexion("jean-miche@gmail.com", "1234");
 
         assertNotNull(result);
         assertEquals(expectedList.get(0).getAdresseMail(), result.getAdresseMail());

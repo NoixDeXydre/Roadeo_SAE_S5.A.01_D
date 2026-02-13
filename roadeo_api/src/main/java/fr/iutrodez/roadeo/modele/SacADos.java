@@ -131,4 +131,12 @@ public class SacADos {
             }
         }
     }
+
+    public double getPoidsMax() {
+        return poidsMax;
+    }
+
+    public void setPoidsMax(double poidsMax) {
+        this.poidsMax = poidsMax;
+    }
 }

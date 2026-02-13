@@ -15,7 +15,7 @@ db.utilisateur.insertOne({
   prenom: "Marcel", 
   age: 40, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Forte",
+  morphologie: "Fort",
   sac: []
 })
 
@@ -29,7 +29,7 @@ db.utilisateur.insertOne({
   prenom: "Jean-Michel", 
   age: 23, 
   niveauEntrainement: "Entraine", 
-  morphologie: "Moyenne",
+  morphologie: "Moyen",
   sac: []
 })
 
@@ -43,7 +43,7 @@ db.utilisateur.insertOne({
   prenom: "Un", 
   age: 39, 
   niveauEntrainement: "Debutant", 
-  morphologie: "Legere",
+  morphologie: "Leger",
   sac: []
 })
 
@@ -58,7 +58,24 @@ db.randonnee.insertOne({
   participants_max: 2,
   point_depart: {libelle: "depart", geo:[43.408308198518846, 2.4458198213038966]},
   point_arrive: {libelle: "arrive", geo:[43.424080742263676, 2.462710777901859]},
-  nombre_jours: 1
+  nombre_jours: 1,
+  participants: [
+  {
+    nom: "Le Marcheur", 
+    prenom: "Pierre", 
+    age: 61, 
+    niveauEntrainement: "Sportif", 
+    morphologie: "Moyen",
+    sac: []
+  }, 
+  {
+    nom: "Tournepluie", 
+    prenom: "M Tournesol", 
+    age: 67, 
+    niveauEntrainement: "Debutant", 
+    morphologie: "Leger",
+    sac: []
+  }]
 });
 
 db.randonnee.insertOne({
@@ -68,7 +85,33 @@ db.randonnee.insertOne({
   participants_max: 3,
   point_depart: {libelle: "depart", geo:[44.34974473375299, 2.5764601949018444]},
   point_arrive: {libelle: "arrive", geo:[44.34974473375299, 2.5764601949018444]},
-  nombre_jours: 2
+  nombre_jours: 2,
+  participants: [
+    {
+      nom: "Le Marcheur", 
+      prenom: "Pierre", 
+      age: 61, 
+      niveauEntrainement: "Sportif", 
+      morphologie: "Moyen",
+      sac: []
+    }, 
+    {
+      nom: "Tournepluie", 
+      prenom: "M Tournesol", 
+      age: 67, 
+      niveauEntrainement: "Debutant", 
+      morphologie: "Leger",
+      sac: []
+    },
+    {
+      nom: "L'étudiant", 
+      prenom: "Marcel", 
+      age: 23, 
+      niveauEntrainement: "sportif", 
+      morphologie: "Leger",
+      sac: []
+    }
+  ]
 });
 
 db.randonnee.insertOne({
@@ -78,7 +121,25 @@ db.randonnee.insertOne({
   participants_max: 3,
   point_depart: {libelle: "depart", geo:[44.360123830300076, 2.575580735324156]},
   point_arrive: {libelle: "arrive", geo:[44.360123830300076, 2.575580735324156]},
-  nombre_jours: 1
+  nombre_jours: 1,
+  participants: [
+    {
+      nom: "Le Marcheur", 
+      prenom: "Pierre", 
+      age: 61, 
+      niveauEntrainement: "Sportif", 
+      morphologie: "Moyen",
+      sac: []
+    }, 
+    {
+      nom: "Tournepluie", 
+      prenom: "M Tournesol", 
+      age: 67, 
+      niveauEntrainement: "Debutant", 
+      morphologie: "Leger",
+      sac: []
+    }
+  ]
 });
 
 // Création de la table parcours
@@ -97,25 +158,8 @@ db.parcours.insertOne({
   idRando: '1', 
   libelle_randonnee: 'La montagne Noire', 
   etat: 2,
-  date_realisation: new ISODate("2026-01-18T14:10:30.123Z"),
-  participants: [
-    {
-      nom: "Marcel Jr", 
-      prenom: "Marcenelle", 
-      age: 12, 
-      niveauEntrainement: "Debutant", 
-      morphologie: "Legere",
-      sac: []
-    }, 
-    {
-      nom: "Marie Marcel", 
-      prenom: "Montrane", 
-      age: 39, 
-      niveauEntrainement: "Entraine", 
-      morphologie: "Moyenne",
-      sac: []
-    }
-  ]
+  selection: false,
+  date_realisation: new ISODate("2026-01-18T14:10:30.123Z")
 });
 
 db.parcours.insertOne({
@@ -131,33 +175,8 @@ db.parcours.insertOne({
           {libelle : "Cassarou", geo : [2.4768070240403404,44.33126526040786]},
           {libelle : "Moyrazès", geo : [2.4398242797784917,44.34276725217214]},
           {libelle : "Montès", geo : [2.455742937387953,44.32713060116157]}],
-  date_realisation: new ISODate("2026-01-22T14:10:30.123Z"),
-  participants: [
-    {
-      nom: "Le Marcheur", 
-      prenom: "Pierre", 
-      age: 61, 
-      niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne",
-      sac: []
-    }, 
-    {
-      nom: "Tournepluie", 
-      prenom: "M Tournesol", 
-      age: 67, 
-      niveauEntrainement: "Debutant", 
-      morphologie: "Legere",
-      sac: []
-    },
-    {
-      nom: "L'étudiant", 
-      prenom: "Marcel", 
-      age: 23, 
-      niveauEntrainement: "sportif", 
-      morphologie: "Legere",
-      sac: []
-    }
-  ]
+  selection: true,
+  date_realisation: new ISODate("2026-01-22T14:10:30.123Z")
 });
 
 db.parcours.insertOne({
@@ -169,25 +188,8 @@ db.parcours.insertOne({
           {libelle : "Batiment C", geo :[2.575853338825084, 44.360287526289454]},
           {libelle : "Batiment A", geo :[2.5765978001776375, 44.36019428390435]},
           {libelle : "Batiment B", geo : [ 2.576335155660985,44.35970734903577]}],
-  date_realisation: new ISODate("2026-01-22T14:10:30.123Z"),
-  participants: [
-    {
-      nom: "Le Marcheur", 
-      prenom: "Pierre", 
-      age: 61, 
-      niveauEntrainement: "Sportif", 
-      morphologie: "Moyenne",
-      sac: []
-    }, 
-    {
-      nom: "Tournepluie", 
-      prenom: "M Tournesol", 
-      age: 67, 
-      niveauEntrainement: "Debutant", 
-      morphologie: "Legere",
-      sac: []
-    }
-  ]
+  selection: false,
+  date_realisation: new ISODate("2026-01-22T14:10:30.123Z")
 });
 
 db.createCollection("produits");

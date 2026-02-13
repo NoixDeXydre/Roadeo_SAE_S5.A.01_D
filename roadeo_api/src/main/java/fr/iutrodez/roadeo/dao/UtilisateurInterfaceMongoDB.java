@@ -5,6 +5,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
+/**
+ * Communique avec la collection utilisateur de MongoDB
+ */
 public interface UtilisateurInterfaceMongoDB extends MongoRepository<Utilisateur, String> {
 
     /**

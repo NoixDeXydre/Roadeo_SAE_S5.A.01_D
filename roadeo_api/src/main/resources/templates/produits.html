@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Produits</title>
+
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left {
+            width: 40%;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            overflow-y: auto;
+        }
+
+        .right {
+            width: 60%;
+            padding: 20px;
+        }
+    </style>
+
+    <script src="/js/produits.js"></script>
+
+</head>
+<body onload="toggleNutrition()">
+
+<div class="container">
+
+    <!-- ================= GAUCHE ================= -->
+
+    <div class="left">
+
+        <h3>Filtres</h3>
+
+        <form method="get" th:action="@{/produits}">
+
+            <!-- Catégorie -->
+            Catégorie :
+            <select name="categorie">
+
+                <option value="">Tous</option>
+
+                <option th:each="cat : ${categories}"
+                        th:value="${cat}"
+                        th:text="${cat}"
+                        th:selected="${cat == selectedCategorie}">
+                </option>
+
+            </select>
+            &ensp;
+            <!-- Nom -->
+            Nom :
+            <select name="nom">
+
+                <option value="">Tous</option>
+
+                <option th:each="n : ${noms}"
+                        th:value="${n}"
+                        th:text="${n}"
+                        th:selected="${n == selectedNom}">
+                </option>
+
+            </select>
+
+            &ensp;
+
+            <button type="submit">Filtrer</button>
+        </form>
+
+        <hr>
+
+        <h3>Liste Produits</h3>
+
+        <div th:each="p : ${produits}">
+            <b th:text="${p.nom}"></b>
+            -
+            <span th:text="${p.categorie}"></span>
+
+            <br>
+
+            <a th:href="@{/produits(editId=${p.id})}">Modifier</a>
+            |
+            <a th:href="@{/produits/delete/{id}(id=${p.id})}">Supprimer</a>
+
+            <hr>
+        </div>
+
+    </div>
+
+    <!-- ================= DROITE ================= -->
+
+    <div class="right">
+
+        <h2 th:text="${editMode} ?
+            'Modification du produit ' + ${produit.nom}
+            : 'Ajout d\'un objet'">
+        </h2>
+
+        <form th:action="@{/produits/save}" th:object="${produit}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Catégorie -->
+            Catégorie :
+            <select id="categorie" th:field="*{categorie}" onchange="toggleNutrition()">
+
+                <option th:each="cat : ${categories}"
+                        th:value="${cat}"
+                        th:text="${cat}">
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <!-- Dénomination -->
+            Dénomination :
+            <input type="text" th:field="*{denomination}">
+            <br><br>
+
+            <!-- Nom -->
+            Nom :
+            <input type="text" th:field="*{nom}">
+            <br><br>
+
+            <!-- Description -->
+            Description :
+            <textarea th:field="*{description}"></textarea>
+            <br><br>
+
+            <!-- Masse -->
+            Masse :
+            <input type="number"
+                   step="0.01"
+                   min="1"
+                   placeholder="en g"
+                   th:field="*{masse}">
+            <br><br>
+
+            <!-- Nutrition -->
+            <div id="nutritionDiv">
+                Nutrition :
+                <input type="number"
+                       step="0.01"
+                       min="0"
+                       placeholder="en kcal"
+                       th:field="*{nutrition}">
+            </div>
+
+            <br>
+
+            <!-- Prix -->
+            Prix :
+            <input type="number"
+                   step="0.01"
+                   min="0"
+                   placeholder="en euros"
+                   th:field="*{prix}">
+            <br><br>
+
+            <button type="submit"
+                    th:text="${editMode} ? 'Modifier' : 'Ajouter'">
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

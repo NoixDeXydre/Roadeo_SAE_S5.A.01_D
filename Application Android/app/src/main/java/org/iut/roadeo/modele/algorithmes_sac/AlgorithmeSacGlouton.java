@@ -20,7 +20,6 @@ import java.util.Comparator;
  */
 public class AlgorithmeSacGlouton implements IAlgorithmeSac {
 
-    @Override
     public ArrayList<SacADos> getSacADosRepartis(ArrayList<Produit> produits,
                                                  ArrayList<SacADos> sacADos) {
 

@@ -164,8 +164,4 @@ public class Participant {
             return 22 * Math.pow(1.65,2) * corpulence;
         }
     }
-
-    public double poidsRando() {
-        return poidsApproximatif() * 0.20;
-    }
 }

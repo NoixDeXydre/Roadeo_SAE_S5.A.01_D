@@ -15,14 +15,14 @@ public class ParcoursTest {
 
     @BeforeEach
     void setUp() {
-        randoTest = new Parcours("1", "1","3", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>());
+        randoTest = new Parcours("1", "1","3", "Balade insolite à l'IUT de Rodez", new ArrayList<PointInteret>());
     }
 
     @Test
     @DisplayName("Test du constructeur avec valeur incorrecte")
     public void parcoursControleurVideTest(){
-        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","", "Balade insolite à l'IUT de Rodez", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
-        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","3", "", new ArrayList<Participant>(), new ArrayList<PointInteret>()));
+        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","", "Balade insolite à l'IUT de Rodez", new ArrayList<PointInteret>()));
+        assertThrows(IllegalArgumentException.class, () -> new Parcours("1", "1","3", "", new ArrayList<PointInteret>()));
     }
 
     @Test

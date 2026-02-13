@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Communique avec la collection produits de MongoDB
+ */
 public interface ObjetInterfaceMongoDB extends MongoRepository<Produits, String> {
 
     /**
@@ -19,4 +22,7 @@ public interface ObjetInterfaceMongoDB extends MongoRepository<Produits, String>
     ArrayList<Produits> findByCategorie(String Categorie);
 
     Produits findProduitsById(String idObjet);
+
+    @Aggregation(pipeline = { "{ '$group': { '_id': '$nom' } }" })
+    ArrayList<String> findDistinctNom();
 }

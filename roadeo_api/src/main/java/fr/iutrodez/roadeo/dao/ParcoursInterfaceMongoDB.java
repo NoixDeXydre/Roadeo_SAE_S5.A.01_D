@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.ArrayList;
 import java.util.Optional;
 
+/**
+ * Communique avec la collection parcours de MongoDB
+ */
 public interface ParcoursInterfaceMongoDB extends MongoRepository<Parcours, String> {
 
     ArrayList<Parcours> findByIdRando(String idRando);

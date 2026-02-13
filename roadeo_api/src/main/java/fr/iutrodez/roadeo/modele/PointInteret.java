@@ -44,5 +44,4 @@ public class PointInteret {
     public void setCoordonnees(double[] coordonnees) {
         this.coordonnees = coordonnees;
     }
-
 }

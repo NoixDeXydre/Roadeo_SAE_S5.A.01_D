@@ -18,6 +18,9 @@ public class Parcours {
     /** id de la randonnée auquelle le parcours est associé */
     private String idRando;
 
+    /** Permet de savoir si le parcours est sélectionné pour la randonnée */
+    private boolean selection;
+
     /**
      * id de l'utilisateur auquelle le parcours est associé
      * @serialField id_utilisateur : champ mongo associé à la variable
@@ -35,7 +38,7 @@ public class Parcours {
     private String libelleRandonnee;
 
     /** Liste des participants du parcours */
-    private ArrayList<Participant> participants;
+    //private ArrayList<Participant> participants;
 
     private ArrayList<PointInteret> pointInterets;
 
@@ -44,7 +47,7 @@ public class Parcours {
 
     /** Constructeur manuel */
     public Parcours(String id, String idRando, String idUtilisateur, String libelleRandonnee,
-                    ArrayList<Participant> participants,  ArrayList<PointInteret> pointInterets) {
+                    ArrayList<PointInteret> pointInterets) {
         if ( idRando == null || idRando.isEmpty()
                 || idUtilisateur == null || idUtilisateur.isEmpty()
                 || libelleRandonnee == null || libelleRandonnee.isEmpty()) {
@@ -54,8 +57,8 @@ public class Parcours {
         this.idRando = idRando;
         this.idUtilisateur = idUtilisateur;
         this.libelleRandonnee = libelleRandonnee;
-        this.participants = participants;
         this.pointInterets = pointInterets;
+        this.selection = false;
     }
 
     /** Renvoi l'id du parcours */
@@ -94,66 +97,19 @@ public class Parcours {
         this.libelleRandonnee = libelleRandonnee;
     }
 
-    public void setParticipants(ArrayList<Participant> participants) {
-        this.participants = participants;
-    }
-
     public void setPointInterets(ArrayList<PointInteret> pointInterets) {
         this.pointInterets = pointInterets;
-    }
-
-    /** liste des randonnées */
-    public ArrayList<Participant> getParticipants() {
-        return this.participants;
     }
 
     public ArrayList<PointInteret> getPointInterets() {
         return this.pointInterets;
     }
 
-    /**
-     * Calcul de Kcal selon la formule de Mifflin–St Jeor
-     * MB = 10 × poids(kg) + 6,25 × taille(cm) − 5 × âge + 5
-     * -> on prend la formule du calcul de Mifflin-St Jeor pour un homme au repos
-     * et on ultiplie par 1,9 pour simuler l'activité sportive
-     * @return le nombre de kilo calorie d'une personne
-     */
-    private double calculKcalParticipant(double poids, double taille, int age) {
-        return (10 * poids + 6.25 * taille - 5 * age + 5) * 1.9;
+    public boolean getSelection() {
+        return this.selection;
     }
 
-    /**
-     * Calcul le nombre Kcal total pour l'ensemble des participants du parcours
-     * @param jour durée de la randonnée en jour
-     * @return les besoins en Kcal pour tout le parcours
-     */
-    public double calculKcalTotal(int jour) {
-        double result = 0.0;
-        for (Participant participant : this.participants) {
-            result += calculKcalParticipant(participant.poidsApproximatif(),
-                    participant.tailleApproximative(),
-                    participant.getAge());
-        }
-        return result * jour;
-    }
-
-    /**
-     * Calcul le poids max emportable par les participants du parcours
-     * @return le poids maximum
-     */
-    public double poidsMax() {
-        double result = 0.0;
-        for (Participant participant : this.participants) {
-            result += participant.poidsApproximatif();
-        }
-        return result;
-    }
-
-    public double poidsRando() {
-        double result = 0.0;
-        for (Participant participant : this.participants) {
-            result += participant.poidsRando();
-        }
-        return result;
+    public void setSelection(boolean selection) {
+        this.selection = selection;
     }
 }

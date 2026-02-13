@@ -32,5 +32,4 @@ jobs:
 
       # Construire l'image Docker
       - name: Build Docker image
-        run: |
-          docker build -t my-api:latest .
+        run: "docker buildx build -t rando-api:latest roadeo_api/"

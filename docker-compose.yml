@@ -1,6 +1,7 @@
 version: "3.8"
 
 services:
+  
   mongodb:
     image: mongo:7.0
     container_name: randoDB
@@ -17,6 +18,19 @@ services:
     volumes:
       - mongodb_data:/data/db 
       - ./init:/docker-entrypoint-initdb.d:ro
+      
+  java-server:
+    build:
+      context: ./roadeo_api
+      dockerfile: Dockerfile
+    container_name: randoAPI
+    restart: always
+    ports:
+      - "80:8080"
+    depends_on:
+      - mongodb
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://admin:juste1234@mongodb:27017/Roadeo-db?authSource=admin
 
 volumes:
   mongodb_data:

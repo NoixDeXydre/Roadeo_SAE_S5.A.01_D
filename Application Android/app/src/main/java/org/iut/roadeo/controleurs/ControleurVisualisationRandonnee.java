@@ -34,6 +34,7 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
 
     private Marker pointDepart;
     private Marker pointArrivee;
+    private Marker pointArriveeDepart;
 
     private boolean modeDepart;
 
@@ -75,15 +76,30 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
         pointArrivee.setAnchor(0.25f, 0.25f);
         pointArrivee.setInfoWindowAnchor(0.25f, Marker.ANCHOR_TOP);
 
+        // On crée le marqueur du point d'arrivée
+        pointArriveeDepart = new Marker(mapView);
+        pointArriveeDepart.setTitle("Départ et arrivée de la randonnée");
+        pointArriveeDepart.setIcon(getDrawable(R.drawable.arrivee_depart_marqueur));
+        pointArriveeDepart.setAnchor(0.25f, 0.25f);
+        pointArriveeDepart.setInfoWindowAnchor(0.25f, Marker.ANCHOR_TOP);
+
         // si informations reçues, on met les points en place
         if (!Double.isNaN(coordDepart[0])) { // une seule vérif nécessaire
-            PointInteret depart = new PointInteret("depart", coordDepart);
-            PointInteret arrive = new PointInteret("arrive", coordArrive);
+            if (coordDepart[0] != coordArrive[0]
+                || coordDepart[1] != coordArrive[1]) {
+                PointInteret depart = new PointInteret("depart", coordDepart);
+                PointInteret arrive = new PointInteret("arrive", coordArrive);
 
-            pointDepart.setPosition(depart.getCoordonnees());
-            pointArrivee.setPosition(arrive.getCoordonnees());
-            mapView.getOverlays().add(pointDepart);
-            mapView.getOverlays().add(pointArrivee);
+                pointDepart.setPosition(depart.getCoordonnees());
+                pointArrivee.setPosition(arrive.getCoordonnees());
+                mapView.getOverlays().add(pointDepart);
+                mapView.getOverlays().add(pointArrivee);
+            } else {
+                PointInteret departArrive = new PointInteret("depart arrive",
+                                                             coordDepart);
+                pointArriveeDepart.setPosition(departArrive.getCoordonnees());
+                mapView.getOverlays().add(pointArriveeDepart);
+            }
         }
 
         modeDepart = true;

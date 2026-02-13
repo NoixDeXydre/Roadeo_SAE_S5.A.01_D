@@ -266,7 +266,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         pointInteret.setPosition(position);
         pointInteret.setTitle("Point d'intérêt Roadeo");
         pointInteret.setIcon(getResources().getDrawable(R.drawable.point_interet_marqueur));
-        pointInteret.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        pointInteret.setAnchor(0.25f, 0.25f);
 
         // Ecriture dans le cache
         parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",

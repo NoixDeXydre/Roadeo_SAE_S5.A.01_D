@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/ajouter"
-        android:id="@+id/ajoutParcours"
+        android:onClick="ajouterParcours"
         android:textColor="@color/black"/>
 
     <View

@@ -2,6 +2,11 @@ package org.iut.roadeo.controleurs;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -61,5 +66,47 @@ public class ControleurListeParcours extends AppCompatActivity {
                         }
             });
         }
+
+        // on associe le menu contextuel
+        registerForContextMenu(listeParcours);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        // on défini les items du menu click droit
+        new MenuInflater(this).inflate(R.menu.menu_ajouter_liste, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo information =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
+        // On regarde l'option choisie par l'utilisateur
+        if(item.getItemId() == R.id.detail){
+            Parcours parcoursChoisi;
+            Intent intention = new Intent(this, ControleurParamParcours.class);
+
+            parcoursChoisi = parcours.get(information.position);
+            intention.putExtra("NOM", parcoursChoisi.getLibelle());
+
+            startActivity(intention);
+        } else if (item.getItemId() == R.id.supprimer) {
+            parcours.remove(information.position);
+            listeParcours.setAdapter(adaptateur);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Envoi vers la vue permettant de créer un parcours
+     * @param view non utilisé
+     */
+    public void ajouterParcours(View view) {
+        Intent intention = new Intent(this, ControleurParamParcours.class);
+
+        startActivity(intention);
     }
 }

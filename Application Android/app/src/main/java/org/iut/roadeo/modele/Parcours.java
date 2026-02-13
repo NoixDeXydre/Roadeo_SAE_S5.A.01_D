@@ -200,4 +200,10 @@ public class Parcours {
             index++;
         } while (!trouve && index<pointsInteret.size());
     }
+
+    @Override
+    public String toString() {
+        return "Parcours : "+getLibelle()+", Nombre de points d'intérêts : "+
+                getPointsInteret().size();
+    }
 }

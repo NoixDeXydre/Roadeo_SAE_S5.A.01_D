@@ -1,8 +1,7 @@
 package org.iut.roadeo.modele;
 
-import org.iut.roadeo.Modele.Randonneur;
-import org.iut.roadeo.Modele.TypeDonnees.Morphologie;
-import org.iut.roadeo.Modele.TypeDonnees.NiveauEntrainement;
+import org.iut.roadeo.modele.typedonnees.Morphologie;
+import org.iut.roadeo.modele.typedonnees.NiveauEntrainement;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

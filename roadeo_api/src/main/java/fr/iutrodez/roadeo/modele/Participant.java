@@ -164,6 +164,4 @@ public class Participant {
             return 22 * Math.pow(1.65,2) * corpulence;
         }
     }
-
-
 }

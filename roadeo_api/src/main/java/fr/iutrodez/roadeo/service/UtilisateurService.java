@@ -9,31 +9,30 @@ import java.util.Optional;
 
 @Service
 public class UtilisateurService {
-    /**
-     *
-     */
+
+    /** répertoire qui permet de communiquer avec la collection utilisateur */
     private final UtilisateurInterfaceMongoDB repository;
 
     /**
-     *
-     * @param repository
+     * Crée un service
+     * @param repository répertoire utilisateur
      */
     public UtilisateurService(UtilisateurInterfaceMongoDB repository) {
         this.repository = repository;
     }
 
     /**
-     *
-     * @return
+     * Liste les utilisateurs de la base de données
+     * @return la liste des utilisateurs
      */
     public List<Utilisateur> getAllUtilisateurs() {
         return repository.findAll();
     }
 
     /**
-     *
-     * @param id
-     * @return
+     * Récupère un utilisateur selon un id
+     * @param id id de l'utilisateur à retrouver
+     * @return l'utilisateur trouvé ou null si l'id n'existe pas
      */
     public Utilisateur getUtilisateur(String id) {
 
@@ -46,8 +45,8 @@ public class UtilisateurService {
     //      la clé API devrait être fournie.
     /**
      * Valide la connexion de l'utilisateur.
-     * @param email
-     * @param mdp
+     * @param email adresse mail de l'utilisateur
+     * @param mdp mot de passe de l'utilisateur
      * @return l'utilisateur connecté
      */
     public Utilisateur validerConnexion(String email, String mdp) {

@@ -7,20 +7,21 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
     <application
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icone_roadeo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icone_roadeo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Roadeo"
         tools:targetApi="31">
 
         <activity
-            android:name=".Controleurs.ControleurPageConnexion"
+            android:name=".controleurs.ControleurPageConnexion"
             android:screenOrientation="landscape"
             android:exported="true">
             <intent-filter>
@@ -31,34 +32,53 @@
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurDashboard"
+            android:name=".controleurs.ControleurDashboard"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurCreationCompte"
+            android:name=".controleurs.ControleurCreationCompte"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurCompteUtilisateur"
+            android:name=".controleurs.ControleurCompteUtilisateur"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurListeParticipant"
+            android:name=".controleurs.ControleurListeParcours"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
 
         <activity
-            android:name=".Controleurs.ControleurAjoutRandonneur"
+            android:name=".controleurs.ControleurListeParticipant"
             android:screenOrientation="landscape"
             android:exported="true">
         </activity>
+
+        <activity
+            android:name=".controleurs.ControleurAjoutRandonneur"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".controleurs.ControleurParamParcours"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".controleurs.ControleurVisualisationRandonnee"
+            android:screenOrientation="landscape"
+            android:exported="true">
+        </activity>
+
     </application>
 
 </manifest>

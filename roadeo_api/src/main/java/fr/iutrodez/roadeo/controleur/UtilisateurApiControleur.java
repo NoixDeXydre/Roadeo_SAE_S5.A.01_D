@@ -47,10 +47,18 @@ public class UtilisateurApiControleur {
         }
     }
 
+    /**
+     * Ajoute un utilisateur
+     * @param util l'utilisateur à ajouter
+     * @return l'utilisateur sauvegardée et un code
+     * code 200 -> si l'utilisateur est ajouté
+     *      403 -> si une erreur est détectée
+     *      404 -> si l'utilisateur est null
+     */
     @PostMapping("/ajoutUtilisateur")
-    public ResponseEntity<Utilisateur>  ajoutUtilisateur(@RequestBody Utilisateur request) {
+    public ResponseEntity<Utilisateur>  ajoutUtilisateur(@RequestBody Utilisateur util) {
         try {
-            Utilisateur utilisateur = utilisateurService.addUtilisateur(request);
+            Utilisateur utilisateur = utilisateurService.addUtilisateur(util);
             if (utilisateur != null) {
                 return ResponseEntity.ok(utilisateur);
             } else {
@@ -61,10 +69,18 @@ public class UtilisateurApiControleur {
         }
     }
 
+    /**
+     * Modifie un utilisateur
+     * @param util l'utilisateur à modifier
+     * @return l'utilisateur sauvegardée et un code
+     * code 200 -> si l'utilisateur est modifiée
+     *      403 -> si une erreur est détectée
+     *      404 -> si l'utilisateur est null
+     */
     @PutMapping("/modifUtilisateur")
-    public ResponseEntity<Utilisateur> modifUtilisateur(@RequestBody Utilisateur request) {
+    public ResponseEntity<Utilisateur> modifUtilisateur(@RequestBody Utilisateur util) {
         try{
-            Utilisateur utilisateur = utilisateurService.updateUtilisateur(request);
+            Utilisateur utilisateur = utilisateurService.updateUtilisateur(util);
             if (utilisateur != null) {
                 return ResponseEntity.ok(utilisateur);
             } else {
@@ -75,6 +91,13 @@ public class UtilisateurApiControleur {
         }
     }
 
+    /**
+     * Modifie un utilisateur
+     * @param id de l'utilisateur à supprimer
+     * @return un code 200 -> si l'utilisateur est supprimée
+     *                 403 -> si une erreur est détectée
+     *                 404 -> si l'utilisateur n'est pas supprimé
+     */
     @DeleteMapping("/supprimeUtilisateur/{id}")
     public ResponseEntity<Void>  supprimeUtilisateur(@PathVariable String id) {
         if (id == null) {

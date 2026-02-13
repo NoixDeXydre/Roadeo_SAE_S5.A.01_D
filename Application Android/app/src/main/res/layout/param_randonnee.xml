@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:gravity="center"
+        android:text="@string/details_randonnee"
+        android:textColor="@color/vert_gazon"
+        android:textSize="30sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/marron_noisette"/>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/nom_randonnee" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nom_randonnee"
+            android:id="@+id/labelLibelle"
+            android:inputType="text" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/duree_jours" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/placeholder_nb_max_personne"
+            android:id="@+id/labelDureeJours"
+            android:inputType="number" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+            android:id="@+id/voirListeParcours"
+            android:text="@string/voir_liste_parcours"
+            android:backgroundTint="@color/vert_kaki"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/voirListeParticipants"
+            android:text="@string/voir_liste_participants"
+            android:backgroundTint="@color/vert_kaki"
+            android:textColor="@color/black"/>
+    </TableRow>
+
+    <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+    android:id="@+id/ajoutDepartArrivee"
+    android:text="Placer le départ et l'arrivée"
+    android:backgroundTint="@color/vert_kaki"
+    android:textColor="@color/black"/>
+
+    <androidx.constraintlayout.widget.Placeholder
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dist_page_randonnee_boutons"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/confirmerRandonnee"
+        android:text="@string/confirmer"
+        android:textColor="@color/black" />
+
+</LinearLayout>

@@ -1,6 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:gravity="center"
+        android:text="@string/options_randonneur"
+        android:textSize="@dimen/taille_titre_page" />
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_nom" />
+
+        <EditText
+            android:id="@+id/nomRandonneur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="120"
+            android:hint="@string/description_nom"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_prenom" />
+
+        <EditText
+            android:id="@+id/prenomRandonneur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLength="120"
+            android:hint="@string/description_prenom"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_age" />
+
+        <EditText
+            android:id="@+id/ageRandonneur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberSigned"
+            android:maxLength="120"
+            android:hint="@string/description_age"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_niveau" />
+
+        <Spinner
+            android:id="@+id/niveauRandonneur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dist_page_connexion_labels_champs"
+            android:text="@string/label_compte_morphologie" />
+
+        <Spinner
+            android:id="@+id/morphologieRandonneur"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </TableRow>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="confirmerRandonneur"
+        android:text="@string/confirmer"
+        android:textColor="@color/black" />
 </LinearLayout>

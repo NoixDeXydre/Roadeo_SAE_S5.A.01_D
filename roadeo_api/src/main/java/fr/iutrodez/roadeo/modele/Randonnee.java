@@ -96,11 +96,9 @@ public class Randonnee {
         return id;
     }
 
-    /**
-     * Inutilisé
-     * @param id Inutilisé
-     */
-    public void setId(String id) {}
+    public void setId(String id) {
+        this.id = id;
+    }
 
     /**
      * Récupère le nom de la randonnée
@@ -179,27 +177,11 @@ public class Randonnee {
     }
 
     /**
-     * Modifie le point de départ de la randonnée
-     * @param coordonnee le nouveau point de départ de la randonnée
-     */
-    public void setDepart(double[] coordonnee) {
-        depart.setCoordonnees(coordonnee);
-    }
-
-    /**
      * Renvoi le point d'arrivée de la randonnée
      * @return arrive
      */
     public PointInteret getArrive() {
         return arrive;
-    }
-
-    /**
-     * Modifie le point d'arrivé de la randonnée
-     * @param coordonnee les nouveau point d'arrivé de la randonée
-     */
-    public void setArrive(double[] coordonnee) {
-        arrive.setCoordonnees(coordonnee);
     }
 
     /**

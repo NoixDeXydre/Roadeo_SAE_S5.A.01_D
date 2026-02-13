@@ -6,6 +6,17 @@
     <string name="nom_page_connexion">Connexion</string>
     <string name="nom_page_creation_compte">"Création d'un compte"</string>
 
+    <!-- Titre onglet -->
+    <string-array name="onglets">
+        <item name="onglet_liste">Liste des randonnées</item>
+        <item name="onglet_liste">Paramètre de la randonnée</item>
+        <item name="onglet_carte">Carte</item>
+    </string-array>
+
+    <!-- option menu burger -->
+    <string name="option_menu_dashboard">Menu principal</string>
+    <string name="option_menu_compte_utilisateur">Compte utilisateur</string>
+
     <!-- Lié aux informations du compte -->
     <string name="label_compte_nom">Nom</string>
     <string name="label_compte_prenom">Prenom</string>
@@ -17,6 +28,17 @@
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
 
+    <!-- Liés aux informations de la randonnée -->
+    <string name="nom_randonnee">Nom de la randonnée</string>
+    <string name="duree_jours">Durée de la randonnée en jours</string>
+    <string name="texte_randonee">Liste des randonnées</string>
+    <string name="details_randonnee">Détails de la randonnée</string>
+
+    <!-- Liés aux informations du parcours -->
+    <string name="texte_parcours">Liste des parcours</string>
+    <string name="details_parcours">Détails du parcours</string>
+    <string name="nom_parcours">Nom du parcours</string>
+
     <string name="asterix">*</string>
 
     <!-- Labels boutons -->
@@ -24,24 +46,32 @@
     <string name="label_btn_confirmation_creation_compte">Confirmer la création du compte</string>
     <string name="label_btn_se_connecter">Se connecter</string>
     <string name="label_btn_visualiser_rando">Visualiser la randonnée</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="modifier">Modifier</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="details">Détails…</string>
+    <string name="voir_liste_parcours">Voir la liste des parcours</string>
+    <string name="voir_liste_participants">Voir la liste des participants</string>
+    <string name="bouton_carte_parcours">Voir la carte du parcours</string>
+    <string name="depart">Placer le point de départ</string>
+    <string name="arrivee">Placer le point d\'arrivée</string>
 
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>
     <string name="description_prenom">Marcenac</string>
-    <string name="description_email">m-marcenac@dmail.com</string>
+    <string name="description_email">M-Marcenac@email.com</string>
     <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_age">20</string>
     <string name="description_domicile">7 rue du Citron</string>
     <string name="description_patronyme">Marcel Marcenac</string>
     <string name="texte_participants">Liste des participants</string>
-    <string name="option_menu_dashboard">Menu principal</string>
-    <string name="option_menu_compte_utilisateur">Compte utilisateur</string>
     <string name="liste_participants_rando">Liste des participants</string>
+    <string name="options_randonneur">Options randonneur</string>
     <string name="se_deconnecter">Se déconnecter</string>
-    <string name="ajouter">Ajouter</string>
-    <string name="modifier">Modifier</string>
-    <string name="supprimer">Supprimer</string>
-    <string name="details">Détails…</string>
+    <string name="placeholder_nom_randonnee">Écrivez le nom de la randonnee</string>
+    <string name="placeholder_nb_max_personne">Entrez un nombre entre 1 et 3</string>
+    <string name="placeholder_nom_parcours">Écrivez le nom du parcours</string>
 
     <!-- Spinners -->
 
@@ -57,6 +87,23 @@
         <item name="fort">Fort</item>
     </string-array>
 
+    <!-- Carte -->
+    <string name="avertissement_point_interet">
+        "Vous êtes à moins de 200m d'un point d'intérêt !"
+    </string>
+    <string name="mise_en_pause_parcours">Le parcours a été mis en pause.</string>
+    <string name="demarrage_parcours">Démarrage / continuation de la randonnée</string>
+    <string name="mise_en_arret_parcours">Arrêt de la randonnée</string>
+
+    <!-- Informations carte -->
+
+    <string name="label_carte_randonnee">Randonnée</string>
+    <string name="date_carte_parcours_formatage">Parcours crée le : %s</string>
+    <string name="label_point_interet_proche">"Distance du Point D'intérêt le plus Proche"</string>
+    <string name="distance_point_interet_proche_formatage">"%s m"</string>
+    <string name="label_participants_carte">Participants</string>
+    <string name="label_status_parcours">Status Parcours</string>
+
     <!-- Messages succès -->
 
     <string name="message_succes_creation_compte">"Votre compte a été crée avec succès.\nBienvenue, %s !"</string>
@@ -68,7 +115,7 @@
     <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>
     <string name="message_erreur_confirmation_mdp">Veuillez confirmer votre mot de passe.</string>
     <string name="message_erreur_mdp_conf_echec">"La confirmation du mot de passe à échouer, faite en sorte à ce qu'il corresponde à votre mot de passe initial."</string>
-    <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 - 120.</string>
+    <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail">Votre adresse mail est vide ou incorrecte.</string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
 

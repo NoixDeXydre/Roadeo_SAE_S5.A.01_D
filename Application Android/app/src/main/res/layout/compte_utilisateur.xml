@@ -10,20 +10,21 @@
             android:id="@+id/imageUtilisateur"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/crayon" />
+            android:src="@drawable/utilisateur_marqueur" />
 
         <EditText
             android:id="@+id/nomUtilisateur"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/description_patronyme"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifNom"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:adjustViewBounds="false"
-            android:src="@drawable/crayon" />
+            android:adjustViewBounds="true"
+            android:text="Modifier"
+            android:layout_column="2" />
     </TableRow>
     <TableRow>
         <TextView
@@ -38,12 +39,12 @@
             android:hint="@string/description_motdepasse"
             android:inputType="textPassword"
             android:layout_column="2"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifMotDePasse"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
+            android:adjustViewBounds="true"
             android:layout_column="2"/>
     </TableRow>
     <TableRow>
@@ -58,12 +59,11 @@
             android:layout_height="wrap_content"
             android:hint="@string/description_email"
             android:layout_column="2"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifEmail"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
             android:layout_column="2"/>
     </TableRow>
     <TableRow>
@@ -78,12 +78,12 @@
             android:layout_height="wrap_content"
             android:hint="@string/description_domicile"
             android:layout_column="2"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifDomicile"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
+            android:adjustViewBounds="true"
             android:layout_column="2"/>
     </TableRow>
     <TableRow>
@@ -97,12 +97,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifNiveau"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
+            android:adjustViewBounds="true"
             android:layout_column="2"/>
     </TableRow>
     <TableRow>
@@ -116,12 +116,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="2"/>
-        <ImageButton
+        <Button
             android:id="@+id/modifMorphologie"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:backgroundTint="@color/vert_pomme"
-            android:src="@drawable/crayon"
+            android:adjustViewBounds="true"
             android:layout_column="2"/>
     </TableRow>
 </TableLayout>

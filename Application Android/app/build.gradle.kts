@@ -2,7 +2,7 @@ plugins {
     id("com.android.application")
 }
 
-val URL_API_DEBUG by extra("http://10.0.2.2:8080/api/")
+val URL_API_DEBUG by extra("http://10.0.2.2/api/")
 val URL_API_PROD by extra("http://13.60.253.54/api/")
 
 android {

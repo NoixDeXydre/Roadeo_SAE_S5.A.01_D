@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +111,9 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
     private ImageView boutonPause;
     private ImageView boutonStop;
 
+    private Button boutonCentrerParcours;
+    private Button boutonCentrerRandonneur;
+
     private Parcours parcoursAfficheUtilisateur;
 
     private Marker marqueurUtilisateur;
@@ -158,6 +162,9 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
         dateParcours = vue.findViewById(R.id.date_parcours);
 
+        boutonCentrerParcours = vue.findViewById(R.id.bouton_carte_centrer_parcours);
+        boutonCentrerRandonneur = vue.findViewById(R.id.bouton_carte_centrer_randonneur);
+
         boutonDemarrer = vue.findViewById(R.id.bouton_demarrer_carte);
         boutonPause = vue.findViewById(R.id.bouton_pause_carte);
         boutonStop = vue.findViewById(R.id.bouton_stop_carte);
@@ -165,6 +172,8 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         boutonDemarrer.setOnClickListener(this);
         boutonPause.setOnClickListener(this);
         boutonStop.setOnClickListener(this);
+        boutonCentrerParcours.setOnClickListener(this);
+        boutonCentrerRandonneur.setOnClickListener(this);
 
         Configuration.getInstance().load(
                 vue.getContext(),
@@ -535,6 +544,8 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
             Toast.makeText(getView().getContext(),
                     getString(R.string.demarrage_parcours),
                     Toast.LENGTH_SHORT).show();
+
+            mettreAJourEtatNotificationPointInteret();
         }
 
         else if (view.getId() == R.id.bouton_pause_carte) {
@@ -553,7 +564,26 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
                     Toast.LENGTH_SHORT).show();
         }
 
+        // Autres boutons
+
+        else if (view.getId() == R.id.bouton_carte_centrer_randonneur
+                && marqueurUtilisateur != null) {
+            controleurMapView.setCenter(marqueurUtilisateur.getPosition());
+        }
+
+        // On centre sur le parcours
+        // en prenant la moyenne des deux coordonnées.
+        else if (view.getId() == R.id.bouton_carte_centrer_parcours) {
+
+            double x = (marqueurDepart.getPosition().getLatitude()
+                    + marqueurArrive.getPosition().getLatitude()) * 0.5f;
+
+            double y = (marqueurDepart.getPosition().getLongitude()
+                    + marqueurArrive.getPosition().getLongitude()) * 0.5f;
+
+            controleurMapView.setCenter(new GeoPoint(x, y));
+        }
+
         mettreAJourAffichageControles();
-        mettreAJourEtatNotificationPointInteret();
     }
 }

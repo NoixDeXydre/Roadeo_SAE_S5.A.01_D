@@ -143,20 +143,6 @@ public class Randonnee {
     }
 
     /**
-     * Calcul de Kcal selon la formule de Mifflin–St Jeor
-     * MB = 10 × poids(kg) + 6,25 × taille(cm) − 5 × âge + 5
-     * -> on prend la formule du calcul de Mifflin-St Jeor pour un homme au repos
-     * et on ultiplie par 1,9 pour simuler l'activité sportive
-     * @param randonneur le randonneur à analyser.
-     * @return le nombre de kilo calorie d'une personne
-     */
-    private double calculKcalParticipant(Randonneur randonneur) {
-        return (10 * randonneur.getPoidsApproximatif()
-                + 6.25 * randonneur.getTailleApproximative()
-                - 5 * randonneur.getAge() + 5) * 1.9;
-    }
-
-    /**
      * Calcul le poids max emportable par les participants du parcours
      * @return le poids maximum
      */

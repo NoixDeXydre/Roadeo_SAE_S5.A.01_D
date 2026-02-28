@@ -167,7 +167,8 @@ public class Randonneur {
     }
 
     /**
-     * Renvoie une estimation de la taille moyenne selon l'âge
+     * Renvoie une estimation du poids que peut porter
+     * le randonneur selon son âge et son poids.
      * @return le poids
      */
     public double getPoidsApproximatif() {
@@ -187,6 +188,19 @@ public class Randonneur {
         else if(this.age < AGE_GRAND_SEUIL_TAILLE_PREDEFINI)
             return 61.71f * corpulence;
         return 59.895f * corpulence;
+    }
+
+    /**
+     * Calcul de Kcal selon la formule de Mifflin–St Jeor
+     * MB = 10 × poids(kg) + 6,25 × taille(cm) − 5 × âge + 5
+     * -> on prend la formule du calcul de Mifflin-St Jeor pour un homme au repos
+     * et on ultiplie par 1,9 pour simuler l'activité sportive
+     *
+     * @return le nombre de kilo calorie d'une personne
+     */
+    private double calculKcalParticipant() {
+        return (10 * getPoidsApproximatif() + 6.25 * getTailleApproximative()
+                - 5 * getAge() + 5) * 1.9;
     }
 
     @Override

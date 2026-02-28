@@ -1,7 +1,10 @@
 package org.iut.roadeo.modele;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import org.iut.roadeo.modele.typedonnees.Morphologie;
+import org.iut.roadeo.modele.typedonnees.NiveauEntrainement;
 import org.junit.Test;
 
 /**
@@ -57,5 +60,44 @@ public class TestRandonnee {
         } catch (IllegalArgumentException e) {
             fail("La randonnée devrait être construite à ce point.");
         }
+    }
+
+    @Test
+    public void testAjouterRandonneur() {
+
+        Randonnee maRandonnee = new Randonnee(1, "Ma randonnée", 1,
+                null, null);
+
+        // Un randonneur null ne peut pas être ajouté.
+        maRandonnee.ajouterRandonneur(null);
+        assertEquals(0, maRandonnee.getRandonneurs().size());
+
+        maRandonnee.ajouterRandonneur(new Randonneur("test", "test", 10,
+                NiveauEntrainement.SPORTIF,  Morphologie.MOYEN));
+        assertEquals(1, maRandonnee.getRandonneurs().size());
+    }
+
+    @Test
+    public void testSupprimerRandonneur() {
+
+        Randonnee maRandonnee = new Randonnee(1, "Ma randonnée", 1,
+                null, null);
+        Randonneur randonneur = new Randonneur("test", "test", 10,
+                NiveauEntrainement.SPORTIF,  Morphologie.MOYEN);
+
+        maRandonnee.ajouterRandonneur(randonneur);
+
+        // Aucun randonneur supprimé
+        maRandonnee.supprimerRandonneur(null);
+        assertEquals(1, maRandonnee.getRandonneurs().size());
+
+        // Rien de supprimé. Ce n'est pas le même randonneur.
+        maRandonnee.supprimerRandonneur(new Randonneur("test", "test", 10,
+                NiveauEntrainement.SPORTIF,  Morphologie.MOYEN));
+        assertEquals(1, maRandonnee.getRandonneurs().size());
+
+        // Cas nominal
+        maRandonnee.supprimerRandonneur(randonneur);
+        assertEquals(0, maRandonnee.getRandonneurs().size());
     }
 }

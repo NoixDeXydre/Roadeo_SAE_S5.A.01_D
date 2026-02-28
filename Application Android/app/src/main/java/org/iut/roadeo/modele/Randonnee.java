@@ -127,7 +127,9 @@ public class Randonnee {
      * @param nouveauRandonneur
      */
     public void ajouterRandonneur(Randonneur nouveauRandonneur) {
-        // TODO méthode
+
+        if (nouveauRandonneur != null)
+            randonneurs.add(nouveauRandonneur);
     }
 
     /**
@@ -135,7 +137,23 @@ public class Randonnee {
      * @param randonneur
      */
     public void supprimerRandonneur(Randonneur randonneur) {
-        // TODO méthode
+
+        if (randonneur != null)
+            randonneurs.remove(randonneur);
+    }
+
+    /**
+     * Calcul le poids max emportable par les participants du parcours
+     * @return le poids maximum
+     */
+    public double poidsMax() {
+
+        double result = 0.0;
+        for (Randonneur randonneur : randonneurs) {
+            result += randonneur.getPoidsApproximatif();
+        }
+
+        return result;
     }
 
     @Override

@@ -39,7 +39,11 @@ Le site et l'application en locale requiert les composants suivants pour fonctio
 
 ## **Roadeo**
 
-Pour que l'application Roadeo communique avec le [serveur distant](https://ec2-13-60-253-54.eu-north-1.compute.amazonaws.com), il suffit de compiler le projet en mode **release**.
+Pour que l'application Roadeo communique avec le [serveur distant](http://13.60.253.54), il suffit de compiler le projet en mode **release**.
+
+Comme dit précédemment, il est possible d'accéder à l'API et à la création de produits :  
+- http://13.60.253.54/api  
+- http://13.60.253.54/produits  
 
 ## **Contribuer**
 

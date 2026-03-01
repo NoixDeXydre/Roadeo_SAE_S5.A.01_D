@@ -264,6 +264,16 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         mapView.onResume();
     }
 
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+
+        // À la destruction du fragment,
+        // on arrête les mises à jour de la localisation.
+        clientDeLocalisation.removeLocationUpdates(callbackDeLocalisation);
+    }
+
     /**
      * Crée et affiche sur la carte le point d'intérêt.
      * @param position

@@ -94,6 +94,8 @@
     <string name="mise_en_pause_parcours">Le parcours a été mis en pause.</string>
     <string name="demarrage_parcours">Démarrage / continuation de la randonnée</string>
     <string name="mise_en_arret_parcours">Arrêt de la randonnée</string>
+    <string name="centrer_carte_randonneur">Centrer la carte sur Vous</string>
+    <string name="centrer_carte_parcours">Centrer la carte sur le parcours</string>
 
     <!-- Informations carte -->
 

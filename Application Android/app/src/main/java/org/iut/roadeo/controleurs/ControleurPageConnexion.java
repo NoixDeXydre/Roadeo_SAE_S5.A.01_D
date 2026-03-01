@@ -17,6 +17,7 @@ import org.iut.roadeo.R;
 
 import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
+import static org.iut.roadeo.modele.utilitaire.ViewUtils.*;
 
 /**
  * Point d'entrée de l'application.
@@ -42,6 +43,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
     private EditText champIdentifiant;
     private EditText champMotDePasse;
 
+    private View ecranChargement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -50,6 +53,8 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         champIdentifiant = setChampListenerResetErreurOnEcriture(findViewById(R.id.champLogin));
         champMotDePasse = setChampListenerResetErreurOnEcriture(findViewById(R.id.champMotDePasse));
+
+        ecranChargement = findViewById(R.id.ecran_chargement);
     }
 
     /**
@@ -85,6 +90,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         } else {
 
+            activerVisuellementView(ecranChargement);
             setBarreCouleurChamp(champIdentifiant, R.color.black);
 
             // Test API
@@ -101,6 +107,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
                     // Après connexion, l'utilisateur pourra appuyer sur BACK
                     // pour revenir à cette page.
 
+                    desactiverVisuellementView(ecranChargement);
                     Intent intention = new Intent(ControleurPageConnexion.this,
                             ControleurDashboard.class);
                     startActivity(intention);
@@ -109,6 +116,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
                 @Override
                 public void onError(String message) {
 
+                    desactiverVisuellementView(ecranChargement);
                     Toast.makeText(ControleurPageConnexion.this,
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
 

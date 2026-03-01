@@ -12,5 +12,8 @@
     <color name="vert_kaki">#93915C</color>
     <color name="marron_noisette">#816747</color>
     <color name="marron_boue">#60523F</color>
+
+    <!-- Ecran de chargement -->
+    <color name="ecran_chargement">#594A4A4A</color>
     
 </resources>

@@ -23,6 +23,7 @@ import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.getIntFromChamp;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
+import static org.iut.roadeo.modele.utilitaire.ViewUtils.*;
 
 /**
  * Gère la création du compte.
@@ -36,6 +37,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
     private final static int AGE_MINIMUM = 1;
     private final static int AGE_MAXIMUM = 120;
 
+    private View ecranChargement;
     private EditText champNom;
     private EditText champPrenom;
     private EditText champAdresseMail;
@@ -53,6 +55,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
+
+        ecranChargement = findViewById(R.id.ecran_chargement);
 
         champNom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champNom));
         champPrenom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champPrenom));
@@ -177,6 +181,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         } else {
 
+            activerVisuellementView(ecranChargement);
+
             Utilisateur utilisateurACreer = new Utilisateur(
                     champNom.getText().toString(),
                     champPrenom.getText().toString(),
@@ -196,6 +202,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
                 @Override
                 public void onSuccess(Utilisateur utilisateur) {
 
+                    desactiverVisuellementView(ecranChargement);
+
                     Toast.makeText(ControleurCreationCompte.this,
                             getString(R.string.message_succes_creation_compte,
                                     utilisateurACreer.getNom()),
@@ -214,6 +222,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
                 @Override
                 public void onError(String message) {
+                    desactiverVisuellementView(ecranChargement);
                     Toast.makeText(ControleurCreationCompte.this,
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
                 }

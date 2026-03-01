@@ -1,276 +1,301 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imageRoadeo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/nomPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:text="@string/nom_page_creation_compte"
-        android:textSize="@dimen/taille_titre_page" />
+        android:orientation="vertical">
 
-    <TableRow
-        android:id="@+id/ligneNom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/imageRoadeo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/nomPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:text="@string/nom_page_creation_compte"
+            android:textSize="@dimen/taille_titre_page" />
 
-        <TextView
-            android:id="@+id/labelNom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_nom" />
-
-        <EditText
-            android:id="@+id/champNom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_nom"
-            android:inputType="text" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/lignePrenom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
-
-        <TextView
-            android:id="@+id/labelPrenom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_prenom" />
-
-        <EditText
-            android:id="@+id/champPrenom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_prenom"
-            android:inputType="text" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/ligneLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
-
-        <TextView
-            android:id="@+id/labelLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_email" />
-
-        <EditText
-            android:id="@+id/champLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_email"
-            android:inputType="text" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/ligneAdresse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
-
-        <TextView
-            android:id="@+id/labelAdresse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_domicile" />
-
-        <EditText
-            android:id="@+id/champAdresse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_domicile"
-            android:inputType="text" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/ligneMotDePasse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
-
-        <TextView
-            android:id="@+id/labelMotDePasse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_motdepasse" />
-
-        <EditText
-            android:id="@+id/champMotDePasse"
+        <TableRow
+            android:id="@+id/ligneNom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_motdepasse"
-            android:inputType="textPassword" />
-    </TableRow>
+            android:layout_gravity="center">
 
-    <TableRow
-        android:id="@+id/ligneConfirmationMotDePasse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
+            <TextView
+                android:id="@+id/labelNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_nom" />
 
-        <TextView
-            android:id="@+id/labelConfirmationMotDePasse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_conf_motdepasse" />
+            <EditText
+                android:id="@+id/champNom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_nom"
+                android:inputType="text" />
+        </TableRow>
 
-        <EditText
-            android:id="@+id/champConfirmationMotDePasse"
+        <TableRow
+            android:id="@+id/lignePrenom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_motdepasse"
-            android:enabled="false"
-            android:alpha="0.3"
-            android:inputType="textPassword" />
-    </TableRow>
+            android:layout_gravity="center">
 
-    <TableRow
-        android:id="@+id/ligneAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_asterix_label"
-            android:textColor="@color/red"
-            android:text="@string/asterix"/>
+            <TextView
+                android:id="@+id/labelPrenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_prenom" />
 
-        <TextView
-            android:id="@+id/labelAge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_age" />
+            <EditText
+                android:id="@+id/champPrenom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_prenom"
+                android:inputType="text" />
+        </TableRow>
 
-        <EditText
-            android:id="@+id/champAge"
+        <TableRow
+            android:id="@+id/ligneLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="numberSigned"
-            android:maxLength="120"
-            android:hint="@string/description_age"/>
-    </TableRow>
+            android:layout_gravity="center">
 
-    <TableRow
-        android:id="@+id/ligneNiveauEntrainement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
 
-        <TextView
-            android:id="@+id/labelNiveauEntrainement"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_niveau" />
+            <TextView
+                android:id="@+id/labelLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_email" />
 
-        <Spinner
-            android:id="@+id/spinnerNiveauEntrainement"
+            <EditText
+                android:id="@+id/champLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_email"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneAdresse"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/ligneMorphologie"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/labelMorphologie"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_morphologie" />
+            android:layout_gravity="center">
 
-        <Spinner
-            android:id="@+id/spinnerMorphologie"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/labelAdresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_domicile" />
+
+            <EditText
+                android:id="@+id/champAdresse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_domicile"
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneMotDePasse"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </TableRow>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btnSeConnecter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/labelMotDePasse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_motdepasse" />
+
+            <EditText
+                android:id="@+id/champMotDePasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_motdepasse"
+                android:inputType="textPassword" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneConfirmationMotDePasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/labelConfirmationMotDePasse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_conf_motdepasse" />
+
+            <EditText
+                android:id="@+id/champConfirmationMotDePasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.3"
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/description_motdepasse"
+                android:inputType="textPassword" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneAge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_asterix_label"
+                android:text="@string/asterix"
+                android:textColor="@color/red" />
+
+            <TextView
+                android:id="@+id/labelAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_age" />
+
+            <EditText
+                android:id="@+id/champAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/description_age"
+                android:inputType="numberSigned"
+                android:maxLength="120" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneNiveauEntrainement"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/labelNiveauEntrainement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_niveau" />
+
+            <Spinner
+                android:id="@+id/spinnerNiveauEntrainement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneMorphologie"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/labelMorphologie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_morphologie" />
+
+            <Spinner
+                android:id="@+id/spinnerMorphologie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </TableRow>
+
+        <Button
+            android:id="@+id/btnSeConnecter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/vert_pomme"
+            android:onClick="confirmerCreationCompte"
+            android:text="@string/label_btn_confirmation_creation_compte"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ecran_chargement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:backgroundTint="@color/vert_pomme"
-        android:onClick="confirmerCreationCompte"
-        android:text="@string/label_btn_confirmation_creation_compte"
-        android:textColor="@color/black" />
+        android:alpha="1"
+        android:background="@color/ecran_chargement"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-</LinearLayout>
+        <pl.droidsonroids.gif.GifTextView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/chargement"
+            android:gravity="center" />
+    </LinearLayout>
+
+</FrameLayout>

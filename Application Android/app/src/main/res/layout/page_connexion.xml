@@ -1,91 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
 
-    <ImageView
-        android:id="@+id/imageRoadeo"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="172dp"
-        app:srcCompat="@drawable/icone_roadeo_full" />
-
-    <TextView
-        android:id="@+id/nomPage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="@string/nom_page_connexion"
-        android:textSize="@dimen/taille_titre_page" />
+        android:orientation="vertical">
 
-    <TableRow
-        android:id="@+id/ligneLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        <ImageView
+            android:id="@+id/imageRoadeo"
+            android:layout_width="match_parent"
+            android:layout_height="172dp"
+            app:srcCompat="@drawable/icone_roadeo_full" />
 
         <TextView
-            android:id="@+id/labelLogin"
+            android:id="@+id/nomPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_email" />
+            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:gravity="center"
+            android:text="@string/nom_page_connexion"
+            android:textSize="@dimen/taille_titre_page" />
 
-        <EditText
-            android:id="@+id/champLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_email"
-            android:inputType="textEmailAddress" />
-    </TableRow>
-
-    <TableRow
-        android:id="@+id/ligneMotDePasse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center">
-
-        <TextView
-            android:id="@+id/labelMotDePasse"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-            android:text="@string/label_compte_motdepasse" />
-
-        <EditText
-            android:id="@+id/champMotDePasse"
+        <TableRow
+            android:id="@+id/ligneLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/description_motdepasse"
-            android:inputType="textPassword" />
-    </TableRow>
+            android:layout_gravity="center">
 
-    <Button
-        android:id="@+id/btnSeConnecter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/labelLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_email" />
+
+            <EditText
+                android:id="@+id/champLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_email"
+                android:inputType="textEmailAddress" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ligneMotDePasse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/labelMotDePasse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                android:text="@string/label_compte_motdepasse" />
+
+            <EditText
+                android:id="@+id/champMotDePasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/description_motdepasse"
+                android:inputType="textPassword" />
+        </TableRow>
+
+        <Button
+            android:id="@+id/btnSeConnecter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/vert_pomme"
+            android:onClick="seConnecter"
+            android:text="@string/label_btn_se_connecter"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnCreerUnCompte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/white"
+            android:onClick="creerCompte"
+            android:text="@string/label_btn_creercompte"
+            android:textColor="@color/marron_noisette" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ecran_chargement"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:backgroundTint="@color/vert_pomme"
-        android:onClick="seConnecter"
-        android:text="@string/label_btn_se_connecter"
-        android:textColor="@color/black" />
+        android:alpha="1"
+        android:background="@color/ecran_chargement"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <Button
-        android:id="@+id/btnCreerUnCompte"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:backgroundTint="@color/white"
-        android:onClick="creerCompte"
-        android:text="@string/label_btn_creercompte"
-        android:textColor="@color/marron_noisette" />
+        <pl.droidsonroids.gif.GifTextView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/chargement"
+            android:gravity="center" />
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

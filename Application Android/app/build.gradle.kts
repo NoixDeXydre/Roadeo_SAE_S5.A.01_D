@@ -53,6 +53,7 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.6")
     implementation("org.osmdroid:osmdroid-wms:6.1.6")
     implementation("org.osmdroid:osmdroid-mapsforge:6.1.6")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.31")
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

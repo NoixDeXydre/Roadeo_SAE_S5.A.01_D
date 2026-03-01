@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageView3"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/texte_randonee"
-        android:textColor="@color/vert_gazon"
-        android:gravity="center"
-        android:textSize="30sp"/>
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/fond_liste_randonnees" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/ajouter"
-        android:id="@+id/ajoutRandonnee"
-        android:textColor="@color/black"/>
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/marron_noisette"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/listeRandonnee"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/texte_randonee"
+            android:textColor="@color/vert_gazon"
+            android:textSize="30sp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/ajoutRandonnee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/ajouter"
+            android:textColor="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/marron_noisette" />
+
+        <ListView
+            android:id="@+id/listeRandonnee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</FrameLayout>

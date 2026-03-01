@@ -14,92 +14,97 @@
         android:layout_height="match_parent"
         app:srcCompat="@drawable/fond_page_connexion" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent" >
 
-        <ImageView
-            android:id="@+id/imageRoadeo"
-            android:layout_width="match_parent"
-            android:layout_height="172dp"
-            app:srcCompat="@drawable/icone_roadeo_full" />
-
-        <TextView
-            android:id="@+id/nomPage"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/nom_page_connexion"
-            android:textSize="@dimen/taille_titre_page" />
+            android:orientation="vertical">
 
-        <TableRow
-            android:id="@+id/ligneLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            <ImageView
+                android:id="@+id/imageRoadeo"
+                android:layout_width="match_parent"
+                android:layout_height="172dp"
+                app:srcCompat="@drawable/icone_roadeo_full" />
 
             <TextView
-                android:id="@+id/labelLogin"
+                android:id="@+id/nomPage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-                android:text="@string/label_compte_email" />
+                android:layout_marginBottom="@dimen/dist_page_connexion_logo_contenu"
+                android:gravity="center"
+                android:text="@string/nom_page_connexion"
+                android:textSize="@dimen/taille_titre_page" />
 
-            <EditText
-                android:id="@+id/champLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/description_email"
-                android:inputType="textEmailAddress" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/ligneMotDePasse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <TextView
-                android:id="@+id/labelMotDePasse"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
-                android:text="@string/label_compte_motdepasse" />
-
-            <EditText
-                android:id="@+id/champMotDePasse"
+            <TableRow
+                android:id="@+id/ligneLogin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/description_motdepasse"
-                android:inputType="textPassword" />
-        </TableRow>
+                android:layout_gravity="center">
 
-        <Button
-            android:id="@+id/btnSeConnecter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="@color/vert_pomme"
-            android:onClick="seConnecter"
-            android:text="@string/label_btn_se_connecter"
-            android:textColor="@color/black" />
+                <TextView
+                    android:id="@+id/labelLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                    android:text="@string/label_compte_email" />
 
-        <Button
-            android:id="@+id/btnCreerUnCompte"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:backgroundTint="#00FFFFFF"
-            android:onClick="creerCompte"
-            android:text="@string/label_btn_creercompte"
-            android:textColor="@color/marron_noisette" />
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/champLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/description_email"
+                    android:inputType="textEmailAddress" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/ligneMotDePasse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/labelMotDePasse"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dist_page_connexion_labels_champs"
+                    android:text="@string/label_compte_motdepasse" />
+
+                <EditText
+                    android:id="@+id/champMotDePasse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="@string/description_motdepasse"
+                    android:inputType="textPassword" />
+            </TableRow>
+
+            <Button
+                android:id="@+id/btnSeConnecter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="@color/vert_pomme"
+                android:onClick="seConnecter"
+                android:text="@string/label_btn_se_connecter"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/btnCreerUnCompte"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#00FFFFFF"
+                android:onClick="creerCompte"
+                android:text="@string/label_btn_creercompte"
+                android:textColor="@color/marron_noisette" />
+        </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/ecran_chargement"

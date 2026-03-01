@@ -17,6 +17,8 @@ public class ViewUtils {
      */
     public static void activerVisuellementView(View view) {
         view.setVisibility(View.VISIBLE);
+        view.setEnabled(true);
+        view.setClickable(true);
     }
 
     /**
@@ -25,5 +27,7 @@ public class ViewUtils {
      */
     public static void desactiverVisuellementView(View view) {
         view.setVisibility(View.GONE);
+        view.setEnabled(false);
+        view.setClickable(false);
     }
 }

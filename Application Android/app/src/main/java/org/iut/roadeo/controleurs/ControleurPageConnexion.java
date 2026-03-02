@@ -77,7 +77,7 @@ public class ControleurPageConnexion extends AppCompatActivity {
             setBarreCouleurChamp(champIdentifiant, R.color.red);
             setBarreCouleurChamp(champMotDePasse, R.color.black);
             Toast.makeText(ControleurPageConnexion.this,
-                    R.string.message_erreur_mail,
+                    R.string.message_erreur_mail_vide,
                     Toast.LENGTH_SHORT).show();
 
         } else if (!isChampNonVide(champMotDePasse, true)) {

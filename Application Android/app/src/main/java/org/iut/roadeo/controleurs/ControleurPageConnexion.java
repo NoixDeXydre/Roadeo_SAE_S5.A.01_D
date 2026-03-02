@@ -57,6 +57,12 @@ public class ControleurPageConnexion extends AppCompatActivity {
         ecranChargement = findViewById(R.id.ecran_chargement);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        apiRequeteur.annulerRequetes();
+    }
+
     /**
      * (Déclenché au clic du bouton se connecter.)
      *

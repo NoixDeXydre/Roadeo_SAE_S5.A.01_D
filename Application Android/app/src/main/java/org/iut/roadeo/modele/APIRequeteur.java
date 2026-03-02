@@ -143,7 +143,7 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     /**
@@ -197,7 +197,7 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerParcours(int id, IAPIParcoursCallback callback) {
@@ -241,7 +241,7 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerParticipant(String id, IAPIRandonneursCallback callback) {
@@ -280,7 +280,7 @@ public class APIRequeteur {
             }
         });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerRandonnee(IAPIRandonneesCallback callback) {
@@ -319,7 +319,17 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
+    }
+
+    /**
+     * Annule toutes les requêtes en cours.
+     */
+    public void annulerRequetes() {
+
+        if (fileRequete != null) {
+            fileRequete.cancelAll(this);
+        }
     }
 
     private ArrayList<Parcours>

@@ -200,7 +200,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
             activerVisuellementView(ecranChargement);
 
-            Utilisateur utilisateurACreer = new Utilisateur(
+            Utilisateur utilisateurACreer = new Utilisateur
+                    (CacheApplication.getInstance().getUtilisateurConnecte().getId(),
                     champNom.getText().toString(),
                     champPrenom.getText().toString(),
                     getIntFromChamp(champAge, 1),

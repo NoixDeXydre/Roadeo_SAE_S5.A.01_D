@@ -65,6 +65,9 @@ public class APIRequeteur {
     private final static String SUFFIXE_API_AJOUT_UTILISATEUR = SUFFIXE_API_UTILISATEUR
             + "/ajoutUtilisateur";
 
+    private final static String SUFFIXE_API_MODIFIER_UTILISATEUR = SUFFIXE_API_UTILISATEUR
+            + "/modifUtilisateur";
+
     // ======= Commandes API - Randonnee =======
 
     private final static String SUFFIXE_API_RANDONNEE = "Randonnee";
@@ -177,6 +180,55 @@ public class APIRequeteur {
                             throw new RuntimeException(e);
                         }
 
+                        callback.onSuccess(utilisateur);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError error) {
+
+                        if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion.setTag(this));
+    }
+
+    /**
+     * Modifie l'utilisateur
+     * @param utilisateur
+     * @param callback
+     */
+    public void modifierUtilisateur(Utilisateur utilisateur, IAPIUtilisateurCallback callback) {
+
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_MODIFIER_UTILISATEUR;
+
+        HashMap<String, String> entreesJsonRequete = new HashMap<>();
+
+        entreesJsonRequete.put("id", utilisateur.getId());
+        entreesJsonRequete.put("patronyme",
+                utilisateur.getNom() + " " + utilisateur.getPrenom());
+        entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
+        entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
+        entreesJsonRequete.put("domicile", utilisateur.getDomicile());
+        entreesJsonRequete.put("age", Integer.toString(utilisateur.getAge()));
+        entreesJsonRequete.put("niveauEntrainement", utilisateur.getNiveauEntrainement().toString());
+        entreesJsonRequete.put("morphologie", utilisateur.getMorphologie().toString());
+
+        JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.POST,
+                urlAppelAPI, new JSONObject(entreesJsonRequete),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
                         callback.onSuccess(utilisateur);
                     }
                 },
@@ -570,6 +622,7 @@ public class APIRequeteur {
 
         // Création de l'utilisateur
         return new Utilisateur(
+                reponse.getString("id"),
                 reponse.getString("patronyme").split(" ")[0],
                 reponse.getString("patronyme").split(" ")[1],
                 age, niveauEntrainement, morphologie,

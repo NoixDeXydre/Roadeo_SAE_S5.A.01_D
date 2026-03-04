@@ -220,7 +220,8 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
             String[] patronyme = nomUtilisateur.getText().toString().split(" ");
             Utilisateur utilisateurACreer = new Utilisateur
-                    (patronyme[0], patronyme[1],
+                    (cacheApplication.getUtilisateurConnecte().getId(),
+                    patronyme[0], patronyme[1],
                     getIntFromChamp(ageUtilisateur, 1),
                     getNiveauEntrainementWithPosition(niveauUtilisateur.getSelectedItemPosition()),
                     getMorphologieWithPosition(morphologie.getSelectedItemPosition()),

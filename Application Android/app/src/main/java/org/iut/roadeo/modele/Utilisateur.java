@@ -15,6 +15,8 @@ import java.util.ArrayList;
  */
 public class Utilisateur extends Randonneur {
 
+    private String id;
+
     /** Le mot de passe utilisateur */
     private String motDePasse;
 
@@ -35,7 +37,7 @@ public class Utilisateur extends Randonneur {
      * @param email l'email de l'utiliteur
      * @param mDP le mot de passe de l'utilisateur
      */
-    public Utilisateur(String nom, String prenom, int age,
+    public Utilisateur(String id, String nom, String prenom, int age,
                        NiveauEntrainement niveauEntrainement,
                        Morphologie morphologie, String mDP, String email,
                        String domicile) {
@@ -66,6 +68,11 @@ public class Utilisateur extends Randonneur {
             throw new IllegalArgumentException("Le mot de passe incorrect");
         }
         this.motDePasse = motDePasse;
+    }
+
+    /** @return l'ID */
+    public String getId() {
+        return id;
     }
 
     /**

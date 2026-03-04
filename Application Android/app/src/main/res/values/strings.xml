@@ -114,6 +114,7 @@
 
     <string name="message_erreur_nom">Veuillez insérer votre nom.</string>
     <string name="message_erreur_prenom">Veuillez insérer votre prénom.</string>
+    <string name="message_erreur_nom_prenom">Veuillez insérer votre prénom et votre nom.</string>
     <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>
     <string name="message_erreur_confirmation_mdp">Veuillez confirmer votre mot de passe.</string>
     <string name="message_erreur_mdp_conf_echec">"La confirmation du mot de passe à échouer, faite en sorte à ce qu'il corresponde à votre mot de passe initial."</string>

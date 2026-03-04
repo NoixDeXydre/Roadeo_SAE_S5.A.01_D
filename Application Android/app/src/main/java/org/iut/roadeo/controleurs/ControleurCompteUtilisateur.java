@@ -6,6 +6,8 @@ import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -79,6 +81,29 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
         morphologie = findViewById(R.id.spinnerMorphologie);
         ageUtilisateur = findViewById(R.id.champAge);
+
+        // FIXME code dupliqué
+        // Avec cet écouteur, on peut bloquer
+        // la confirmation du mot de passe si aucun mdp n'a été inséré.
+        motDePasseUtilisateur.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                if (charSequence.length() != 0) {
+                    motDePasseUtilisateurConfirmation.setEnabled(true);
+                    motDePasseUtilisateurConfirmation.setAlpha(1.0f);
+                } else {
+                    motDePasseUtilisateurConfirmation.setEnabled(false);
+                    motDePasseUtilisateurConfirmation.setAlpha(0.3f);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
 
         // Remplissage spinner
 

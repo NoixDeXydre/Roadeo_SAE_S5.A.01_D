@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -45,6 +47,12 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
     private Spinner niveauUtilisateur;
     private Spinner morphologie;
 
+    private Button annulerChangements;
+    private Button modifierCompte;
+    private Button validerChangements;
+
+    CacheApplication cacheApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -73,7 +81,12 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
                 androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
                 getResources().getStringArray(R.array.spinner_morphologie)));
 
-        CacheApplication cacheApplication = CacheApplication.getInstance();
+        // Récupération des boutons
+        annulerChangements = findViewById(R.id.annuler_changements_compte);
+        modifierCompte = findViewById(R.id.modifier_compte);
+        validerChangements = findViewById(R.id.valider_changements_compte);
+
+        cacheApplication = CacheApplication.getInstance();
         updateChampsUtilisateur(cacheApplication.getUtilisateurConnecte());
 
         // On rend les données non modifiables
@@ -99,10 +112,26 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void annulerChangements(View view) {
+        rendreChampsModifiables(false);
+        updateChampsUtilisateur(cacheApplication.getUtilisateurConnecte());
+    }
+
+    public void modifierCompte(View view) {
+        rendreChampsModifiables(true);
+    }
+
+    public void validerChangements(View view) {
+        // TODO API
+        // TODO écrire dans le cache
+        // TODO redonner la main
+    }
+
     /**
      * @param isChampModifiable true = modifiable, sinon false.
      */
     private void rendreChampsModifiables(boolean isChampModifiable) {
+
         nomUtilisateur.setEnabled(isChampModifiable);
         motDePasseUtilisateur.setEnabled(isChampModifiable);
         motDePasseUtilisateurConfirmation.setEnabled(isChampModifiable);
@@ -111,6 +140,24 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         ageUtilisateur.setEnabled(isChampModifiable);
         niveauUtilisateur.setEnabled(isChampModifiable);
         morphologie.setEnabled(isChampModifiable);
+
+        // À partir d'ici, on change l'apparence
+        // et le status des boutons selon l'état de modification.
+
+        annulerChangements.setEnabled(isChampModifiable);
+        validerChangements.setEnabled(isChampModifiable);
+
+        modifierCompte.setEnabled(!isChampModifiable);
+
+        if (isChampModifiable) {
+            annulerChangements.setBackgroundColor(getResources().getColor(R.color.vert_pomme));
+            validerChangements.setBackgroundColor(getResources().getColor(R.color.vert_pomme));
+            modifierCompte.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
+        } else {
+            annulerChangements.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
+            validerChangements.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
+            modifierCompte.setBackgroundColor(getResources().getColor(R.color.vert_pomme));
+        }
     }
 
     private void updateChampsUtilisateur(Utilisateur utilisateur) {

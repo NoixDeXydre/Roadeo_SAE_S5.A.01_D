@@ -191,7 +191,8 @@
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
                 android:text="Valider les changements"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:onClick="validerChangements"/>
 
         </TableRow>
 
@@ -207,7 +208,8 @@
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
                 android:text="Modifier le compte"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:onClick="modifierCompte"/>
 
             <Button
                 android:id="@+id/annuler_changements_compte"
@@ -217,7 +219,8 @@
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
                 android:text="Annuler les changements"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:onClick="annulerChangements"/>
         </TableRow>
     </TableLayout>
 

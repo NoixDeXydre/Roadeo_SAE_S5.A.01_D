@@ -74,34 +74,15 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
                 getResources().getStringArray(R.array.spinner_morphologie)));
 
         CacheApplication cacheApplication = CacheApplication.getInstance();
-        Utilisateur utilisateur = cacheApplication.getUtilisateurConnecte();
+        updateChampsUtilisateur(cacheApplication.getUtilisateurConnecte());
 
-        /* Ecriture des données du compte */
-        if (utilisateur != null) {
-            titrePatronyme.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
-            nomUtilisateur.setText(titrePatronyme.getText());
-            motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
-            motDePasseUtilisateurConfirmation.setText(utilisateur.getMotDePasse());
-            emailUtilisateur.setText(utilisateur.getEmail());
-            domicileUtilisateur.setText(utilisateur.getDomicile());
-            ageUtilisateur.setText(utilisateur.getAge() + "");
-            niveauUtilisateur.setSelection(utilisateur.getNiveauEntrainement().ordinal());
-            morphologie.setSelection(utilisateur.getMorphologie().ordinal());
-        }
-
-        /* On rend les données non modifiables */
-        nomUtilisateur.setEnabled(false);
-        motDePasseUtilisateur.setEnabled(false);
-        motDePasseUtilisateurConfirmation.setEnabled(false);
-        emailUtilisateur.setEnabled(false);
-        domicileUtilisateur.setEnabled(false);
-        ageUtilisateur.setEnabled(false);
-        niveauUtilisateur.setEnabled(false);
-        morphologie.setEnabled(false);
+        // On rend les données non modifiables
+        rendreChampsModifiables(false);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         // On affiche le menu burger
         new MenuInflater(this).inflate(R.menu.menu_activite, menu);
         return super.onCreateOptionsMenu(menu);
@@ -116,5 +97,34 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         ChangeVue.changeurVue(item, ControleurCompteUtilisateur.this);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * @param isChampModifiable true = modifiable, sinon false.
+     */
+    private void rendreChampsModifiables(boolean isChampModifiable) {
+        nomUtilisateur.setEnabled(isChampModifiable);
+        motDePasseUtilisateur.setEnabled(isChampModifiable);
+        motDePasseUtilisateurConfirmation.setEnabled(isChampModifiable);
+        emailUtilisateur.setEnabled(isChampModifiable);
+        domicileUtilisateur.setEnabled(isChampModifiable);
+        ageUtilisateur.setEnabled(isChampModifiable);
+        niveauUtilisateur.setEnabled(isChampModifiable);
+        morphologie.setEnabled(isChampModifiable);
+    }
+
+    private void updateChampsUtilisateur(Utilisateur utilisateur) {
+
+        if (utilisateur != null) {
+            titrePatronyme.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
+            nomUtilisateur.setText(titrePatronyme.getText());
+            motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
+            motDePasseUtilisateurConfirmation.setText(utilisateur.getMotDePasse());
+            emailUtilisateur.setText(utilisateur.getEmail());
+            domicileUtilisateur.setText(utilisateur.getDomicile());
+            ageUtilisateur.setText(utilisateur.getAge() + "");
+            niveauUtilisateur.setSelection(utilisateur.getNiveauEntrainement().ordinal());
+            morphologie.setSelection(utilisateur.getMorphologie().ordinal());
+        }
     }
 }

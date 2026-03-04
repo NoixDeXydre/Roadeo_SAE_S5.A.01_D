@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 /**
  * Affiche les informations du compte utilisateur
  * ainsi que son historique.
+ *
  * Il y a également des commandes pour modifier ces informations.
  *
  * @author BOYER Djedline
@@ -32,13 +34,13 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     private ArrayAdapter<String> adaptateur;
 
+    private TextView titrePatronyme;
     private EditText nomUtilisateur;
-
     private EditText motDePasseUtilisateur;
-
+    private EditText motDePasseUtilisateurConfirmation;
     private EditText emailUtilisateur;
-
     private EditText domicileUtilisateur;
+    private EditText ageUtilisateur;
 
     private Spinner niveauUtilisateur;
     private Spinner morphologie;
@@ -49,13 +51,17 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.compte_utilisateur);
 
+        titrePatronyme = findViewById(R.id.patronyme_utilisateur_titre);
+
         /* Récupération des identifiants */
         nomUtilisateur = findViewById(R.id.nomUtilisateur);
         motDePasseUtilisateur = findViewById(R.id.motDePasseUtilisateur);
+        motDePasseUtilisateurConfirmation = findViewById(R.id.champConfirmationMotDePasse);
         emailUtilisateur = findViewById(R.id.emailUtilisateur);
         domicileUtilisateur = findViewById(R.id.domicileUtilisateur);
         niveauUtilisateur = findViewById(R.id.niveauUtilisateur);
         morphologie = findViewById(R.id.spinnerMorphologie);
+        ageUtilisateur = findViewById(R.id.champAge);
 
         // Remplissage spinner
 
@@ -72,10 +78,13 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
         /* Ecriture des données du compte */
         if (utilisateur != null) {
-            nomUtilisateur.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
+            titrePatronyme.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
+            nomUtilisateur.setText(titrePatronyme.getText());
             motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
+            motDePasseUtilisateurConfirmation.setText(utilisateur.getMotDePasse());
             emailUtilisateur.setText(utilisateur.getEmail());
             domicileUtilisateur.setText(utilisateur.getDomicile());
+            ageUtilisateur.setText(utilisateur.getAge() + "");
             niveauUtilisateur.setSelection(utilisateur.getNiveauEntrainement().ordinal());
             morphologie.setSelection(utilisateur.getMorphologie().ordinal());
         }
@@ -83,8 +92,10 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         /* On rend les données non modifiables */
         nomUtilisateur.setEnabled(false);
         motDePasseUtilisateur.setEnabled(false);
+        motDePasseUtilisateurConfirmation.setEnabled(false);
         emailUtilisateur.setEnabled(false);
         domicileUtilisateur.setEnabled(false);
+        ageUtilisateur.setEnabled(false);
         niveauUtilisateur.setEnabled(false);
         morphologie.setEnabled(false);
     }
@@ -98,6 +109,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         /* On envoi la vue choisie et le contexte à la méthode
          * permettant de changer de vue
          */

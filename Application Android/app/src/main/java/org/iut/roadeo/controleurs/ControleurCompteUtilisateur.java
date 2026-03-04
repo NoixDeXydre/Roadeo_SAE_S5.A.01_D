@@ -5,7 +5,6 @@ import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.setBarreCo
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -44,6 +43,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     private TextView titrePatronyme;
     private EditText nomUtilisateur;
+    private EditText prenomUtilisateur;
     private EditText motDePasseUtilisateur;
     private EditText motDePasseUtilisateurConfirmation;
     private EditText emailUtilisateur;
@@ -71,6 +71,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
         /* Récupération des identifiants */
         nomUtilisateur = findViewById(R.id.nomUtilisateur);
+        prenomUtilisateur = findViewById(R.id.prenomUtilisateur);
         motDePasseUtilisateur = findViewById(R.id.motDePasseUtilisateur);
         motDePasseUtilisateurConfirmation = findViewById(R.id.champConfirmationMotDePasse);
         emailUtilisateur = findViewById(R.id.emailUtilisateur);
@@ -140,12 +141,21 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
         // Si l'on devait faire une future version,
         // il faudrait empêcher cette duplication de code.
 
-        // Champ patronyme vide ?
+        // Champ nom vide ?
         if (!isChampNonVide(nomUtilisateur, false)) {
             setBarreCouleurChamp(nomUtilisateur, R.color.red);
 
             Toast.makeText(ControleurCompteUtilisateur.this,
-                    R.string.message_erreur_nom_prenom,
+                    R.string.message_erreur_nom,
+                    Toast.LENGTH_SHORT).show();
+
+        // Champ prénom vide ?
+        } else if (!isChampNonVide(prenomUtilisateur, false)) {
+            setBarreCouleurChamp(nomUtilisateur, R.color.black);
+            setBarreCouleurChamp(prenomUtilisateur, R.color.red);
+
+            Toast.makeText(ControleurCompteUtilisateur.this,
+                    R.string.message_erreur_prenom,
                     Toast.LENGTH_SHORT).show();
 
         // Champ mail vide ?
@@ -217,11 +227,9 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
             activerVisuellementView(ecranChargement);
 
-            // FIXME l'index 0 et 1 peuvent être null
-            String[] patronyme = nomUtilisateur.getText().toString().split(" ");
             Utilisateur utilisateurACreer = new Utilisateur
                     (cacheApplication.getUtilisateurConnecte().getId(),
-                    patronyme[0], patronyme[1],
+                    nomUtilisateur.getText().toString(), prenomUtilisateur.getText().toString(),
                     getIntFromChamp(ageUtilisateur, 1),
                     getNiveauEntrainementWithPosition(niveauUtilisateur.getSelectedItemPosition()),
                     getMorphologieWithPosition(morphologie.getSelectedItemPosition()),
@@ -265,6 +273,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
     private void rendreChampsModifiables(boolean isChampModifiable) {
 
         nomUtilisateur.setEnabled(isChampModifiable);
+        prenomUtilisateur.setEnabled(isChampModifiable);
         motDePasseUtilisateur.setEnabled(isChampModifiable);
         motDePasseUtilisateurConfirmation.setEnabled(isChampModifiable);
         emailUtilisateur.setEnabled(isChampModifiable);
@@ -299,7 +308,8 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
         if (utilisateur != null) {
             titrePatronyme.setText(utilisateur.getNom() + " " + utilisateur.getPrenom());
-            nomUtilisateur.setText(titrePatronyme.getText());
+            nomUtilisateur.setText(utilisateur.getNom());
+            prenomUtilisateur.setText(utilisateur.getPrenom());
             motDePasseUtilisateur.setText(utilisateur.getMotDePasse());
             motDePasseUtilisateurConfirmation.setText(utilisateur.getMotDePasse());
             emailUtilisateur.setText(utilisateur.getEmail());
@@ -312,6 +322,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
     private void resetCouleursChamps() {
         setBarreCouleurChamp(nomUtilisateur, R.color.black);
+        setBarreCouleurChamp(prenomUtilisateur, R.color.black);
         setBarreCouleurChamp(motDePasseUtilisateur, R.color.black);
         setBarreCouleurChamp(motDePasseUtilisateurConfirmation, R.color.black);
         setBarreCouleurChamp(emailUtilisateur, R.color.black);

@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/imageUtilisateur"
-                android:layout_width="225dp"
-                android:layout_height="163dp"
+                android:layout_width="174dp"
+                android:layout_height="117dp"
                 android:src="@drawable/randonneur_photo" />
 
             <TextView
@@ -49,13 +49,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_column="1"
-                android:text="Patronyme" />
+                android:text="@string/label_compte_nom" />
 
             <EditText
                 android:id="@+id/nomUtilisateur"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/description_patronyme" />
+                android:hint="@string/description_nom" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="@string/label_compte_prenom" />
+
+            <EditText
+                android:id="@+id/prenomUtilisateur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/description_prenom" />
         </TableRow>
 
         <TableRow>

@@ -5,6 +5,7 @@ import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.setBarreCo
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.modele.Utilisateur;
+import org.iut.roadeo.modele.interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.modele.utilitaire.ChangeVue;
 import org.iut.roadeo.R;
 
@@ -121,11 +123,8 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
     }
 
     public void annulerChangements(View view) {
-
         rendreChampsModifiables(false);
         updateChampsUtilisateur(cacheApplication.getUtilisateurConnecte());
-
-        resetCouleursChamps();
     }
 
     public void modifierCompte(View view) {
@@ -218,6 +217,7 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
 
             activerVisuellementView(ecranChargement);
 
+            // FIXME l'index 0 et 1 peuvent être null
             String[] patronyme = nomUtilisateur.getText().toString().split(" ");
             Utilisateur utilisateurACreer = new Utilisateur
                     (cacheApplication.getUtilisateurConnecte().getId(),
@@ -229,11 +229,33 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
                     emailUtilisateur.getText().toString(),
                     domicileUtilisateur.getText().toString());
 
-            // TODO API
-            // TODO écrire dans le cache
-            // TODO redonner la main
+            ControleurPageConnexion.apiRequeteur.modifierUtilisateur(utilisateurACreer,
+                    new IAPIUtilisateurCallback() {
+                        @Override
+                        public void onSuccess(Utilisateur utilisateur) {
 
-            // desactiverVisuellementView(ecranChargement);
+                            Toast.makeText(ControleurCompteUtilisateur.this,
+                                    getString(R.string.message_succes_modification_compte),
+                                    Toast.LENGTH_LONG).show();
+
+                            rendreChampsModifiables(false);
+                            updateChampsUtilisateur(utilisateur);
+
+                            // Ecriture cache
+                            cacheApplication.setUtilisateurConnecte(utilisateur);
+
+                            desactiverVisuellementView(ecranChargement);
+                        }
+
+                        @Override
+                        public void onError(String message) {
+
+                            desactiverVisuellementView(ecranChargement);
+
+                            Toast.makeText(ControleurCompteUtilisateur.this,
+                                    message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
+                        }
+                    });
         }
     }
 
@@ -264,9 +286,12 @@ public class ControleurCompteUtilisateur extends AppCompatActivity {
             validerChangements.setBackgroundColor(getResources().getColor(R.color.vert_pomme));
             modifierCompte.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
         } else {
+
             annulerChangements.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
             validerChangements.setBackgroundColor(getResources().getColor(R.color.ecran_chargement));
             modifierCompte.setBackgroundColor(getResources().getColor(R.color.vert_pomme));
+
+            resetCouleursChamps();
         }
     }
 

@@ -44,6 +44,8 @@ public class Utilisateur extends Randonneur {
 
         super(nom, prenom, age, niveauEntrainement, morphologie);
 
+        this.id = id;
+
         setMotDePasse(mDP);
         setEmail(email);
         setDomicile(domicile);

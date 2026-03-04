@@ -109,6 +109,7 @@
     <!-- Messages succès -->
 
     <string name="message_succes_creation_compte">"Votre compte a été crée avec succès.\nBienvenue, %s !"</string>
+    <string name="message_succes_modification_compte">"Les informations modifiées ont bien été prises en compte."</string>
 
     <!-- Messages d'erreur -->
 

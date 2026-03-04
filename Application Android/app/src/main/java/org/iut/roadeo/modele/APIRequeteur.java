@@ -224,12 +224,16 @@ public class APIRequeteur {
         entreesJsonRequete.put("niveauEntrainement", utilisateur.getNiveauEntrainement().toString());
         entreesJsonRequete.put("morphologie", utilisateur.getMorphologie().toString());
 
-        JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.PUT,
                 urlAppelAPI, new JSONObject(entreesJsonRequete),
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(utilisateur);
+                        try {
+                            callback.onSuccess(construireUtilisateurWithReponse(response));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 },
                 new Response.ErrorListener() {

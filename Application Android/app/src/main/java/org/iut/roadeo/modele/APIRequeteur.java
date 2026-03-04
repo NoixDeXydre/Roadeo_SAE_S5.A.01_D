@@ -106,8 +106,8 @@ public class APIRequeteur {
 
         HashMap<String, String> entreesJsonRequete = new HashMap<>();
 
-        entreesJsonRequete.put("patronyme",
-                utilisateur.getNom() + " " + utilisateur.getPrenom());
+        entreesJsonRequete.put("nom", utilisateur.getNom());
+        entreesJsonRequete.put("prenom", utilisateur.getPrenom());
         entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
         entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
         entreesJsonRequete.put("domicile", utilisateur.getDomicile());
@@ -215,8 +215,8 @@ public class APIRequeteur {
         HashMap<String, String> entreesJsonRequete = new HashMap<>();
 
         entreesJsonRequete.put("id", utilisateur.getId());
-        entreesJsonRequete.put("patronyme",
-                utilisateur.getNom() + " " + utilisateur.getPrenom());
+        entreesJsonRequete.put("nom", utilisateur.getNom());
+        entreesJsonRequete.put("prenom", utilisateur.getPrenom());
         entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
         entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
         entreesJsonRequete.put("domicile", utilisateur.getDomicile());
@@ -627,8 +627,8 @@ public class APIRequeteur {
         // Création de l'utilisateur
         return new Utilisateur(
                 reponse.getString("id"),
-                reponse.getString("patronyme").split(" ")[0],
-                reponse.getString("patronyme").split(" ")[1],
+                reponse.getString("nom"),
+                reponse.getString("prenom"),
                 age, niveauEntrainement, morphologie,
                 reponse.getString("mdp"),
                 reponse.getString("adresseMail"),

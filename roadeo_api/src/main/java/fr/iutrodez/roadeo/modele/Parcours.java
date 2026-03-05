@@ -37,17 +37,16 @@ public class Parcours {
     @Field("libelle_randonnee")
     private String libelleRandonnee;
 
-    /** Liste des participants du parcours */
-    //private ArrayList<Participant> participants;
-
     private ArrayList<PointInteret> pointInterets;
+
+    private ArrayList<PointGeo> trajetRealise;
 
     /** Constructeur vide pour laisser mongoDB gérer avec les getters */
     public Parcours() {}
 
     /** Constructeur manuel */
     public Parcours(String id, String idRando, String idUtilisateur, String libelleRandonnee,
-                    ArrayList<PointInteret> pointInterets) {
+                    ArrayList<PointInteret> pointInterets,  ArrayList<PointGeo> trajetRealise) {
         if ( idRando == null || idRando.isEmpty()
                 || idUtilisateur == null || idUtilisateur.isEmpty()
                 || libelleRandonnee == null || libelleRandonnee.isEmpty()) {
@@ -58,6 +57,7 @@ public class Parcours {
         this.idUtilisateur = idUtilisateur;
         this.libelleRandonnee = libelleRandonnee;
         this.pointInterets = pointInterets;
+        this.trajetRealise = trajetRealise;
         this.selection = false;
     }
 
@@ -111,5 +111,13 @@ public class Parcours {
 
     public void setSelection(boolean selection) {
         this.selection = selection;
+    }
+
+    public ArrayList<PointGeo> getTrajetRealise() {
+        return trajetRealise;
+    }
+
+    public void setTrajetRealise(ArrayList<PointGeo> trajetRealise) {
+        this.trajetRealise = trajetRealise;
     }
 }

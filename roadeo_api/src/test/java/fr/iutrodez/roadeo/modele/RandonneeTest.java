@@ -15,8 +15,9 @@ public class RandonneeTest {
 
     @BeforeEach
     void setUp() {
-        randoTest = new Randonnee("1","La montagne Noire", 3, new PointInteret("Depart", new double[]{0.0,0.0}),
-                                  new PointInteret("Arrive", new double[]{0.0, 0.0}), new ArrayList<Participant>());
+        randoTest = new Randonnee("1","La montagne Noire", 3, new PointInteret("Depart",
+                new PointGeo(0.0f, 0.0f)), new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
+                new ArrayList<Participant>());
     }
 
     @Test
@@ -25,36 +26,36 @@ public class RandonneeTest {
         assertThrows(IllegalArgumentException.class,
                     () -> new Randonnee("1","",
                              3,
-                             new PointInteret("Depart", new double[]{0.0,0.0}),
-                             new PointInteret("Arrive", new double[]{0.0,0.0}),
+                             new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                             new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
                             new ArrayList<Participant>()));
         assertThrows(IllegalArgumentException.class,
                     () -> new Randonnee("1","    ",
                             3,
-                            new PointInteret("Depart", new double[]{0.0,0.0}),
-                            new PointInteret("Arrive", new double[]{0.0,0.0})
+                            new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                            new PointInteret("Arrive", new PointGeo(0.0f, 0.0f))
                             , new ArrayList<Participant>()));
         assertThrows(IllegalArgumentException.class,
                 () -> new Randonnee("1","Randonnée test",
                         -20,
-                        new PointInteret("Depart", new double[]{0.0,0.0}),
-                        new PointInteret("Arrive", new double[]{0.0,0.0}),
+                        new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                        new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
                         new ArrayList<Participant>()));
         assertThrows(IllegalArgumentException.class,
                 () -> new Randonnee("1","Randonnée test",
                         0,
-                        new PointInteret("Depart", new double[]{0.0,0.0}),
-                        new PointInteret("Arrive", new double[]{0.0,0.0}),
+                        new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                        new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
                         new ArrayList<Participant>()));
         assertThrows(IllegalArgumentException.class,
                 () -> new Randonnee("1","Randonnée test", 4,
-                        new PointInteret("Depart", new double[]{0.0,0.0}),
-                        new PointInteret("Arrive", new double[]{0.0,0.0}),
+                        new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                        new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
                         new ArrayList<Participant>()));
         assertThrows(IllegalArgumentException.class,
                 () -> new Randonnee("1","Randonnée test", 45,
-                        new PointInteret("Depart", new double[]{0.0,0.0}),
-                        new PointInteret("Arrive", new double[]{0.0,0.0}),
+                        new PointInteret("Depart", new PointGeo(0.0f, 0.0f)),
+                        new PointInteret("Arrive", new PointGeo(0.0f, 0.0f)),
                         new ArrayList<Participant>()));
     }
 

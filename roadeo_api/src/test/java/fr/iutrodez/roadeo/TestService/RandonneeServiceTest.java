@@ -38,24 +38,24 @@ public class RandonneeServiceTest {
         MockitoAnnotations.openMocks(this);
         ArrayList<PointInteret> interet = new ArrayList<>();
         listeParcours = new ArrayList<>();
-        Parcours parcours1 = new Parcours("1", "2", "1", "Parcours champètre", interet);
-        Parcours parcours2 = new Parcours("2", "2", "1", "Parcours foret", interet);
+        Parcours parcours1 = new Parcours("1", "2", "1", "Parcours champètre", interet, null);
+        Parcours parcours2 = new Parcours("2", "2", "1", "Parcours foret", interet, null);
 
 
         service = new RandonneeService(repository, parcoursRepository);
         listeParcours.add(parcours1);
         listeParcours.add(parcours2);
-        interet.add(new PointInteret("prairie laitière", new double[]{15.0, 45.0}));
-        interet.add(new PointInteret("prairie caverneuse", new double[]{20.5, 45.0}));
+        interet.add(new PointInteret("prairie laitière", new PointGeo(15.0, 45.0)));
+        interet.add(new PointInteret("prairie caverneuse", new PointGeo(20.5, 45.0)));
 
         Randonnee randonnee1 = new Randonnee("1", "randonnée", 2,
-                new PointInteret("départ", new double[]{12.0,45.0}),
-                new PointInteret("arrivee", new double[]{54.12,95.3}),
+                new PointInteret("départ", new PointGeo(12.0,45.0)),
+                new PointInteret("arrivee", new PointGeo(54.12,95.3)),
                 new ArrayList<>());
 
         Randonnee randonnee2 = new Randonnee("2", "randonnée", 1,
-                new PointInteret("départ", new double[]{12.0,45.0}),
-                new PointInteret("arrivee", new double[]{54.12,95.3}),
+                new PointInteret("départ", new PointGeo(12.0,45.0)),
+                new PointInteret("arrivee", new PointGeo(54.12, 95.3)),
                 new ArrayList<>());
 
         expectedList = Arrays.asList(randonnee1, randonnee2);

@@ -213,7 +213,7 @@ public class TestUtilisateur {
     @Test
     public void testAjouterParcoursNull() {
 
-        Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
+        Parcours parcours = new Parcours("", new Randonnee(1, "Mon parcours", 1,
                 null, null), new Date(), "parcours");
 
         Utilisateur ut = new Utilisateur("", "a", "a", 1,
@@ -226,9 +226,9 @@ public class TestUtilisateur {
     @Test
     public void testAjouterParcoursSucces() {
 
-        Parcours parcours1 = new Parcours(new Randonnee(1, "Mon parcours", 1,
+        Parcours parcours1 = new Parcours("", new Randonnee(1, "Mon parcours", 1,
                 null, null), new Date(), "parcours");
-        Parcours parcours2 = new Parcours(new Randonnee(1, "Mon parcours", 1,
+        Parcours parcours2 = new Parcours("", new Randonnee(1, "Mon parcours", 1,
                 null, null), new Date(), "parcours");
 
         Utilisateur ut = new Utilisateur("", "a", "a", 1,

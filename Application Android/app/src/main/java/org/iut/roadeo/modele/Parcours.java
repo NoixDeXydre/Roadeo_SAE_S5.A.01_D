@@ -33,6 +33,9 @@ public class Parcours {
     /** La date de début du parcours. */
     private Date date;
 
+    /** Id de la randonnée */
+    private String id;
+
     /** Nom de la randonnée */
     private String libelle;
 
@@ -44,17 +47,21 @@ public class Parcours {
 
     /**
      * Crée un nouveau parcours.
+     * @param id du parcours de la randonnée.
      * @param randonnee la randonnée liée au parcours.
      * @param date la date de début du parcours.
      * @throws IllegalArgumentException Si la randonnée liée ou la date est null.
      */
-    public Parcours(Randonnee randonnee, Date date, String libelle) throws IllegalArgumentException {
+    public Parcours(String id, Randonnee randonnee, Date date, String libelle)
+            throws IllegalArgumentException {
 
         if (randonnee == null || date == null) {
             throw new IllegalArgumentException("Erreur : la randonnée" +
                                                " ou la date de la randonnée" +
                                                " est null.");
         }
+
+        this.id = id;
 
         randonneeParcours = randonnee;
         this.date = date;
@@ -133,6 +140,11 @@ public class Parcours {
 
     public boolean isParcoursTermine() {
         return isParcoursTermine;
+    }
+
+    /** @return l'Id du parcours */
+    public String getId() {
+        return id;
     }
 
     /**

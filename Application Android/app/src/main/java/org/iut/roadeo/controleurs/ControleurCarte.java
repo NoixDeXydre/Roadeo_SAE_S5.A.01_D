@@ -59,9 +59,6 @@ import java.util.Date;
  */
 public class ControleurCarte extends Fragment implements View.OnClickListener {
 
-    // TODO manipulation du cache après appel API.
-    // TODO appel API
-
     private final int TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION = 1000;
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
@@ -141,7 +138,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
-        Parcours parcours = new Parcours(new Randonnee
+        Parcours parcours = new Parcours("", new Randonnee
                 (1, "Ma randonnée", 3,
                         new GeoPoint(44.360287526289454, 2.575853338825084),
                         new GeoPoint(44.35970734903577, 2.576335155660985)),

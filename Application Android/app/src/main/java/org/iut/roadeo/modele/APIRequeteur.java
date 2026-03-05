@@ -461,7 +461,7 @@ public class APIRequeteur {
                                      .getString("libelleRandonnee");
 
                     /* On crée le parcours */
-                    parcours = new Parcours(randonnee, date, libelle);
+                    parcours = new Parcours("", randonnee, date, libelle);
 
                     JSONArray listePointInteret;
                     listePointInteret = new JSONArray();

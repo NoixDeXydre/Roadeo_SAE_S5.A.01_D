@@ -10,7 +10,7 @@ public class Utilisateur extends Participant {
 
     @Id
     private String id;
-    private String patronyme;
+
     private String mdp;
 
     @Field("adresse_mail")
@@ -19,7 +19,7 @@ public class Utilisateur extends Participant {
     private String domicile;
 
     /** Crée un utilisateur, utilisé par MongoDB */
-    public Utilisateur(){super();}
+    public Utilisateur(){ super(); }
 
     /** Crée un utilisateur manuellement */
     public Utilisateur(String id, String mdp, String adresseMail, String domicile,
@@ -27,7 +27,6 @@ public class Utilisateur extends Participant {
                        String morphologie) {
         super(nom, prenom,  age, niveauEntrainement, morphologie);
         this.id = id;
-        this.patronyme = prenom + " " + nom;
         this.mdp = mdp;
         this.adresseMail = adresseMail;
         this.domicile = domicile;
@@ -35,10 +34,6 @@ public class Utilisateur extends Participant {
 
     public String getId() {
         return id;
-    }
-
-    public String getPatronyme() {
-        return patronyme;
     }
 
     public String getMdp() {
@@ -57,10 +52,6 @@ public class Utilisateur extends Participant {
 
     public void setDomicile(String domicile) {
         this.domicile = domicile;
-    }
-
-    public void setPatronyme(String patronyme) {
-        this.patronyme = patronyme;
     }
 
     public void setMdp(String mdp) {

@@ -24,7 +24,7 @@ public class TestUtilisateur {
         Utilisateur util;
 
         // WHEN toutes les informations sont correctes
-        util = new Utilisateur("Marsenac", "Marcel", 20,
+        util = new Utilisateur("", "Marsenac", "Marcel", 20,
                 NiveauEntrainement.SPORTIF,
                 Morphologie.FORT, "motDePasse",
                           "email@mail.com", "ici");
@@ -45,21 +45,21 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infoNull, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                        "motDePasse", infoNull, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infoNull));
@@ -77,21 +77,21 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infosVide, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", infosVide, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosVide));
@@ -109,28 +109,28 @@ public class TestUtilisateur {
 
         // pour le mot de passe
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         infosBlanc, "email@mail.com", "ici"));
 
         // pour l'email
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", infosBlanc, "ici"));
 
         // pour le lieu
         assertThrows(IllegalArgumentException.class,
-                () -> new Utilisateur("Marcenac", "Marcel", 20,
+                () -> new Utilisateur("", "Marcenac", "Marcel", 20,
                         NiveauEntrainement.SPORTIF,
                         Morphologie.FORT,
                         "motDePasse", "email@mail.com", infosBlanc));
     }
     @Test
     public void testGetMDP() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
@@ -141,7 +141,7 @@ public class TestUtilisateur {
 
     @Test
     public void testGetEmail() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
@@ -152,7 +152,7 @@ public class TestUtilisateur {
 
     @Test
     public void testGetDomicile() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
                                       "motDePasse", "email@mail.com",
@@ -163,7 +163,7 @@ public class TestUtilisateur {
 
     @Test
     public void testSetMDP() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                            NiveauEntrainement.SPORTIF,
                                            Morphologie.FORT,
                                            "motDePasse", "email@mail.com",
@@ -179,7 +179,7 @@ public class TestUtilisateur {
 
     @Test
     public void testSetEmail() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                             NiveauEntrainement.SPORTIF,
                                             Morphologie.FORT,
                                             "motDePasse", "email@mail.com",
@@ -196,7 +196,7 @@ public class TestUtilisateur {
 
     @Test
     public void testSetDomicile() {
-        Utilisateur util = new Utilisateur("Marsenac", "Marcel", 20,
+        Utilisateur util = new Utilisateur("", "Marsenac", "Marcel", 20,
                                             NiveauEntrainement.SPORTIF,
                                             Morphologie.FORT,
                                             "motDePasse", "email@mail.com",
@@ -216,7 +216,7 @@ public class TestUtilisateur {
         Parcours parcours = new Parcours(new Randonnee(1, "Mon parcours", 1,
                 null, null), new Date(), "parcours");
 
-        Utilisateur ut = new Utilisateur("a", "a", 1,
+        Utilisateur ut = new Utilisateur("", "a", "a", 1,
                 NiveauEntrainement.DEBUTANT, Morphologie.LEGER, "a", "a", "a");
 
         ut.ajouterParcours(null);
@@ -231,7 +231,7 @@ public class TestUtilisateur {
         Parcours parcours2 = new Parcours(new Randonnee(1, "Mon parcours", 1,
                 null, null), new Date(), "parcours");
 
-        Utilisateur ut = new Utilisateur("a", "a", 1,
+        Utilisateur ut = new Utilisateur("", "a", "a", 1,
                 NiveauEntrainement.DEBUTANT, Morphologie.LEGER, "a", "a", "a");
 
         ut.ajouterParcours(parcours1);

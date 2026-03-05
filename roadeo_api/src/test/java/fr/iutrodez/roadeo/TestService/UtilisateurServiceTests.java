@@ -83,10 +83,33 @@ public class UtilisateurServiceTests {
     }
 
     @Test
+    void testGetUtilisateurByAdresseMailCorrect() {
+
+        when(repository.findByAdresseMail("jean-miche@gmail.com"))
+                .thenReturn(Optional.of(expectedList.get(0)));
+
+        Utilisateur result = service.getUtilisateurByAdresseMail("jean-miche@gmail.com");
+        assertEquals(expectedList.get(0), result);
+        verify(repository, times(1))
+                .findByAdresseMail("jean-miche@gmail.com");
+    }
+
+    @Test
+    void testGetUtilisateurByAdresseMailIncorrect() {
+
+        when(repository.findByAdresseMail("aaaaa")).thenReturn(Optional.empty());
+
+        Utilisateur result = service.getUtilisateurByAdresseMail("aaaaa");
+        assertNull(result);
+        verify(repository, times(1))
+                .findByAdresseMail("aaaaa");
+    }
+
+    @Test
     void testGetUtilisateurByIdCorrect() {
         when(repository.findById("1")).thenReturn(Optional.of(expectedList.get(0)));
 
-        Utilisateur result = service.getUtilisateur("1");
+        Utilisateur result = service.getUtilisateurById("1");
         assertEquals(expectedList.get(0), result);
         verify(repository, times(1)).findById("1");
     }
@@ -95,7 +118,7 @@ public class UtilisateurServiceTests {
     void testGetUtilisateurByIdIncorrect() {
         when(repository.findById("999")).thenReturn(Optional.empty());
 
-        Utilisateur result = service.getUtilisateur("999");
+        Utilisateur result = service.getUtilisateurById("999");
         assertNull(result);
         verify(repository, times(1)).findById("999");
     }

@@ -38,7 +38,7 @@ public class UtilisateurApiControleur {
 
     @PostMapping("/Id")
     public ResponseEntity<Utilisateur> getUtilisateurById(@RequestBody Utilisateur request) {
-        Utilisateur utilisateur = utilisateurService.getUtilisateur(request.getId());
+        Utilisateur utilisateur = utilisateurService.getUtilisateurById(request.getId());
 
         if (utilisateur != null) {
             return ResponseEntity.ok(utilisateur);
@@ -54,16 +54,21 @@ public class UtilisateurApiControleur {
      * code 200 -> si l'utilisateur est ajouté
      *      403 -> si une erreur est détectée
      *      404 -> si l'utilisateur est null
+     *      412 -> si l'utilisateur est déjà existant (mail identique)
      */
     @PostMapping("/ajoutUtilisateur")
     public ResponseEntity<Utilisateur>  ajoutUtilisateur(@RequestBody Utilisateur util) {
         try {
+
+            if (utilisateurService.getUtilisateurByAdresseMail
+                    (util.getAdresseMail()) != null)
+                return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+
             Utilisateur utilisateur = utilisateurService.addUtilisateur(util);
-            if (utilisateur != null) {
+            if (utilisateur != null)
                 return ResponseEntity.ok(utilisateur);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
+            return ResponseEntity.notFound().build();
+
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -76,16 +81,36 @@ public class UtilisateurApiControleur {
      * code 200 -> si l'utilisateur est modifiée
      *      403 -> si une erreur est détectée
      *      404 -> si l'utilisateur est null
+     *      412 -> si l'utilisateur est déjà existant (mail identique)
      */
     @PutMapping("/modifUtilisateur")
     public ResponseEntity<Utilisateur> modifUtilisateur(@RequestBody Utilisateur util) {
         try{
-            Utilisateur utilisateur = utilisateurService.updateUtilisateur(util);
-            if (utilisateur != null) {
-                return ResponseEntity.ok(utilisateur);
-            } else {
-                return ResponseEntity.notFound().build();
+
+            Utilisateur utilisateurDoublonPotentiel = utilisateurService
+                    .getUtilisateurByAdresseMail(util.getAdresseMail());
+
+            // Cas où doublon. Pas de panique, ça peut être le même utilisateur.
+            if (utilisateurDoublonPotentiel != null
+                    && utilisateurDoublonPotentiel.getId()
+                    .equals(util.getId())) {
+
+                return ResponseEntity.ok(utilisateurService.updateUtilisateur(util));
+
+            // Cas où l'utilisateur est introuvable via le mail.
+            // (Il peut ne paraitre dans aucun registre.)
+            } else if (utilisateurDoublonPotentiel == null) {
+
+                // On vérifie que l'id existe, sinon utilisateur introuvable.
+                if (utilisateurService.getUtilisateurById(util.getId()) == null)
+                    return ResponseEntity.notFound().build();
+
+                return ResponseEntity.ok(utilisateurService.updateUtilisateur(util));
             }
+
+            // Sinon, c'est bien un doublon
+            return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).build();
+
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -108,5 +133,4 @@ public class UtilisateurApiControleur {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

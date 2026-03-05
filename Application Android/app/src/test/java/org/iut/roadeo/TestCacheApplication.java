@@ -27,7 +27,7 @@ public class TestCacheApplication {
         CacheApplication cacheApplication = CacheApplication.getInstance();
         assertNull(cacheApplication.getUtilisateurConnecte());
 
-        Utilisateur utilisateurAInsere = new Utilisateur("Marcel", "Marcenac",
+        Utilisateur utilisateurAInsere = new Utilisateur("", "Marcel", "Marcenac",
                 25, NiveauEntrainement.SPORTIF, Morphologie.MOYEN,
                 "mdp", "B", "B");
         cacheApplication.setUtilisateurConnecte(utilisateurAInsere);

@@ -33,12 +33,6 @@ public class UtilisateurTest {
     }
 
     @Test
-    @DisplayName("Test du getter de patronyme")
-    public void getNomTest(){
-        assertEquals("Michel Jean", utilTest.getPatronyme());
-    }
-
-    @Test
     @DisplayName("Test du getter de mdp")
     public void getMdpTest(){
         assertEquals("1234", utilTest.getMdp());

@@ -34,10 +34,22 @@ public class UtilisateurService {
      * @param id id de l'utilisateur à retrouver
      * @return l'utilisateur trouvé ou null si l'id n'existe pas
      */
-    public Utilisateur getUtilisateur(String id) {
+    public Utilisateur getUtilisateurById(String id) {
 
         Optional<Utilisateur> result = repository.findById(id);
-        //Objet Utilisateur
+        return result.orElse(null);
+    }
+
+    /**
+     * Récupère un utilisateur selon son adresse mail.
+     * @param adresseMail l'adresse mail de l'utilisateur à retrouver.
+     * @return l'utilisateur trouvé ou null si l'adresse mail n'existe pas.
+     */
+    public Utilisateur getUtilisateurByAdresseMail(String adresseMail) {
+
+        Optional<Utilisateur> result
+        = repository.findByAdresseMail(adresseMail.trim().toLowerCase());
+
         return result.orElse(null);
     }
 

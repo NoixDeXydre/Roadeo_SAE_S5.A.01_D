@@ -28,6 +28,12 @@
     <string name="label_compte_niveau">Niveau physique</string>
     <string name="label_compte_morphologie">Morphologie</string>
 
+    <!-- Page compte utilisateur -->
+    <string name="titre_page_compte_utilisateur">Mon compte</string>
+    <string name="bouton_compte_modifier">Modifier mes informations</string>
+    <string name="bouton_compte_valider">Valider les changements</string>
+    <string name="bouton_compte_annuler">Annuler les changements</string>
+
     <!-- Liés aux informations de la randonnée -->
     <string name="nom_randonnee">Nom de la randonnée</string>
     <string name="duree_jours">Durée de la randonnée en jours</string>
@@ -60,7 +66,7 @@
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>
     <string name="description_prenom">Marcenac</string>
-    <string name="description_email">M-Marcenac@email.com</string>
+    <string name="description_email">m.marcenac@email.com</string>
     <string name="description_motdepasse">mdp_secure1234</string>
     <string name="description_age">20</string>
     <string name="description_domicile">7 rue du Citron</string>
@@ -109,19 +115,21 @@
     <!-- Messages succès -->
 
     <string name="message_succes_creation_compte">"Votre compte a été crée avec succès.\nBienvenue, %s !"</string>
+    <string name="message_succes_modification_compte">"Les informations modifiées ont bien été prises en compte."</string>
 
     <!-- Messages d'erreur -->
 
     <string name="message_erreur_nom">Veuillez insérer votre nom.</string>
     <string name="message_erreur_prenom">Veuillez insérer votre prénom.</string>
+    <string name="message_erreur_nom_prenom">Veuillez insérer votre prénom et votre nom.</string>
     <string name="message_erreur_mdp">Veuillez insérer un mot de passe.</string>
     <string name="message_erreur_confirmation_mdp">Veuillez confirmer votre mot de passe.</string>
     <string name="message_erreur_mdp_conf_echec">"La confirmation du mot de passe à échouer, faite en sorte à ce qu'il corresponde à votre mot de passe initial."</string>
     <string name="message_erreur_age">Veuillez indiquer votre âge dans la tranche 1 – 120.</string>
     <string name="message_erreur_mail_vide">Votre adresse mail est vide.</string>
     <string name="message_erreur_mail_incorrecte">
-        "Votre adresse mail est mal formé,
-        veuillez écrire un mail de la forme 'marcel@dmail.com'."
+        "Votre adresse mail est mal formée,
+        veuillez écrire un mail de la forme 'm.marcenac@email.com'."
     </string>
     <string name="message_erreur_adresse">Veuillez insérer votre adresse personnelle.</string>
 

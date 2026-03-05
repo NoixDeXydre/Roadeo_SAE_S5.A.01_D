@@ -76,7 +76,6 @@ public class ControleurCreationCompte extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                // TODO mettre une constante pour les valeurs alpha
                 if (charSequence.length() != 0) {
                     champConfirmationMdp.setEnabled(true);
                     champConfirmationMdp.setAlpha(1.0f);
@@ -200,8 +199,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
             activerVisuellementView(ecranChargement);
 
-            Utilisateur utilisateurACreer = new Utilisateur(
-                    champNom.getText().toString(),
+            Utilisateur utilisateurACreer = new Utilisateur
+                    ("", champNom.getText().toString(),
                     champPrenom.getText().toString(),
                     getIntFromChamp(champAge, 1),
                     getNiveauEntrainementWithPosition(spinnerNiveauPhysique.getSelectedItemPosition()),

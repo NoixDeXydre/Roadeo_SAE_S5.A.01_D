@@ -37,7 +37,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mon Compte"
+                android:text="@string/titre_page_compte_utilisateur"
                 android:textSize="50dp" />
 
         </TableRow>
@@ -208,9 +208,9 @@
                 android:layout_column="2"
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
-                android:text="Valider les changements"
-                android:textColor="@color/black"
-                android:onClick="validerChangements"/>
+                android:onClick="validerChangements"
+                android:text="@string/bouton_compte_valider"
+                android:textColor="@color/black" />
 
         </TableRow>
 
@@ -225,9 +225,9 @@
                 android:layout_column="2"
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
-                android:text="Modifier le compte"
-                android:textColor="@color/black"
-                android:onClick="modifierCompte"/>
+                android:onClick="modifierCompte"
+                android:text="@string/bouton_compte_modifier"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/annuler_changements_compte"
@@ -236,9 +236,9 @@
                 android:layout_column="2"
                 android:adjustViewBounds="true"
                 android:backgroundTint="@color/vert_pomme"
-                android:text="Annuler les changements"
-                android:textColor="@color/black"
-                android:onClick="annulerChangements"/>
+                android:onClick="annulerChangements"
+                android:text="@string/bouton_compte_annuler"
+                android:textColor="@color/black" />
         </TableRow>
     </TableLayout>
 

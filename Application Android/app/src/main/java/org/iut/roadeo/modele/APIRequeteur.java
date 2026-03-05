@@ -3,6 +3,7 @@ package org.iut.roadeo.modele;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -54,6 +55,9 @@ public class APIRequeteur {
 
     private final static String MESSAGE_ERREUR_CONNEXION
             = "Echec : Aucune connexion.";
+
+    private final static String MESSAGE_ERREUR_DOUBLON_UTILISATEUR
+            = "Echec : Un utilisateur avec la même adresse mail existe déjà.";
 
     private final static String MESSAGE_ERREUR_SERVEUR_INTROUVABLE
             = "Echec : Le serveur est introuvable.";
@@ -135,7 +139,10 @@ public class APIRequeteur {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError error) {
 
-                        if (error instanceof ServerError)
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 412)
+                            callback.onError(MESSAGE_ERREUR_DOUBLON_UTILISATEUR);
+                        else if (error instanceof ServerError)
                             callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
                         else if (error instanceof TimeoutError)
                             callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
@@ -240,7 +247,10 @@ public class APIRequeteur {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError error) {
 
-                        if (error instanceof AuthFailureError)
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 412)
+                            callback.onError(MESSAGE_ERREUR_DOUBLON_UTILISATEUR);
+                        else if (error instanceof AuthFailureError)
                             callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
                         else if (error instanceof ServerError)
                             callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);

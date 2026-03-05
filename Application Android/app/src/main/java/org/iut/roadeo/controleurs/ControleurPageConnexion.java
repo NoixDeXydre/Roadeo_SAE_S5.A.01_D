@@ -125,10 +125,10 @@ public class ControleurPageConnexion extends AppCompatActivity {
                     desactiverVisuellementView(ecranChargement);
                     Toast.makeText(ControleurPageConnexion.this,
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
-
-                    champMotDePasse.setText("");
                 }
             });
+
+            champMotDePasse.setText("");
         }
     }
 

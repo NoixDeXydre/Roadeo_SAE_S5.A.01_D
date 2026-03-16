@@ -23,8 +23,17 @@
                 android:id="@+id/bouton_changer_mode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:onClick="clickChangementMode"
                 android:text="@string/arrivee"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/bouton_arrivee_depart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clickArriveeDepart"
+                android:text="@string/arrivee_depart"
                 android:textColor="@color/black" />
         </LinearLayout>
 

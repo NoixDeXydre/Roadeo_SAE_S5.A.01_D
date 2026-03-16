@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -57,7 +58,7 @@ import java.util.Date;
  * @author M'TIMA LESNIAK Noa
  * @author VIGUE Adrien
  */
-public class ControleurCarte extends Fragment implements View.OnClickListener {
+public class ControleurCarte extends AppCompatActivity implements View.OnClickListener {
 
     // TODO manipulation du cache après appel API.
     // TODO appel API
@@ -65,10 +66,10 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
     private final int TEMPS_ATTENTE_RAFRAICHISSEMENT_POSITION = 1000;
     private final int REQUEST_PERMISSIONS_REQUEST_CODE = 1;
     private final double DISTANCE_MAX_NOTIFICATION_POINT_INTERET = 200.0f;
-    private final String[] DROITS_REQUIS_CARTE = new String[] {
-        Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+    private final String[] DROITS_REQUIS_CARTE = new String[]{
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
     };
 
     LocationRequest requeteLocalisation =
@@ -126,48 +127,37 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
     private ArrayList<Marker> pointsInteretCarte;
 
-    public static ControleurCarte newInstance() {
-        return new ControleurCarte();
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.carte);
 
         pointsInteretCarte = new ArrayList<>();
 
-        clientDeLocalisation = LocationServices.getFusedLocationProviderClient(getContext());
+        clientDeLocalisation = LocationServices.getFusedLocationProviderClient(this);
 
         // TODO Données tests à enlever ici
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
                 (1, "Ma randonnée", 3,
-                        new GeoPoint(44.360287526289454, 2.575853338825084),
-                        new GeoPoint(44.35970734903577, 2.576335155660985)),
+                new GeoPoint(44.360287526289454, 2.575853338825084),
+                new GeoPoint(44.35970734903577, 2.576335155660985)),
                 new Date(), "test");
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;
-    }
 
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) throws SecurityException {
-
-        View vue = inflater.inflate(R.layout.carte, container, false);
-
-        avertissementPointInteret = vue.findViewById(R.id.avertissement_point_interet);
+        avertissementPointInteret = findViewById(R.id.avertissement_point_interet);
         avertissementPointInteret.setAlpha(0.0f);
-        titreRandonnee = vue.findViewById(R.id.titre_randonnee_formate);
-        dateParcours = vue.findViewById(R.id.date_parcours);
+        titreRandonnee = findViewById(R.id.titre_randonnee_formate);
+        dateParcours = findViewById(R.id.date_parcours);
 
-        boutonCentrerParcours = vue.findViewById(R.id.bouton_carte_centrer_parcours);
-        boutonCentrerRandonneur = vue.findViewById(R.id.bouton_carte_centrer_randonneur);
+        boutonCentrerParcours = findViewById(R.id.bouton_carte_centrer_parcours);
+        boutonCentrerRandonneur = findViewById(R.id.bouton_carte_centrer_randonneur);
 
-        boutonDemarrer = vue.findViewById(R.id.bouton_demarrer_carte);
-        boutonPause = vue.findViewById(R.id.bouton_pause_carte);
-        boutonStop = vue.findViewById(R.id.bouton_stop_carte);
+        boutonDemarrer = findViewById(R.id.bouton_demarrer_carte);
+        boutonPause = findViewById(R.id.bouton_pause_carte);
+        boutonStop = findViewById(R.id.bouton_stop_carte);
 
         boutonDemarrer.setOnClickListener(this);
         boutonPause.setOnClickListener(this);
@@ -176,10 +166,10 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         boutonCentrerRandonneur.setOnClickListener(this);
 
         Configuration.getInstance().load(
-                vue.getContext(),
-                PreferenceManager.getDefaultSharedPreferences(vue.getContext()));
+                this,
+                PreferenceManager.getDefaultSharedPreferences(this));
 
-        mapView = vue.findViewById(R.id.mapview);
+        mapView = findViewById(R.id.mapview);
         mapView.setTileSource(TileSourceFactory.MAPNIK);
 
         // Permet de ne pas détruire le mapview quand
@@ -236,7 +226,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         controleurMapView.setCenter(new GeoPoint(44.360054998826f,
                 2.57556698405f));
         parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
-                                        new double[]{44.360054998826, 2.57556698405}));
+                new double[]{44.360054998826, 2.57556698405}));
 
         requestPermissionsIfNecessary(DROITS_REQUIS_CARTE);
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
@@ -246,10 +236,18 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         //
         // On en profite pour mettre à jour le tracé
         // et le marqueur représentant la position de l'utilisateur.
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         clientDeLocalisation.requestLocationUpdates(requeteLocalisation,
                 callbackDeLocalisation, Looper.getMainLooper());
-
-        return vue;
     }
 
     @Override
@@ -319,6 +317,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         mapView.invalidate();
     }
 
@@ -326,7 +325,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         ArrayList<String> permissionsToRequest = new ArrayList<>();
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(getContext(), permission)
+            if (ContextCompat.checkSelfPermission(this, permission)
                     != PackageManager.PERMISSION_GRANTED) {
                 permissionsToRequest.add(permission);
             }
@@ -334,7 +333,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
         if (permissionsToRequest.size() > 0) {
             ActivityCompat.requestPermissions(
-                    getActivity(),
+                    this,
                     permissionsToRequest.toArray(new String[0]),
                     REQUEST_PERMISSIONS_REQUEST_CODE);
         }
@@ -387,7 +386,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
 
             dernierPointInteretNotification = pointTraite;
 
-            Toast.makeText(getView().getContext(),
+            Toast.makeText(this,
                     getString(R.string.avertissement_point_interet),
                     Toast.LENGTH_LONG).show();
 
@@ -551,7 +550,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         if (view.getId() == R.id.bouton_demarrer_carte) {
 
             parcoursAfficheUtilisateur.setParcoursEnFonctionnement(true);
-            Toast.makeText(getView().getContext(),
+            Toast.makeText(this,
                     getString(R.string.demarrage_parcours),
                     Toast.LENGTH_SHORT).show();
 
@@ -561,7 +560,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         else if (view.getId() == R.id.bouton_pause_carte) {
 
             parcoursAfficheUtilisateur.setParcoursEnPause(true);
-            Toast.makeText(getView().getContext(),
+            Toast.makeText(this,
                     getString(R.string.mise_en_pause_parcours),
                     Toast.LENGTH_SHORT).show();
         }
@@ -569,7 +568,7 @@ public class ControleurCarte extends Fragment implements View.OnClickListener {
         else if (view.getId() == R.id.bouton_stop_carte) {
 
             parcoursAfficheUtilisateur.setParcoursEnArret(true);
-            Toast.makeText(getView().getContext(),
+            Toast.makeText(this,
                     getString(R.string.mise_en_arret_parcours),
                     Toast.LENGTH_SHORT).show();
         }

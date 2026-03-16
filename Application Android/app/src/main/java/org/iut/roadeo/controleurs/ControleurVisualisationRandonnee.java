@@ -118,8 +118,8 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
                     mapView.getOverlays().remove(pointArriveeDepart);
 
                     // On enlève le point de depart
-                    System.out.println(mapView.getOverlays().remove(pointDepart));
-                    System.out.println(mapView.getOverlays().remove(pointArrivee));
+                    mapView.getOverlays().remove(pointDepart);
+                    mapView.getOverlays().remove(pointArrivee);
 
                     // On ajoute le point d'arrivé départ
                     pointArriveeDepart.setPosition(p);

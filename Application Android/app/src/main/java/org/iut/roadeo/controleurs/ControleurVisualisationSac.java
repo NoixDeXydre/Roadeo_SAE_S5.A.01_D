@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.R;
 import org.iut.roadeo.modele.Produit;
+import org.iut.roadeo.modele.Randonnee;
 import org.iut.roadeo.modele.Randonneur;
 import org.iut.roadeo.modele.SacADos;
 import org.iut.roadeo.modele.typedonnees.Morphologie;
@@ -38,24 +40,23 @@ public class ControleurVisualisationSac extends AppCompatActivity {
         LinearLayout mainContainer = findViewById(R.id.container_liste_randonneurs);
         LayoutInflater inflater = LayoutInflater.from(this);
 
+        // On prend l'id de la randonnée
+        // où les informations doivent être soutirées.
+        int id = getIntent().getIntExtra("RANDONNEE", -1);
+
+        Randonnee randonnee = null;
+        for (Randonnee r : CacheApplication.getInstance().getUtilisateurConnecte().getRandonnees()) {
+            if (r.getId() == id) {
+                randonnee = r;
+                break;
+            }
+        }
+
+        if (randonnee == null)
+            return;
+
         // FIXME liste des randonneurs à alimenter ici.
-        ArrayList<Randonneur> listeRandonneurs = new ArrayList<>();
-
-        // TODO enlever ces données templates
-
-        Randonneur r1 = new Randonneur("JM", "jean", 32, NiveauEntrainement.SPORTIF, Morphologie.MOYEN);
-        Randonneur r2 = new Randonneur("JM Junior", "marcenac ", 15, NiveauEntrainement.DEBUTANT, Morphologie.LEGER);
-        r1.getSacADos().setPoidsMax(1000f);
-        r2.getSacADos().setPoidsMax(1000f);
-
-        r1.getSacADos().ajouterProduit(new Produit("Spagett", "desc", "pat",
-                "a", 50.0f, 50.0f, 40, 500.0f));
-        r2.getSacADos().ajouterProduit(new Produit("Spagett", "desc", "pat",
-                "a", 50.0f, 50.0f, 40, 500.0f));
-
-        listeRandonneurs.add(r1);
-        listeRandonneurs.add(r2);
-
+        ArrayList<Randonneur> listeRandonneurs = randonnee.getRandonneurs();
         for (Randonneur randonneur : listeRandonneurs) {
 
             // On gonfle la carte du randonneur

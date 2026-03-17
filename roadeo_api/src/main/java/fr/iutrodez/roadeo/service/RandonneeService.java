@@ -76,12 +76,21 @@ public class RandonneeService {
     }
 
     /**
-     * Récupère une randonnée selon un id
-     * @param id id de la randonnée à retrouver
+     * Récupère une randonnée selon l'id de la randonnée
+     * @param idRandonnee id de la randonnée à retrouver
      * @return la randonnée trouvé ou null si l'id n'existe pas
      */
-    public Randonnee getRandonnee(String id) {
-        return repository.findById(id).orElse(null);
+    public Randonnee getRandonneeByIdRandonnee(String idRandonnee) {
+        return repository.findById(idRandonnee).orElse(null);
+    }
+
+    /**
+     * Récupère des randonnées avec l'id utilisateur.
+     * @param idUtilisateur
+     * @return les randonnées ou null si l'id n'existe pas.
+     */
+    public List<Randonnee> getRandonneesByIDUtilisateur(String idUtilisateur) {
+        return repository.findByIdUtilisateur(idUtilisateur);
     }
 
     /**

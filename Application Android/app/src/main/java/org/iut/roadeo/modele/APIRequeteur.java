@@ -266,6 +266,54 @@ public class APIRequeteur {
         getFileRequete().add(requeteConnexion.setTag(this));
     }
 
+    /**
+     * Renvoi les randonnées crées par l'utilisateur.
+     * @param id id de l'utilisateur
+     * @param callback
+     */
+    public void listerRandonnees(String id, IAPIRandonneesCallback callback) {
+
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARCOURS;
+
+        HashMap<String, String> entreesJsonRequete = new HashMap<>();
+        entreesJsonRequete.put("id", id);
+
+        JsonArrayRequest requeteConnexion = new JsonArrayRequest(Request.Method.POST,
+                urlAppelAPI, new JSONObject(entreesJsonRequete).names(),
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+
+                        ArrayList<Randonnee> randonnees;
+                        try {
+                            randonnees = construireRandonneesWithReponse(response);
+                            callback.onSuccess(randonnees);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError
+                                                        error) {
+
+                        if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion.setTag(this));
+    }
+
     public void listerParcours(int id, IAPIParcoursCallback callback) {
         String urlAppelAPI = prefixeUrl +  SUFFIXE_API_LISTE_PARCOURS;
 

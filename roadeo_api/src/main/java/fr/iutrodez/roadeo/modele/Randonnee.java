@@ -21,6 +21,9 @@ public class Randonnee {
     @Id
     private String id;
 
+    @Field("id_utilisateur")
+    private String idUtilisateur;
+
     private String libelle;
 
     @Field("participants_max")
@@ -60,7 +63,7 @@ public class Randonnee {
      *     <li>nombreJours<1 || nombreJours>3</li>
      * </ul>
      */
-    public Randonnee(String id, String libelle,
+    public Randonnee(String id, String idUtilisateur, String libelle,
                      int nombreJours, PointInteret depart,
                      PointInteret arrive, ArrayList<Participant> participants) {
         if (libelle.isBlank()) {
@@ -86,6 +89,7 @@ public class Randonnee {
         this.arrive = arrive;
         this.parcours = new ArrayList<>();
         this.participants = participants;
+        this.idUtilisateur = idUtilisateur;
     }
 
     /**
@@ -286,5 +290,13 @@ public class Randonnee {
 
     public void setArrive(PointInteret arrive) {
         this.arrive = arrive;
+    }
+
+    public String getIdUtilisateur() {
+        return idUtilisateur;
+    }
+
+    public void setIdUtilisateur(String idUtilisateur) {
+        this.idUtilisateur = idUtilisateur;
     }
 }

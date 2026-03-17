@@ -58,19 +58,13 @@ public class RandonneeApiControleur {
     }
 
     /**
-     * Renvoie la liste de toutes les randonnées d'un participant
-     * @param idUtilisateur id de l'utilisateur
+     * Renvoie la liste de toutes les randonnées d'un utilisateur
+     * @param id id de l'utilisateur
      * @return la liste des randonnées
      */
-    @PostMapping("/infoRandoUtil")
-    public List<Randonnee> getRandonneeParIdUtil(@RequestBody String idUtilisateur) {
-        List<Randonnee> listeRandonnee = randonneeService.getAllRandonnees();
-        for (Randonnee randonnee : listeRandonnee) {
-            randonnee.setParcours(
-                    randonneeService.getParcoursByIdRando(randonnee.getId())
-            );
-        }
-        return listeRandonnee;
+    @GetMapping("/infoRandoUtil/{id}")
+    public List<Randonnee> getRandonneeParIdUtil(@PathVariable String id) {
+        return randonneeService.getRandonneesByIDUtilisateur(id);
     }
 
     /**
@@ -80,7 +74,7 @@ public class RandonneeApiControleur {
      */
     @PostMapping("/infoRando")
     public Randonnee getRandonneeParId(@RequestBody String idRando) {
-        Randonnee randonnee = randonneeService.getRandonnee(idRando);
+        Randonnee randonnee = randonneeService.getRandonneeByIdRandonnee(idRando);
         randonnee.setParcours(randonneeService.getParcoursByIdRando(randonnee.getId()));
         return randonnee;
     }

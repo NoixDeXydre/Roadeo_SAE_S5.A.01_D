@@ -90,7 +90,13 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
 
             startActivity(intention);
         } else if (view.getId() == R.id.voir_sacs) {
-            startActivity(new Intent(getContext(), ControleurVisualisationSac.class));
+
+            // On a juste besoin de l'ID de la randonnée pour tout récupérer.
+            Intent intention = new Intent(getContext(), ControleurVisualisationSac.class);
+            intention.putExtra("RANDONNEE", randonnee.getId());
+
+            startActivity(intention);
+
         } else if (view.getId() == R.id.assigner_sacs) {
             // TODO assigner sacs
         } else if (view.getId() == R.id.ajoutDepartArrivee) {

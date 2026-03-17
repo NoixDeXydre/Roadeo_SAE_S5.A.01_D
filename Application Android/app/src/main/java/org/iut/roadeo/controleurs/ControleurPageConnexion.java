@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import org.iut.roadeo.BuildConfig;
 import org.iut.roadeo.CacheApplication;
 import org.iut.roadeo.modele.APIRequeteur;
+import org.iut.roadeo.modele.Randonnee;
+import org.iut.roadeo.modele.interfaces.IAPIRandonneesCallback;
 import org.iut.roadeo.modele.interfaces.IAPIUtilisateurCallback;
 import org.iut.roadeo.modele.Utilisateur;
 import org.iut.roadeo.R;
@@ -18,6 +20,8 @@ import org.iut.roadeo.R;
 import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.ViewUtils.*;
+
+import java.util.ArrayList;
 
 /**
  * Point d'entrée de l'application.
@@ -96,38 +100,9 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         } else {
 
-            activerVisuellementView(ecranChargement);
+            seConnecter();
+
             setBarreCouleurChamp(champIdentifiant, R.color.black);
-
-            // Test API
-            apiRequeteur = new APIRequeteur(this.getApplicationContext(), BuildConfig.API_URL);
-            apiRequeteur.seConnecter(champIdentifiant.getText().toString(), champMotDePasse.getText().toString(),
-                    new IAPIUtilisateurCallback() {
-                @Override
-                public void onSuccess(Utilisateur utilisateur) {
-
-                    // Enregistre l'utilisateur dans le cache.
-                    CacheApplication.getInstance().setUtilisateurConnecte(utilisateur);
-
-                    // Note :
-                    // Après connexion, l'utilisateur pourra appuyer sur BACK
-                    // pour revenir à cette page.
-
-                    desactiverVisuellementView(ecranChargement);
-                    Intent intention = new Intent(ControleurPageConnexion.this,
-                            ControleurDashboard.class);
-                    startActivity(intention);
-                }
-
-                @Override
-                public void onError(String message) {
-
-                    desactiverVisuellementView(ecranChargement);
-                    Toast.makeText(ControleurPageConnexion.this,
-                            message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
-                }
-            });
-
             champMotDePasse.setText("");
         }
     }
@@ -140,6 +115,81 @@ public class ControleurPageConnexion extends AppCompatActivity {
 
         Intent intention = new Intent(ControleurPageConnexion.this,
                 ControleurCreationCompte.class);
+        startActivity(intention);
+    }
+
+    /**
+     * Tente une connexion de l'utilisateur.
+     */
+    public void seConnecter() {
+
+        activerVisuellementView(ecranChargement);
+
+        apiRequeteur = new APIRequeteur(this.getApplicationContext(), BuildConfig.API_URL);
+        apiRequeteur.seConnecter(champIdentifiant.getText().toString(),
+                champMotDePasse.getText().toString(),
+                new IAPIUtilisateurCallback() {
+                    @Override
+                    public void onSuccess(Utilisateur utilisateur) {
+
+                        // Enregistre l'utilisateur dans le cache.
+                        CacheApplication.getInstance().setUtilisateurConnecte(utilisateur);
+                        recupererRandonneesUtilisateur();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                        desactiverVisuellementView(ecranChargement);
+                        Toast.makeText(ControleurPageConnexion.this,
+                                message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    /**
+     * Récupère les randonnées et les met
+     * dans le cache une fois l'utilisateur connecté.
+     */
+    public void recupererRandonneesUtilisateur() {
+
+        apiRequeteur = new APIRequeteur(this.getApplicationContext(), BuildConfig.API_URL);
+        apiRequeteur.listerRandonnees(CacheApplication.getInstance().getUtilisateurConnecte().getId(),
+                new IAPIRandonneesCallback() {
+
+                    @Override
+                    public void onSuccess(ArrayList<Randonnee> randonnees) {
+
+                        for (Randonnee r : randonnees) {
+                            CacheApplication.getInstance()
+                                    .getUtilisateurConnecte().ajouterRandonnee(r);
+                        }
+
+                        envoyerUtilisateurDashboard();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+                        desactiverVisuellementView(ecranChargement);
+                        Toast.makeText(ControleurPageConnexion.this,
+                                message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    /**
+     * Envoi les utilisateurs
+     * dans le dashboard quand tout est terminé.
+     */
+    public void envoyerUtilisateurDashboard() {
+
+        // Note :
+        // Après connexion, l'utilisateur pourra appuyer sur BACK
+        // pour revenir à cette page.
+
+        desactiverVisuellementView(ecranChargement);
+        Intent intention = new Intent(ControleurPageConnexion.this,
+                ControleurDashboard.class);
         startActivity(intention);
     }
 }

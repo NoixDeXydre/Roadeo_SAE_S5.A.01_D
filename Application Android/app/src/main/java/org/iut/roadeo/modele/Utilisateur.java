@@ -29,6 +29,9 @@ public class Utilisateur extends Randonneur {
     /** Parcours enregistrés par l'utilisateur. */
     private ArrayList<Parcours> parcours;
 
+    /** Randonnées enregistrés par l'utilisateur. */
+    private ArrayList<Randonnee> randonnees;
+
     /**
      * Crée un nouvel utilisateur.
      * @param nom le nom de l'utilisateur
@@ -51,6 +54,7 @@ public class Utilisateur extends Randonneur {
         setDomicile(domicile);
 
         parcours = new ArrayList<>();
+        randonnees = new ArrayList<>();
     }
 
     /**
@@ -128,6 +132,21 @@ public class Utilisateur extends Randonneur {
 
     public ArrayList<Parcours> getParcours() {
         return parcours;
+    }
+
+    /**
+     * Ajoute une randonnée dans la liste des randonnées utilisateur.
+     * @param randonnee
+     */
+    public void ajouterRandonnee(Randonnee randonnee) {
+
+        if (randonnee != null) {
+            this.randonnees.add(randonnee);
+        }
+    }
+
+    public ArrayList<Randonnee> getRandonnees() {
+        return randonnees;
     }
 
     public void setParcours(ArrayList<Parcours> parcours) {

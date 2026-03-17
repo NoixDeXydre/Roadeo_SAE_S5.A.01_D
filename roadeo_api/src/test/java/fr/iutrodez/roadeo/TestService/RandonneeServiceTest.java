@@ -48,12 +48,12 @@ public class RandonneeServiceTest {
         interet.add(new PointInteret("prairie laitière", new double[]{15.0, 45.0}));
         interet.add(new PointInteret("prairie caverneuse", new double[]{20.5, 45.0}));
 
-        Randonnee randonnee1 = new Randonnee("1", "randonnée", 2,
+        Randonnee randonnee1 = new Randonnee("1", "", "randonnée", 2,
                 new PointInteret("départ", new double[]{12.0,45.0}),
                 new PointInteret("arrivee", new double[]{54.12,95.3}),
                 new ArrayList<>());
 
-        Randonnee randonnee2 = new Randonnee("2", "randonnée", 1,
+        Randonnee randonnee2 = new Randonnee("2", "", "randonnée", 1,
                 new PointInteret("départ", new double[]{12.0,45.0}),
                 new PointInteret("arrivee", new double[]{54.12,95.3}),
                 new ArrayList<>());
@@ -104,7 +104,7 @@ public class RandonneeServiceTest {
     }
 
     @Test
-    void testgetRandonnee() {
+    void testgetRandonneeByIdRandonnee() {
 
         // TODO faire le test
 

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.mockito.MockitoAnnotations;
@@ -52,6 +53,185 @@ public class UtilisateurApiControleurTest {
 
         assertEquals(utilisateurs, result);
         verify(utilisateurService, times(1)).getAllUtilisateurs();
+    }
+
+    @Test
+    void testAjoutUtilisateurSucces() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.addUtilisateur(any(Utilisateur.class))).thenReturn(u1);
+        mockMvc.perform(post("/api/Utilisateur/ajoutUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "1",
+                            "domicile": "IUT Rodez",
+                            "nom": "Jean",
+                            "prenom": "Michel",
+                            "age": "40",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "jean-miche@gmail.com",
+                            "mdp": "1234"
+                        }
+                        """))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testAjoutUtilisateurEchecDoublon() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.getUtilisateurByAdresseMail
+                (u1.getAdresseMail())).thenReturn(u1);
+
+        mockMvc.perform(post("/api/Utilisateur/ajoutUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "1",
+                            "domicile": "Sans domicile",
+                            "nom": "A",
+                            "prenom": "B",
+                            "age": "40",
+                            "prenom": "B",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "jean-miche@gmail.com",
+                            "mdp": "non"
+                        }
+                        """))
+                .andExpect(status().isPreconditionFailed());
+    }
+
+    @Test
+    void testModifUtilisateurSuccesWithMemeMail() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.getUtilisateurByAdresseMail
+                (u1.getAdresseMail())).thenReturn(u1);
+
+        mockMvc.perform(put("/api/Utilisateur/modifUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "1",
+                            "domicile": "Sans domicile",
+                            "nom": "A",
+                            "prenom": "B",
+                            "age": "40",
+                            "prenom": "B",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "jean-miche@gmail.com",
+                            "mdp": "non"
+                        }
+                        """))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testModifUtilisateurSucces() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.getUtilisateurByAdresseMail
+                (u1.getAdresseMail())).thenReturn(u1);
+        when(utilisateurService.getUtilisateurById
+                (u1.getId())).thenReturn(u1);
+
+        mockMvc.perform(put("/api/Utilisateur/modifUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "1",
+                            "domicile": "Sans domicile",
+                            "nom": "A",
+                            "prenom": "B",
+                            "age": "40",
+                            "prenom": "B",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "un.autremail@yes.com",
+                            "mdp": "non"
+                        }
+                        """))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testModifUtilisateurEchecDoublon() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        Utilisateur u2 = new Utilisateur("2", "1234", "miche-jean@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.getUtilisateurByAdresseMail
+                (u2.getAdresseMail())).thenReturn(u2);
+
+        mockMvc.perform(put("/api/Utilisateur/modifUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "1",
+                            "domicile": "Sans domicile",
+                            "nom": "A",
+                            "prenom": "B",
+                            "age": "40",
+                            "prenom": "B",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "miche-jean@gmail.com",
+                            "mdp": "non"
+                        }
+                        """))
+                .andExpect(status().isPreconditionFailed());
+    }
+
+    @Test
+    void testModifUtilisateurEchecIntrouvable() throws Exception {
+
+        Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
+
+        when(utilisateurService.getUtilisateurByAdresseMail
+                (u1.getAdresseMail())).thenReturn(u1);
+        when(utilisateurService.getUtilisateurById
+                (u1.getId())).thenReturn(u1);
+
+        mockMvc.perform(put("/api/Utilisateur/modifUtilisateur")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                        {
+                            "id": "999",
+                            "domicile": "Sans domicile",
+                            "nom": "A",
+                            "prenom": "B",
+                            "age": "40",
+                            "prenom": "B",
+                            "niveauEntrainement": "Sportif",
+                            "morphologie": "Fort",
+                            "adresseMail": "miche-jean@gmail.com",
+                            "mdp": "non"
+                        }
+                        """))
+                .andExpect(status().isNotFound());
     }
 
     @Test

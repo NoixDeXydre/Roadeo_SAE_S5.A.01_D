@@ -3,6 +3,7 @@ package org.iut.roadeo.modele;
 import android.content.Context;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -55,6 +56,9 @@ public class APIRequeteur {
     private final static String MESSAGE_ERREUR_CONNEXION
             = "Echec : Aucune connexion.";
 
+    private final static String MESSAGE_ERREUR_DOUBLON_UTILISATEUR
+            = "Echec : Un utilisateur avec la même adresse mail existe déjà.";
+
     private final static String MESSAGE_ERREUR_SERVEUR_INTROUVABLE
             = "Echec : Le serveur est introuvable.";
 
@@ -64,6 +68,9 @@ public class APIRequeteur {
             + "/seConnecter";
     private final static String SUFFIXE_API_AJOUT_UTILISATEUR = SUFFIXE_API_UTILISATEUR
             + "/ajoutUtilisateur";
+
+    private final static String SUFFIXE_API_MODIFIER_UTILISATEUR = SUFFIXE_API_UTILISATEUR
+            + "/modifUtilisateur";
 
     // ======= Commandes API - Randonnee =======
 
@@ -103,8 +110,8 @@ public class APIRequeteur {
 
         HashMap<String, String> entreesJsonRequete = new HashMap<>();
 
-        entreesJsonRequete.put("patronyme",
-                utilisateur.getNom() + " " + utilisateur.getPrenom());
+        entreesJsonRequete.put("nom", utilisateur.getNom());
+        entreesJsonRequete.put("prenom", utilisateur.getPrenom());
         entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
         entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
         entreesJsonRequete.put("domicile", utilisateur.getDomicile());
@@ -132,7 +139,10 @@ public class APIRequeteur {
                     @Override
                     public void onErrorResponse(com.android.volley.VolleyError error) {
 
-                        if (error instanceof ServerError)
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 412)
+                            callback.onError(MESSAGE_ERREUR_DOUBLON_UTILISATEUR);
+                        else if (error instanceof ServerError)
                             callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
                         else if (error instanceof TimeoutError)
                             callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
@@ -143,7 +153,7 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     /**
@@ -197,7 +207,63 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
+    }
+
+    /**
+     * Modifie l'utilisateur
+     * @param utilisateur
+     * @param callback
+     */
+    public void modifierUtilisateur(Utilisateur utilisateur, IAPIUtilisateurCallback callback) {
+
+        String urlAppelAPI = prefixeUrl +  SUFFIXE_API_MODIFIER_UTILISATEUR;
+
+        HashMap<String, String> entreesJsonRequete = new HashMap<>();
+
+        entreesJsonRequete.put("id", utilisateur.getId());
+        entreesJsonRequete.put("nom", utilisateur.getNom());
+        entreesJsonRequete.put("prenom", utilisateur.getPrenom());
+        entreesJsonRequete.put("adresseMail", utilisateur.getEmail());
+        entreesJsonRequete.put("mdp", utilisateur.getMotDePasse());
+        entreesJsonRequete.put("domicile", utilisateur.getDomicile());
+        entreesJsonRequete.put("age", Integer.toString(utilisateur.getAge()));
+        entreesJsonRequete.put("niveauEntrainement", utilisateur.getNiveauEntrainement().toString());
+        entreesJsonRequete.put("morphologie", utilisateur.getMorphologie().toString());
+
+        JsonObjectRequest requeteConnexion = new JsonObjectRequest(Request.Method.PUT,
+                urlAppelAPI, new JSONObject(entreesJsonRequete),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(construireUtilisateurWithReponse(response));
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(com.android.volley.VolleyError error) {
+
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 412)
+                            callback.onError(MESSAGE_ERREUR_DOUBLON_UTILISATEUR);
+                        else if (error instanceof AuthFailureError)
+                            callback.onError(MESSAGE_ERREUR_LOGIN_ECHEC);
+                        else if (error instanceof ServerError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_ECHEC);
+                        else if (error instanceof TimeoutError)
+                            callback.onError(MESSAGE_ERREUR_SERVEUR_INTROUVABLE);
+                        else if (error instanceof NoConnectionError)
+                            callback.onError(MESSAGE_ERREUR_CONNEXION);
+                        else
+                            callback.onError(MESSAGE_ERREUR_QUELCONQUE);
+                    }
+                });
+
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerParcours(int id, IAPIParcoursCallback callback) {
@@ -241,7 +307,7 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerParticipant(String id, IAPIRandonneursCallback callback) {
@@ -280,7 +346,7 @@ public class APIRequeteur {
             }
         });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
     }
 
     public void listerRandonnee(IAPIRandonneesCallback callback) {
@@ -319,7 +385,17 @@ public class APIRequeteur {
                     }
                 });
 
-        getFileRequete().add(requeteConnexion);
+        getFileRequete().add(requeteConnexion.setTag(this));
+    }
+
+    /**
+     * Annule toutes les requêtes en cours.
+     */
+    public void annulerRequetes() {
+
+        if (fileRequete != null) {
+            fileRequete.cancelAll(this);
+        }
     }
 
     private ArrayList<Parcours>
@@ -560,8 +636,9 @@ public class APIRequeteur {
 
         // Création de l'utilisateur
         return new Utilisateur(
-                reponse.getString("patronyme").split(" ")[0],
-                reponse.getString("patronyme").split(" ")[1],
+                reponse.getString("id"),
+                reponse.getString("nom"),
+                reponse.getString("prenom"),
                 age, niveauEntrainement, morphologie,
                 reponse.getString("mdp"),
                 reponse.getString("adresseMail"),

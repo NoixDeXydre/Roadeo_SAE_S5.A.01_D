@@ -3,14 +3,10 @@ package fr.iutrodez.roadeo.controleur;
 import fr.iutrodez.roadeo.modele.Parcours;
 import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
-import fr.iutrodez.roadeo.modele.Utilisateur;
 import fr.iutrodez.roadeo.service.RandonneeService;
-import fr.iutrodez.roadeo.service.UtilisateurService;
-import org.springframework.data.mongodb.repository.Update;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +14,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/Randonnee")
-public class RandoneeApiControleur {
+public class RandonneeApiControleur {
 
     /**
      * Service métier permettant la gestion des randonnées.
@@ -29,7 +25,7 @@ public class RandoneeApiControleur {
      * Constructeur du contrôleur de l'api des randonnées
      * @param randonneeService service utilisé pour accéder aux données des randonnées
      */
-    public RandoneeApiControleur(RandonneeService randonneeService) {
+    public RandonneeApiControleur(RandonneeService randonneeService) {
         this.randonneeService = randonneeService;
     }
 

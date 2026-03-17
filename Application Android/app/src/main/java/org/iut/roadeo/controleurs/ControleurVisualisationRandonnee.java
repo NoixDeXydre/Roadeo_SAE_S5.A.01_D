@@ -28,14 +28,18 @@ import org.osmdroid.views.overlay.Marker;
 public class ControleurVisualisationRandonnee extends AppCompatActivity {
 
     private Button boutonChangerPoint;
+    private Button boutonArriveeDepart;
 
     /** Carte sur laquelle interragir */
     private MapView mapView;
 
     private Marker pointDepart;
     private Marker pointArrivee;
+    private Marker pointArriveeDepart;
 
     private boolean modeDepart;
+
+    private boolean modeArriveeDepart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
 
         mapView = findViewById(R.id.map_view_randonnee);
         boutonChangerPoint = findViewById(R.id.bouton_changer_mode);
+        boutonArriveeDepart = findViewById(R.id.bouton_arrivee_depart);
 
         // On crée les paramètres de la carte
         mapView.getController().setCenter(new GeoPoint(44.360054998826f,
@@ -75,28 +80,67 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
         pointArrivee.setAnchor(0.25f, 0.25f);
         pointArrivee.setInfoWindowAnchor(0.25f, Marker.ANCHOR_TOP);
 
+        // On crée le marqueur du point d'arrivée
+        pointArriveeDepart = new Marker(mapView);
+        pointArriveeDepart.setTitle("Départ et arrivée de la randonnée");
+        pointArriveeDepart.setIcon(getDrawable(R.drawable.arrivee_depart_marqueur));
+        pointArriveeDepart.setAnchor(0.25f, 0.25f);
+        pointArriveeDepart.setInfoWindowAnchor(0.25f, Marker.ANCHOR_TOP);
+
         // si informations reçues, on met les points en place
         if (!Double.isNaN(coordDepart[0])) { // une seule vérif nécessaire
-            PointInteret depart = new PointInteret("depart", coordDepart);
-            PointInteret arrive = new PointInteret("arrive", coordArrive);
+            if (coordDepart[0] != coordArrive[0]
+                || coordDepart[1] != coordArrive[1]) {
+                PointInteret depart = new PointInteret("depart", coordDepart);
+                PointInteret arrive = new PointInteret("arrive", coordArrive);
 
-            pointDepart.setPosition(depart.getCoordonnees());
-            pointArrivee.setPosition(arrive.getCoordonnees());
-            mapView.getOverlays().add(pointDepart);
-            mapView.getOverlays().add(pointArrivee);
+                pointDepart.setPosition(depart.getCoordonnees());
+                pointArrivee.setPosition(arrive.getCoordonnees());
+                mapView.getOverlays().add(pointDepart);
+                mapView.getOverlays().add(pointArrivee);
+            } else {
+                PointInteret departArrive = new PointInteret("depart arrive",
+                                                             coordDepart);
+                pointArriveeDepart.setPosition(departArrive.getCoordonnees());
+                mapView.getOverlays().add(pointArriveeDepart);
+            }
         }
 
         modeDepart = true;
+        modeArriveeDepart = false;
 
         // On code ici le clic sur la carte.
         MapEventsReceiver mReceive = new MapEventsReceiver() {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
-                if (modeDepart) {
+                if (modeArriveeDepart) {
+                    // On enlève le point précédent
+                    mapView.getOverlays().remove(pointArriveeDepart);
+
+                    // On enlève le point de depart
+                    mapView.getOverlays().remove(pointDepart);
+                    mapView.getOverlays().remove(pointArrivee);
+
+                    // On ajoute le point d'arrivé départ
+                    pointArriveeDepart.setPosition(p);
+                    mapView.getOverlays().add(pointArriveeDepart);
+                } else if (modeDepart) {
+                    // On enlève le point précédent
+                    mapView.getOverlays().remove(pointDepart);
+
+                    // On enlève le point d'arrivee et depart commun
+                    mapView.getOverlays().remove(pointArriveeDepart);
+
                     // On ajoute le point de départ
                     pointDepart.setPosition(p);
                     mapView.getOverlays().add(pointDepart);
                 } else {
+                    // On enlève le point précédent
+                    mapView.getOverlays().remove(pointArrivee);
+
+                    // On enlève le point d'arrivee et depart commun
+                    mapView.getOverlays().remove(pointArriveeDepart);
+
                     // On ajoute le point d'arrivée
                     pointArrivee.setPosition(p);
                     mapView.getOverlays().add(pointArrivee);
@@ -123,10 +167,23 @@ public class ControleurVisualisationRandonnee extends AppCompatActivity {
      */
     public void clickChangementMode(View view) {
         modeDepart = !modeDepart;
+        modeArriveeDepart = false;
         if (modeDepart) {
             boutonChangerPoint.setText(R.string.arrivee);
         } else {
             boutonChangerPoint.setText(R.string.depart);
         }
+        boutonArriveeDepart.setText(R.string.arrivee_depart);
+        boutonArriveeDepart.setEnabled(true);
+    }
+
+    /**
+     * Quand le bouton est cliqué, on peut placer le point commun de départ et arrivé
+     * @param view inutilisé
+     */
+    public void clickArriveeDepart(View view) {
+        modeArriveeDepart = true;
+        boutonArriveeDepart.setText(R.string.arrivee_depart_actif);
+        boutonArriveeDepart.setEnabled(false);
     }
 }

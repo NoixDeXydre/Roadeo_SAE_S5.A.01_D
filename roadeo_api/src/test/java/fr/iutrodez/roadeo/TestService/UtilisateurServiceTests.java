@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Example;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,11 +30,11 @@ public class UtilisateurServiceTests {
         service = new UtilisateurService(repository);
 
         Utilisateur u1 = new Utilisateur("1", "1234", "jean-miche@gmail.com",
-                                         "IUT Rodez", "Jean", "Michel", 40,
-                                         "Sportif", "Fort");
+                "IUT Rodez", "Jean", "Michel", 40,
+                "Sportif", "Fort");
         Utilisateur u2 = new Utilisateur("2", "1234", "jean-jacques@gmail.com",
-                                         "IUT Rodez", "Jean", "Jacques", 40,
-                                         "Sportif", "Fort");
+                "IUT Rodez", "Jean", "Jacques", 40,
+                "Sportif", "Fort");
 
         expectedList = Arrays.asList(u1, u2);
     }
@@ -53,35 +52,64 @@ public class UtilisateurServiceTests {
     @Test
     void testValiderConnexionSucces() {
 
-        // Simuler le comportement du repository
-        when(repository.findOne(any(Example.class))).thenReturn(Optional.of(expectedList.get(0)));
+        String emailCleaned = "jean-miche@gmail.com";
+        String mdp = "1234";
 
-        Utilisateur result = service.validerConnexion("jean-miche@gmail.com", "1234");
+        when(repository.findByAdresseMailAndMdp(emailCleaned, mdp))
+                .thenReturn(Optional.of(expectedList.get(0)));
+
+        Utilisateur result = service.validerConnexion(" JEAN-miche@gmail.com ", mdp);
 
         assertNotNull(result);
         assertEquals(expectedList.get(0).getAdresseMail(), result.getAdresseMail());
         assertEquals(expectedList.get(0).getMdp(), result.getMdp());
 
-        verify(repository, times(1)).findOne(any(Example.class));
+        verify(repository, times(1)).findByAdresseMailAndMdp(emailCleaned, mdp);
     }
 
     @Test
     void testValiderConnexionEchec() {
+        String email = "wrong@example.com";
+        String mdp = "badpass";
 
-        // Simuler un login incorrect
-        when(repository.findOne(any(Example.class))).thenReturn(Optional.empty());
+        when(repository.findByAdresseMailAndMdp(email, mdp))
+                .thenReturn(Optional.empty());
 
-        Utilisateur result = service.validerConnexion("wrong@example.com", "badpass");
+        Utilisateur result = service.validerConnexion(email, mdp);
 
         assertNull(result);
-        verify(repository, times(1)).findOne(any(Example.class));
+
+        verify(repository, times(1)).findByAdresseMailAndMdp(email, mdp);
+    }
+
+    @Test
+    void testGetUtilisateurByAdresseMailCorrect() {
+
+        when(repository.findByAdresseMail("jean-miche@gmail.com"))
+                .thenReturn(Optional.of(expectedList.get(0)));
+
+        Utilisateur result = service.getUtilisateurByAdresseMail("jean-miche@gmail.com");
+        assertEquals(expectedList.get(0), result);
+        verify(repository, times(1))
+                .findByAdresseMail("jean-miche@gmail.com");
+    }
+
+    @Test
+    void testGetUtilisateurByAdresseMailIncorrect() {
+
+        when(repository.findByAdresseMail("aaaaa")).thenReturn(Optional.empty());
+
+        Utilisateur result = service.getUtilisateurByAdresseMail("aaaaa");
+        assertNull(result);
+        verify(repository, times(1))
+                .findByAdresseMail("aaaaa");
     }
 
     @Test
     void testGetUtilisateurByIdCorrect() {
         when(repository.findById("1")).thenReturn(Optional.of(expectedList.get(0)));
 
-        Utilisateur result = service.getUtilisateur("1");
+        Utilisateur result = service.getUtilisateurById("1");
         assertEquals(expectedList.get(0), result);
         verify(repository, times(1)).findById("1");
     }
@@ -90,9 +118,8 @@ public class UtilisateurServiceTests {
     void testGetUtilisateurByIdIncorrect() {
         when(repository.findById("999")).thenReturn(Optional.empty());
 
-        Utilisateur result = service.getUtilisateur("999");
+        Utilisateur result = service.getUtilisateurById("999");
         assertNull(result);
         verify(repository, times(1)).findById("999");
     }
-
 }

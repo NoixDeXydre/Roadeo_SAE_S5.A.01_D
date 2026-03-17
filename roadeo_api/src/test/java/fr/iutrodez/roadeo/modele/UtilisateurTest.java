@@ -33,26 +33,20 @@ public class UtilisateurTest {
     }
 
     @Test
-    @DisplayName("Test du getter de patronyme")
-    public void getNomTest(){
-        assertEquals("nom prenom", utilTest.getPatronyme());
-    }
-
-    @Test
     @DisplayName("Test du getter de mdp")
     public void getMdpTest(){
-        assertEquals("test", utilTest.getMdp());
+        assertEquals("1234", utilTest.getMdp());
     }
 
     @Test
     @DisplayName("Test du getter de adresse mail")
     public void getMailTest(){
-        assertEquals("nomprenom@test.com", utilTest.getAdresseMail());
+        assertEquals("jean-miche@gmail.com", utilTest.getAdresseMail());
     }
 
     @Test
     @DisplayName("Test du getter de domicile")
     public void getDomicileTest(){
-        assertEquals("test", utilTest.getDomicile());
+        assertEquals("IUT Rodez", utilTest.getDomicile());
     }
 }

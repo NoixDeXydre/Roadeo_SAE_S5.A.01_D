@@ -23,6 +23,7 @@ import static org.iut.roadeo.modele.utilitaire.champ.DecorateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.*;
 import static org.iut.roadeo.modele.utilitaire.champ.RecuperateurChamps.getIntFromChamp;
 import static org.iut.roadeo.modele.utilitaire.champ.VerificateurChamps.*;
+import static org.iut.roadeo.modele.utilitaire.ViewUtils.*;
 
 /**
  * Gère la création du compte.
@@ -36,6 +37,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
     private final static int AGE_MINIMUM = 1;
     private final static int AGE_MAXIMUM = 120;
 
+    private View ecranChargement;
     private EditText champNom;
     private EditText champPrenom;
     private EditText champAdresseMail;
@@ -53,6 +55,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.creation_compte);
+
+        ecranChargement = findViewById(R.id.ecran_chargement);
 
         champNom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champNom));
         champPrenom = setChampListenerResetErreurOnEcriture(findViewById(R.id.champPrenom));
@@ -72,7 +76,6 @@ public class ControleurCreationCompte extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                // TODO mettre une constante pour les valeurs alpha
                 if (charSequence.length() != 0) {
                     champConfirmationMdp.setEnabled(true);
                     champConfirmationMdp.setAlpha(1.0f);
@@ -110,6 +113,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
      */
     public void confirmerCreationCompte(View view) {
 
+        // Champ nom vide ?
         if (!isChampNonVide(champNom, false)) {
             setBarreCouleurChamp(champNom, R.color.red);
 
@@ -117,6 +121,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_nom,
                     Toast.LENGTH_SHORT).show();
 
+        // Champ prénom vide ?
         } else if (!isChampNonVide(champPrenom, false)) {
             setBarreCouleurChamp(champNom, R.color.black);
             setBarreCouleurChamp(champPrenom, R.color.red);
@@ -125,15 +130,27 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_prenom,
                     Toast.LENGTH_SHORT).show();
 
+        // Champ mail vide ?
         } else if (!isTexteNonVideBlank(champAdresseMail.getText().toString()
                 .toLowerCase().trim())) {
             setBarreCouleurChamp(champPrenom, R.color.black);
             setBarreCouleurChamp(champAdresseMail, R.color.red);
 
             Toast.makeText(ControleurCreationCompte.this,
-                    R.string.message_erreur_mail,
+                    R.string.message_erreur_mail_vide,
                     Toast.LENGTH_SHORT).show();
 
+        // Champ mail valide ?
+        } else if (!isEmailValide(champAdresseMail.getText().toString()
+                .toLowerCase().trim())) {
+            setBarreCouleurChamp(champAdresseMail, R.color.red);
+            setBarreCouleurChamp(champDomicile, R.color.black);
+
+            Toast.makeText(ControleurCreationCompte.this,
+                    R.string.message_erreur_mail_incorrecte,
+                    Toast.LENGTH_SHORT).show();
+
+        // Champ domicile vide ?
         } else if (!isChampNonVide(champDomicile, false)) {
             setBarreCouleurChamp(champAdresseMail, R.color.black);
             setBarreCouleurChamp(champDomicile, R.color.red);
@@ -142,6 +159,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_adresse,
                     Toast.LENGTH_SHORT).show();
 
+        // Champ mdp vide ?
         } else if (!isChampNonVide(champMdp, true)) {
             setBarreCouleurChamp(champDomicile, R.color.black);
             setBarreCouleurChamp(champMdp, R.color.red);
@@ -158,6 +176,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_confirmation_mdp,
                     Toast.LENGTH_SHORT).show();
 
+        // Les deux mots de passe concordent ?
         } else if (!isChampsMdpIdentiques(champMdp, champConfirmationMdp)) {
             setBarreCouleurChamp(champConfirmationMdp, R.color.red);
 
@@ -165,6 +184,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     R.string.message_erreur_mdp_conf_echec,
                     Toast.LENGTH_SHORT).show();
 
+        // Champ de l'âge correct et dans la tranche ?
         } else if (!isChampNonVide(champAge, false)
                 || getIntFromChamp(champAge, 0) < AGE_MINIMUM
                 || getIntFromChamp(champAge, 0) > AGE_MAXIMUM) {
@@ -177,8 +197,10 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
         } else {
 
-            Utilisateur utilisateurACreer = new Utilisateur(
-                    champNom.getText().toString(),
+            activerVisuellementView(ecranChargement);
+
+            Utilisateur utilisateurACreer = new Utilisateur
+                    ("", champNom.getText().toString(),
                     champPrenom.getText().toString(),
                     getIntFromChamp(champAge, 1),
                     getNiveauEntrainementWithPosition(spinnerNiveauPhysique.getSelectedItemPosition()),
@@ -195,6 +217,8 @@ public class ControleurCreationCompte extends AppCompatActivity {
                     new IAPIUtilisateurCallback() {
                 @Override
                 public void onSuccess(Utilisateur utilisateur) {
+
+                    desactiverVisuellementView(ecranChargement);
 
                     Toast.makeText(ControleurCreationCompte.this,
                             getString(R.string.message_succes_creation_compte,
@@ -214,6 +238,7 @@ public class ControleurCreationCompte extends AppCompatActivity {
 
                 @Override
                 public void onError(String message) {
+                    desactiverVisuellementView(ecranChargement);
                     Toast.makeText(ControleurCreationCompte.this,
                             message.subSequence(0, message.length()), Toast.LENGTH_LONG).show();
                 }

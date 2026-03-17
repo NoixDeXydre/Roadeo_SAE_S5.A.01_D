@@ -2,8 +2,8 @@ plugins {
     id("com.android.application")
 }
 
-// TODO mettre l'URL du serveur distant
-val URL_API by extra("http://10.0.2.2:8080/api/")
+val URL_API_DEBUG by extra("http://10.0.2.2/api/")
+val URL_API_PROD by extra("http://13.60.253.54/api/")
 
 android {
     namespace = "org.iut.roadeo"
@@ -12,7 +12,6 @@ android {
     defaultConfig {
 
         android.buildFeatures.buildConfig = true
-        buildConfigField("String", "API_URL", "\"${extra["URL_API"]}\"")
 
         applicationId = "org.iut.roadeo"
         minSdk = 24
@@ -24,13 +23,18 @@ android {
     }
 
     buildTypes {
+
         release {
-            isMinifyEnabled = false
+
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
             enableUnitTestCoverage = true
+
+            buildConfigField("String", "API_URL", "\"$URL_API_PROD\"")
         }
+
         debug {
             enableUnitTestCoverage = true
+            buildConfigField("String", "API_URL", "\"$URL_API_DEBUG\"")
         }
     }
     compileOptions {
@@ -49,7 +53,9 @@ dependencies {
     implementation("org.osmdroid:osmdroid-android:6.1.6")
     implementation("org.osmdroid:osmdroid-wms:6.1.6")
     implementation("org.osmdroid:osmdroid-mapsforge:6.1.6")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.31")
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.test:monitor:1.6.1")

@@ -2,9 +2,11 @@ package fr.iutrodez.roadeo.service;
 
 
 import fr.iutrodez.roadeo.dao.ObjetInterfaceMongoDB;
+import fr.iutrodez.roadeo.modele.AlgoSacADos;
+import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Produits;
-import fr.iutrodez.roadeo.modele.Produits;
-import org.springframework.data.mongodb.core.MongoTemplate;
+import fr.iutrodez.roadeo.modele.Randonnee;
+import fr.iutrodez.roadeo.modele.SacADos;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,9 +18,11 @@ import java.util.List;
 @Service
 public class ObjetService {
     private final ObjetInterfaceMongoDB objetRepository;
+    private final RandonneeService randonneeService;
 
-    public ObjetService(ObjetInterfaceMongoDB repository) {
+    public ObjetService(ObjetInterfaceMongoDB repository, RandonneeService randonneeService) {
         this.objetRepository = repository;
+        this.randonneeService = randonneeService;
     }
 
     /**
@@ -105,5 +109,57 @@ public class ObjetService {
         }
         objetRepository.deleteById(id);
         return objetRepository.existsById(id);
+    }
+
+    public List<Participant> getParticipantsAvecSacs(String idRandonnee) {
+        final int UTILITE_NOURRITURE = 1;
+
+        Randonnee randonnee = randonneeService.getRandonnee(idRandonnee);
+        if (randonnee == null) {
+            return null;
+        }
+
+        List<Participant> participants = randonnee.getParticipants();
+        if (participants == null || participants.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        ArrayList<SacADos> sacs = new ArrayList<>();
+        for (Participant participant : participants) {
+            double poidsMax = participant.poidsRando();
+            sacs.add(new SacADos(poidsMax, 0));
+        }
+
+        List<Produits> produits = objetRepository.findByIdRandonnee(idRandonnee);
+        if (produits == null || produits.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+
+        ArrayList<SacADos> sacsRemplis = new AlgoSacADos()
+                .getSacADosRepartis(new ArrayList<>(produits), sacs);
+
+        double caloriesRequises = randonnee.calculKcalTotal(randonnee.getNombreJours());
+        double caloriesDansSacs = 0.0;
+        for (SacADos sac : sacsRemplis) {
+            for (Produits produit : sac.getContenu()) {
+                if (produit.getUtilite() == UTILITE_NOURRITURE) {
+                    caloriesDansSacs += produit.getNutrition();
+                }
+            }
+        }
+
+        if (caloriesDansSacs < caloriesRequises) {
+            throw new IllegalArgumentException();
+        }
+
+        if (sacsRemplis.size() != participants.size()) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < participants.size(); i++) {
+            participants.get(i).setSacADos(sacsRemplis.get(i));
+        }
+
+        return participants;
     }
 }

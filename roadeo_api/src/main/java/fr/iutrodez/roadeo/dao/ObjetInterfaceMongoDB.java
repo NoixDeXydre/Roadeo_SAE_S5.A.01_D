@@ -23,6 +23,8 @@ public interface ObjetInterfaceMongoDB extends MongoRepository<Produits, String>
 
     Produits findProduitsById(String idObjet);
 
+    ArrayList<Produits> findByIdRandonnee(String idRandonnee);
+
     @Aggregation(pipeline = { "{ '$group': { '_id': '$nom' } }" })
     ArrayList<String> findDistinctNom();
 }

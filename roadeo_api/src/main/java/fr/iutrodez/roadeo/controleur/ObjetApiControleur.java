@@ -1,11 +1,11 @@
 package fr.iutrodez.roadeo.controleur;
 
+import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Produits;
-import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.service.ObjetService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,5 +45,18 @@ public class ObjetApiControleur {
     @GetMapping("/categorie")
     public List<String> getCategorie() {
         return objetService.listeCategorie();
+    }
+
+    @GetMapping("/sac/{idRandonnee}")
+    public ResponseEntity<List<Participant>> getSacs(@PathVariable String idRandonnee) {
+        try {
+            List<Participant> participants = objetService.getParticipantsAvecSacs(idRandonnee);
+            if (participants == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(participants);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -10,6 +10,7 @@ public class Participant {
     private int age;
     private String niveauEntrainement;
     private String morphologie;
+    private SacADos sacADos;
 
     /**
      * Crée un participant à partir de MongoDB
@@ -118,6 +119,17 @@ public class Participant {
     public void setMorphologie(String morphologie) {
         this.morphologie = morphologie;
     }
+    public SacADos getSacADos() {
+        return sacADos;
+    }
+
+    public void setSacADos(SacADos sacADos) {
+        this.sacADos = sacADos;
+    }
+
+    public double poidsRando() {
+        return poidsApproximatif() * 0.2;
+    }
 
     /**
      * Renvoie une estimation de la taille moyenne selon l'âge
@@ -165,3 +177,4 @@ public class Participant {
         }
     }
 }
+

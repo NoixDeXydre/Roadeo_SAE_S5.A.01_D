@@ -137,6 +137,10 @@ public class SacADos {
     }
 
     public void setPoidsMax(double poidsMax) {
+
+        if (poidsMax < 0.0f)
+            throw new IllegalArgumentException("Le poids max du sac ne peut pas être négatif.");
+
         this.poidsMax = poidsMax;
     }
 }

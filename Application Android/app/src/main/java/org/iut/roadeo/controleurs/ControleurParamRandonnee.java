@@ -91,6 +91,8 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
             startActivity(intention);
         } else if (view.getId() == R.id.voir_sacs) {
             startActivity(new Intent(getContext(), ControleurVisualisationSac.class));
+        } else if (view.getId() == R.id.assigner_sacs) {
+            // TODO assigner sacs
         } else if (view.getId() == R.id.ajoutDepartArrivee) {
             Intent intention = new Intent(getContext(),
                                           ControleurVisualisationRandonnee.class);

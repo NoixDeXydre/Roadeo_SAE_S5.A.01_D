@@ -110,6 +110,23 @@
             android:textColor="@color/black" />
     </TableRow>
 
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_gravity="center"
+        android:gravity="center|top">
+
+        <Button
+            android:id="@+id/assigner_sacs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+            android:backgroundTint="@color/vert_kaki"
+            android:text="Assigner les sacs à dos"
+            android:textColor="@color/black" />
+    </TableRow>
+
     <androidx.constraintlayout.widget.Placeholder
         android:layout_width="match_parent"
         android:layout_height="@dimen/dist_page_randonnee_boutons"/>

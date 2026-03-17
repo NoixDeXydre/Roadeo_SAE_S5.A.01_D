@@ -2,8 +2,10 @@ package org.iut.roadeo.controleurs;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -133,17 +135,32 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.carte);
 
+        Intent intention = getIntent();
+
+        double[] depart;
+        double[] arrivee;
+        ArrayList<PointInteret> pointInterets = new ArrayList<>();
+
+        depart = intention.getDoubleArrayExtra("DEPART");
+        arrivee = intention.getDoubleArrayExtra("ARRIVEE");
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            pointInterets = intention.getParcelableArrayListExtra("POINT_INTERET",
+                                                                  PointInteret.class);
+        }
+
         pointsInteretCarte = new ArrayList<>();
 
         clientDeLocalisation = LocationServices.getFusedLocationProviderClient(this);
 
-        // TODO Données tests à enlever ici
+        /* On importe les données de l'API */
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
                 (1, "Ma randonnée", 3,
-                new GeoPoint(44.360287526289454, 2.575853338825084),
-                new GeoPoint(44.35970734903577, 2.576335155660985)),
+                new GeoPoint(depart[0], depart[1]),
+                new GeoPoint(arrivee[0], arrivee[1])),
                 new Date(), "test");
+
         ut.ajouterParcours(parcours);
         parcoursAfficheUtilisateur = parcours;
 
@@ -180,25 +197,6 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         // La correction du tactile
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
 
-        // Corrige un problème où le fragment empêche le tactile de fonctionner.
-        mapView.setOnTouchListener((v, event) -> {
-            int action = event.getAction();
-            switch (action) {
-                case MotionEvent.ACTION_DOWN:
-                    // Empêche le ScrollView parent d'intercepter le toucher
-                    v.getParent().requestDisallowInterceptTouchEvent(true);
-                    break;
-
-                case MotionEvent.ACTION_UP:
-                    // Rend le contrôle au ScrollView parent quand on relâche
-                    v.getParent().requestDisallowInterceptTouchEvent(false);
-                    break;
-            }
-
-            // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
-            return false;
-        });
-
         // On code ici le clic sur la carte.
         MapEventsReceiver mReceive = new MapEventsReceiver() {
             @Override
@@ -222,11 +220,12 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);
 
-        // FIXME Juste pour les tests :3
-        controleurMapView.setCenter(new GeoPoint(44.360054998826f,
-                2.57556698405f));
-        parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
-                new double[]{44.360054998826, 2.57556698405}));
+        // On ajoute les différents point d'intérêt
+        if (pointInterets != null) {
+            for (PointInteret point:pointInterets) {
+                parcoursAfficheUtilisateur.ajouterPointInteret(point);
+            }
+        }
 
         requestPermissionsIfNecessary(DROITS_REQUIS_CARTE);
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
@@ -440,19 +439,31 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         if (marqueurArrive != null)
             marqueurArrive.remove(mapView);
 
-        marqueurDepart = new Marker(mapView);
-        marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
-                .getPointDepart());
-        marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
-        marqueurDepart.setInfoWindow(null);
+        if (!parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart()
+            .equals(parcoursAfficheUtilisateur.getRandonneeParcours()
+                                              .getPointArrive())) {
+            marqueurDepart = new Marker(mapView);
+            marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                    .getPointDepart());
+            marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+            marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
+            marqueurDepart.setInfoWindow(null);
 
-        marqueurArrive = new Marker(mapView);
-        marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
-                .getPointArrive());
-        marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-        marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
-        marqueurArrive.setInfoWindow(null);
+            marqueurArrive = new Marker(mapView);
+            marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                    .getPointArrive());
+            marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+            marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
+            marqueurArrive.setInfoWindow(null);
+        } else {
+            marqueurDepart = new Marker(mapView);
+            marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                    .getPointDepart());
+            marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+            marqueurDepart.setIcon(getResources()
+                                   .getDrawable(R.drawable.arrivee_depart_marqueur));
+            marqueurDepart.setInfoWindow(null);
+        }
 
         mapView.getOverlays().add(marqueurDepart);
         mapView.getOverlays().add(marqueurArrive);

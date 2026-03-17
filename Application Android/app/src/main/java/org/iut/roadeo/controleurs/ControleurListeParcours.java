@@ -44,26 +44,26 @@ public class ControleurListeParcours extends AppCompatActivity {
         if (idRando>0) {
             ControleurPageConnexion.apiRequeteur.listerParcours(idRando,
                     new IAPIParcoursCallback(){
-                        @Override
-                        public void onSuccess(ArrayList<Parcours>
-                                                      parcoursListe) {
-                            parcours.addAll(parcoursListe);
-                            adaptateur = new ArrayAdapter<>(
-                                    getApplicationContext(),
-                                    androidx.appcompat.R.layout.
-                                            support_simple_spinner_dropdown_item,
-                                    parcours);
-                            listeParcours.setAdapter(adaptateur);
-                        }
+                @Override
+                public void onSuccess(ArrayList<Parcours>
+                                              parcoursListe) {
+                    parcours.addAll(parcoursListe);
+                    adaptateur = new ArrayAdapter<>(
+                            getApplicationContext(),
+                            androidx.appcompat.R.layout.
+                                    support_simple_spinner_dropdown_item,
+                            parcours);
+                    listeParcours.setAdapter(adaptateur);
+                }
 
-                        @Override
-                        public void onError(String message) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Les parcours n'ont pas pu" +
-                                            " être affichés\n" +
-                                            message,
-                                    Toast.LENGTH_LONG).show();
-                        }
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(getApplicationContext(),
+                            "Les parcours n'ont pas pu" +
+                                    " être affichés\n" +
+                                    message,
+                            Toast.LENGTH_LONG).show();
+                }
             });
         }
 
@@ -91,6 +91,19 @@ public class ControleurListeParcours extends AppCompatActivity {
 
             parcoursChoisi = parcours.get(information.position);
             intention.putExtra("NOM", parcoursChoisi.getLibelle());
+            intention.putExtra("POINT_INTERET", parcoursChoisi.getPointsInteret());
+            intention.putExtra("DEPART_LONGITUDE",
+                               parcoursChoisi.getRandonneeParcours().getPointDepart()
+                                             .getLongitude());
+            intention.putExtra("DEPART_LATITUDE",
+                               parcoursChoisi.getRandonneeParcours().getPointDepart()
+                               .getLatitude());
+            intention.putExtra("ARRIVEE_LONGITUDE",
+                               parcoursChoisi.getRandonneeParcours().getPointArrive()
+                                             .getLongitude());
+            intention.putExtra("ARRIVEE_LATITUDE",
+                               parcoursChoisi.getRandonneeParcours().getPointArrive()
+                                             .getLatitude());
 
             startActivity(intention);
         } else if (item.getItemId() == R.id.supprimer) {
@@ -106,6 +119,19 @@ public class ControleurListeParcours extends AppCompatActivity {
      */
     public void ajouterParcours(View view) {
         Intent intention = new Intent(this, ControleurParamParcours.class);
+
+        intention.putExtra("DEPART_LONGITUDE",
+                           parcours.get(0).getRandonneeParcours().getPointDepart()
+                                   .getLongitude());
+        intention.putExtra("DEPART_LATITUDE",
+                           parcours.get(0).getRandonneeParcours().getPointDepart()
+                                   .getLatitude());
+        intention.putExtra("ARRIVEE_LONGITUDE",
+                           parcours.get(0).getRandonneeParcours().getPointArrive()
+                                   .getLongitude());
+        intention.putExtra("ARRIVEE_LATITUDE",
+                           parcours.get(0).getRandonneeParcours().getPointArrive()
+                                   .getLatitude());
 
         startActivity(intention);
     }

@@ -83,15 +83,32 @@
             android:textColor="@color/black"/>
     </TableRow>
 
-    <Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:layout_margin="@dimen/dist_page_connexion_labels_champs"
-    android:id="@+id/ajoutDepartArrivee"
-    android:text="Placer le départ et l'arrivée"
-    android:backgroundTint="@color/vert_kaki"
-    android:textColor="@color/black"/>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center|top">
+
+        <Button
+            android:id="@+id/ajoutDepartArrivee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+            android:backgroundTint="@color/vert_kaki"
+            android:text="Placer le départ et l'arrivée"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/voir_sacs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/dist_page_connexion_labels_champs"
+            android:backgroundTint="@color/vert_kaki"
+            android:text="Voir les sacs assignés"
+            android:textColor="@color/black" />
+    </TableRow>
 
     <androidx.constraintlayout.widget.Placeholder
         android:layout_width="match_parent"

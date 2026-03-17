@@ -51,6 +51,7 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
         saisieLibelle = vue.findViewById(R.id.labelLibelle);
         saisieJours = vue.findViewById(R.id.labelDureeJours);
 
+        vue.findViewById(R.id.voir_sacs).setOnClickListener(this);
         vue.findViewById(R.id.voirListeParcours).setOnClickListener(this);
         vue.findViewById(R.id.voirListeParticipants).setOnClickListener(this);
         vue.findViewById(R.id.confirmerRandonnee).setOnClickListener(this);
@@ -88,6 +89,8 @@ public class ControleurParamRandonnee extends Fragment implements View.OnClickLi
             }
 
             startActivity(intention);
+        } else if (view.getId() == R.id.voir_sacs) {
+            startActivity(new Intent(getContext(), ControleurVisualisationSac.class));
         } else if (view.getId() == R.id.ajoutDepartArrivee) {
             Intent intention = new Intent(getContext(),
                                           ControleurVisualisationRandonnee.class);

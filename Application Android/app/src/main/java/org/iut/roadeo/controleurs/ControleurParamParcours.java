@@ -42,6 +42,9 @@ public class ControleurParamParcours extends AppCompatActivity {
      */
     public void voirCarteParcours(View view) {
         // TODO renvoyer vers la carte pour ajouter des points clés
+        Intent intention = new Intent(ControleurParamParcours.this,
+                ControleurCarte.class);
+        startActivity(intention);
     }
 
     /**

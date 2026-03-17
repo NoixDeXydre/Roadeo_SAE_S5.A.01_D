@@ -62,6 +62,8 @@
     <string name="bouton_carte_parcours">Voir la carte du parcours</string>
     <string name="depart">Placer le point de départ</string>
     <string name="arrivee">Placer le point d\'arrivée</string>
+    <string name="arrivee_depart">Placer un point commun</string>
+    <string name="arrivee_depart_actif">Mode arrivée départ commun</string>
 
     <!-- Descriptions edit text -->
     <string name="description_nom">Marcel</string>

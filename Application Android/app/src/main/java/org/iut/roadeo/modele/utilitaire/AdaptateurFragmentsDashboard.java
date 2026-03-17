@@ -17,7 +17,7 @@ import org.iut.roadeo.controleurs.ControleurParamRandonnee;
  */
 public class AdaptateurFragmentsDashboard extends FragmentStateAdapter {
 
-    public final static int NOMBRE_FRAGMENTS = 3;
+    public final static int NOMBRE_FRAGMENTS = 2;
 
     public AdaptateurFragmentsDashboard(FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -31,8 +31,6 @@ public class AdaptateurFragmentsDashboard extends FragmentStateAdapter {
                 return ControleurListeRandonnee.newInstance();
             case 1:
                 return ControleurParamRandonnee.newInstance();
-            case 2:
-                return ControleurCarte.newInstance();
             default:
                 return null;
         }

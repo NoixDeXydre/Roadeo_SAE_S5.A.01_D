@@ -67,10 +67,13 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      # Commandes permettant de faire les tests et les tests d'intégration.
+      # (Un peu plus long à faire.)
       - name: Tests Android + Coverage
         working-directory: "Application Android"
         run: chmod +x gradlew && ./gradlew build createDebugCoverageReport
-        
+      
+      # Jacoco nous fera un rapport de tout ça.
       - name: jacoco-reporter
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v5.0
@@ -78,5 +81,6 @@ jobs:
           coverage_results_path: "Application Android/app/build/reports/coverage/test/debug/report.xml"
           github_token: ${{ secrets.GITHUB_TOKEN }}
         
+      # Envoi rapport
       - name: Couverture application Android
         run: echo "${{ steps.jacoco-reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY

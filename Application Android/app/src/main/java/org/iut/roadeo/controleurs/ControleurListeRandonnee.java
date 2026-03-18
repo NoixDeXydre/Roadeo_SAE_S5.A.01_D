@@ -84,22 +84,22 @@ public class ControleurListeRandonnee extends Fragment implements View.OnClickLi
         /* On rempli la liste des randonnées */
         ControleurPageConnexion.apiRequeteur.listerRandonnee(new
                                         IAPIRandonneesCallback() {
-        @Override
-        public void onSuccess(ArrayList<Randonnee> randos) {
-            randonnees.addAll(randos);
-            adaptateur = new ArrayAdapter<>(getContext(),
-                                            androidx.appcompat.R.layout.
-                                            support_simple_spinner_dropdown_item,
-                                            randonnees);
-            listeRandonnee.setAdapter(adaptateur);
-        }
-        @Override
-        public void onError(String message) {
-            Toast.makeText(getContext(),
-                "Les randonneurs n'ont pas pu être affichés\n"+
-                        message,
-                Toast.LENGTH_LONG).show();
-        }
+            @Override
+            public void onSuccess(ArrayList<Randonnee> randos) {
+                randonnees.addAll(randos);
+                adaptateur = new ArrayAdapter<>(getContext(),
+                                                androidx.appcompat.R.layout.
+                                                support_simple_spinner_dropdown_item,
+                                                randonnees);
+                listeRandonnee.setAdapter(adaptateur);
+            }
+            @Override
+            public void onError(String message) {
+                Toast.makeText(getContext(),
+                    "Les randonnées n'ont pas pu être affichés\n"+
+                            message,
+                    Toast.LENGTH_LONG).show();
+            }
         });
         registerForContextMenu(listeRandonnee);
 

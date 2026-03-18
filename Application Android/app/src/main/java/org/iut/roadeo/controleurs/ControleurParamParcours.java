@@ -42,12 +42,6 @@ public class ControleurParamParcours extends AppCompatActivity {
 
         libelle = intention.getStringExtra("NOM");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pointInterets = intention
-                            .getParcelableArrayListExtra("POINT_INTERET",
-                                                         PointInteret.class);
-        }
-
         depart = new double[2];
         arrivee = new double[2];
 
@@ -74,9 +68,6 @@ public class ControleurParamParcours extends AppCompatActivity {
                     ControleurCarte.class);
             intention.putExtra("DEPART", depart);
             intention.putExtra("ARRIVEE", arrivee);
-            if (pointInterets != null) {
-                intention.putExtra("POINT_INTERET", pointInterets);
-            }
 
             startActivity(intention);
         }

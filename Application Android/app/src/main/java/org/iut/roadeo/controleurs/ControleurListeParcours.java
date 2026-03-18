@@ -91,7 +91,6 @@ public class ControleurListeParcours extends AppCompatActivity {
 
             parcoursChoisi = parcours.get(information.position);
             intention.putExtra("NOM", parcoursChoisi.getLibelle());
-            intention.putExtra("POINT_INTERET", parcoursChoisi.getPointsInteret());
             intention.putExtra("DEPART_LONGITUDE",
                                parcoursChoisi.getRandonneeParcours().getPointDepart()
                                              .getLongitude());

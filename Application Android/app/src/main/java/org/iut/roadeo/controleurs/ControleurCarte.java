@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
@@ -122,6 +121,7 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
     private Marker marqueurUtilisateur;
     private Marker marqueurDepart;
     private Marker marqueurArrive;
+    private Marker marqueurArriveeDepart;
 
     private Marker dernierPointInteretNotification;
 
@@ -144,11 +144,6 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         depart = intention.getDoubleArrayExtra("DEPART");
         arrivee = intention.getDoubleArrayExtra("ARRIVEE");
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            pointInterets = intention.getParcelableArrayListExtra("POINT_INTERET",
-                                                                  PointInteret.class);
-        }
-
         pointsInteretCarte = new ArrayList<>();
 
         clientDeLocalisation = LocationServices.getFusedLocationProviderClient(this);
@@ -157,8 +152,8 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         Utilisateur ut = CacheApplication.getInstance().getUtilisateurConnecte();
         Parcours parcours = new Parcours(new Randonnee
                 (1, "Ma randonnée", 3,
-                new GeoPoint(depart[0], depart[1]),
-                new GeoPoint(arrivee[0], arrivee[1])),
+                        new GeoPoint(depart[0], depart[1]),
+                        new GeoPoint(arrivee[0], arrivee[1])),
                 new Date(), "test");
 
         ut.ajouterParcours(parcours);
@@ -197,6 +192,25 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         // La correction du tactile
         mapView.setMultiTouchControls(true); // Important pour le zoom avec deux doigts
 
+        // Corrige un problème où le fragment empêche le tactile de fonctionner.
+        mapView.setOnTouchListener((v, event) -> {
+            int action = event.getAction();
+            switch (action) {
+                case MotionEvent.ACTION_DOWN:
+                    // Empêche le ScrollView parent d'intercepter le toucher
+                    v.getParent().requestDisallowInterceptTouchEvent(true);
+                    break;
+
+                case MotionEvent.ACTION_UP:
+                    // Rend le contrôle au ScrollView parent quand on relâche
+                    v.getParent().requestDisallowInterceptTouchEvent(false);
+                    break;
+            }
+
+            // Renvoie false pour laisser la MapView gérer l'événement (zoom, pan)
+            return false;
+        });
+
         // On code ici le clic sur la carte.
         MapEventsReceiver mReceive = new MapEventsReceiver() {
             @Override
@@ -220,12 +234,11 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         controleurMapView = mapView.getController();
         controleurMapView.setZoom(18.0);
 
-        // On ajoute les différents point d'intérêt
-        if (pointInterets != null) {
-            for (PointInteret point:pointInterets) {
-                parcoursAfficheUtilisateur.ajouterPointInteret(point);
-            }
-        }
+        // FIXME Juste pour les tests :3
+        controleurMapView.setCenter(new GeoPoint(44.360054998826f,
+                2.57556698405f));
+        parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
+                new double[]{44.360054998826, 2.57556698405}));
 
         requestPermissionsIfNecessary(DROITS_REQUIS_CARTE);
         mettreAJourCarteParcours(parcoursAfficheUtilisateur);
@@ -286,8 +299,8 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
 
         // Ecriture dans le cache
         parcoursAfficheUtilisateur.ajouterPointInteret(new PointInteret("test",
-                                            new double[]{position.getLongitude(),
-                                                         position.getLatitude()}));
+                new double[]{position.getLongitude(),
+                        position.getLatitude()}));
 
         pointsInteretCarte.add(pointInteret);
 
@@ -409,21 +422,21 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
             activerImage(boutonDemarrer, true);
             activerImage(boutonStop, true);
 
-        // Si arret
-        // On affiche le bouton demarrer
+            // Si arret
+            // On affiche le bouton demarrer
         } else if (parcoursAfficheUtilisateur.isParcoursEnArret()) {
             activerImage(boutonPause, false);
             activerImage(boutonDemarrer, true);
             activerImage(boutonStop, false);
 
-        // Sinon
-        // On affiche le bouton stop et pause. (Parcours en fonctionnement)
+            // Sinon
+            // On affiche le bouton stop et pause. (Parcours en fonctionnement)
         } else if (parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
             activerImage(boutonPause, true);
             activerImage(boutonDemarrer, false);
             activerImage(boutonStop, true);
 
-        // Cas particulier où le parcours n'est pas en fonctionnement.
+            // Cas particulier où le parcours n'est pas en fonctionnement.
         } else if (!parcoursAfficheUtilisateur.isParcoursEnFonctionnement()) {
             activerImage(boutonPause, false);
             activerImage(boutonDemarrer, true);
@@ -438,35 +451,39 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
             marqueurDepart.remove(mapView);
         if (marqueurArrive != null)
             marqueurArrive.remove(mapView);
+        if (marqueurArriveeDepart != null)
+            marqueurArriveeDepart.remove(mapView);
 
-        if (!parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart()
-            .equals(parcoursAfficheUtilisateur.getRandonneeParcours()
-                                              .getPointArrive())) {
-            marqueurDepart = new Marker(mapView);
-            marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
-                    .getPointDepart());
-            marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-            marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
-            marqueurDepart.setInfoWindow(null);
+        marqueurDepart = new Marker(mapView);
+        marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointDepart());
+        marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurDepart.setIcon(getResources().getDrawable(R.drawable.depart_marqueur));
+        marqueurDepart.setInfoWindow(null);
 
-            marqueurArrive = new Marker(mapView);
-            marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
-                    .getPointArrive());
-            marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-            marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
-            marqueurArrive.setInfoWindow(null);
+        marqueurArrive = new Marker(mapView);
+        marqueurArrive.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointArrive());
+        marqueurArrive.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurArrive.setIcon(getResources().getDrawable(R.drawable.arrive_marqueur));
+        marqueurArrive.setInfoWindow(null);
+
+        marqueurArriveeDepart = new Marker(mapView);
+        marqueurArriveeDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
+                .getPointDepart());
+        marqueurArriveeDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
+        marqueurArriveeDepart.setIcon(getResources()
+                               .getDrawable(R.drawable.arrivee_depart_marqueur));
+        marqueurArriveeDepart.setInfoWindow(null);
+
+        if(parcoursAfficheUtilisateur.getRandonneeParcours().getPointDepart()
+           .equals(parcoursAfficheUtilisateur.getRandonneeParcours()
+                   .getPointArrive())) {
+            mapView.getOverlays().add(marqueurArriveeDepart);
         } else {
-            marqueurDepart = new Marker(mapView);
-            marqueurDepart.setPosition(parcoursAfficheUtilisateur.getRandonneeParcours()
-                    .getPointDepart());
-            marqueurDepart.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER);
-            marqueurDepart.setIcon(getResources()
-                                   .getDrawable(R.drawable.arrivee_depart_marqueur));
-            marqueurDepart.setInfoWindow(null);
+            mapView.getOverlays().add(marqueurDepart);
+            mapView.getOverlays().add(marqueurArrive);
         }
-
-        mapView.getOverlays().add(marqueurDepart);
-        mapView.getOverlays().add(marqueurArrive);
     }
 
     // À appeler à chaque fois qu'on change de parcours.
@@ -485,7 +502,7 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
 
         // Puis on met ceux du cache.
         for (PointInteret positionPointInteret : parcoursAfficheUtilisateur
-                                                 .getPointsInteret()) {
+                .getPointsInteret()) {
             creerPointInteret(positionPointInteret.getCoordonnees());
         }
 
@@ -536,8 +553,8 @@ public class ControleurCarte extends AppCompatActivity implements View.OnClickLi
         double Δλ = (p2.getLongitude() - p1.getLongitude()) * degres;
 
         double a = Math.sin(Δφ * 0.5) * Math.sin(Δφ * 0.5) +
-                        Math.cos(φ1) * Math.cos(φ2) *
-                                Math.sin(Δλ * 0.5) * Math.sin(Δλ * 0.5);
+                Math.cos(φ1) * Math.cos(φ2) *
+                        Math.sin(Δλ * 0.5) * Math.sin(Δλ * 0.5);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
         return R * c; // in metres

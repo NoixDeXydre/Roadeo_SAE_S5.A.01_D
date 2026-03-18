@@ -1,78 +1,171 @@
 package fr.iutrodez.roadeo.modele;
 
-import fr.iutrodez.roadeo.service.ObjetService;
+import fr.iutrodez.roadeo.modele.IAlgorithmeSac;
+import fr.iutrodez.roadeo.modele.Produits;
+import fr.iutrodez.roadeo.modele.SacADos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import static java.util.Collections.list;
 
-/** Permet de faire la répartition des objets dans des sacs */
-public class AlgoSacADos {
-
-    private static ArrayList<Produits> listeObjets = new ArrayList<>();
-    private static ArrayList<SacADos> listeSacADos = new ArrayList<>();
-    private ObjetService serviceO;
+/**
+ * Implémentation d'un algorithme de résolution KP
+ * par méthode gloutonne.
+ *
+ * Dans le pire des cas, il est de complexité O(n²)
+ *
+ * @author BOYER Djedline
+ * @author M'TIMA LESNIAK Noa
+ * @author VIGUE Adrien
+ */
+public class AlgoSacADos implements IAlgorithmeSac {
 
     /**
-     * Initialise des données tests
+     * Algorithme de tri
+     * @param tab liste ou sous liste à trier
+     * @param premier premier élément de la liste ou sous liste
+     * @param dernier dernier élément de la liste ou sous liste
+     * @param option permet de savoir qu'elle type d'objet est trié
      */
-    public static void init() {
-        SacADos sportif = new SacADos(16, 0); // moyen
-        SacADos entraine = new SacADos(18, 0); // fort
-        SacADos debutant = new SacADos(7.5, 0); // léger
-
-        //listeObjets.addAll(Arrays.asList(serviceO.recupListeObjet()));
-        //listeSacADos.addAll(Arrays.asList(sportif, entraine, debutant));
+    public static void triRapide(List<Produits> tab, int premier, int dernier, char option) {
+        int pivot;
+        if (premier < dernier) {
+            pivot = choix_pivot(tab, premier, dernier);
+            pivot = partitionnement(tab, premier, dernier, pivot, option);
+            triRapide(tab, premier, pivot-1, option);
+            triRapide(tab, pivot+1, dernier, option);
+        }
     }
 
     /**
-     * Range les objets dans les sacs à dos selon leur capacité maximale
-     * @param listeObjets liste des objets sélectionnés par l'utilisateur
-     * @param listeSacADos liste des sacs à dos vides
-     * @return la liste des sacs avec les objets attribués
+     * Choisit le pivot
+     * @param dernier élément de la sous liste choisit comme pivot
+     * @return dernier
+     *
+     * Une autre version integrerait un choix de pivot aléatoirement
      */
-    public static ArrayList<SacADos> algoGlouton(ArrayList<Produits> listeObjets, ArrayList<SacADos> listeSacADos) {
-        //algoTri();
-        Produits objet;
-        Boolean ok;
-        // Pour chaque objet chosit
-        for (int i = 0; i < listeObjets.size(); i++) {
-            objet = listeObjets.get(i);
+    private static int choix_pivot(List<Produits> tab, int premier, int dernier) {
+        return dernier;
+    }
 
-            // On vérifie s'il est possible de placer l'objet dans un sac
-            for (int s = 0; s < listeSacADos.size(); s++) {
-                if (listeSacADos.get(s).addObjet(objet)) {
-                    objet.setPresenceSac(false);
-                    break; // dès que l'objet est placé dans un sac, on s'arrête pour changer d'objet
+    /**
+     * Partionne la sous liste en s'appuyant sur le pivot
+     * @param tab liste ou sous liste à trier
+     * @param premier premier élément de la liste ou sous liste
+     * @param dernier dernier élément de la liste ou sous liste
+     * @param option permet de savoir qu'elle type d'objet est trié
+     * @return le nouveau pivot
+     */
+    public static int partitionnement(List<Produits> tab, int premier, int dernier, int pivot, char option) {
+        Collections.swap(tab, pivot, dernier);
+        int j = premier;
+
+        for (int i = premier; i < dernier; i++) {
+            if (option == 'n') {
+                if (tab.get(i).getNutrition() <= tab.get(dernier).getNutrition()) {
+                    Collections.swap(tab, i, j); // Permet d'échanger deux éléments d'une liste
+                    j++;
+                }
+            } else {
+                if (tab.get(i).getMasse() <= tab.get(dernier).getMasse()) {
+                    Collections.swap(tab, i, j);
+                    j++;
                 }
             }
         }
-        return listeSacADos;
+        Collections.swap(tab, dernier, j);
+        return j;
     }
 
     /**
-     * TODO à corriger
+     * Version 0 du rangement du sac
+     * Permet de ranger les produits dans le sac à dos
+     * @param produits listes des produits à ranger dans les sacs
+     * @param sacADos listes des sacs à dos à compléter
+     * @return les sacs à dos
      */
-    private static void algoTri() {
-        for (int i = 0; i < listeObjets.size(); i++) {
-            Produits valeur = listeObjets.get(i);
+    public ArrayList<SacADos> getSacADosRepartis(ArrayList<Produits> produits,
+                                                 ArrayList<SacADos> sacADos) {
+        final int UTILITE_NOURRITURE = 1;
+        final int UTILITE_INDISPENSABLE = 2;
 
-            for (int j = i - 1; j >= 0 && listeObjets.get(j).getUtilite() < valeur.getUtilite(); j--) {
-                listeObjets.set(j+1, listeObjets.get(j));
+        ArrayList<Produits> produitsTraitement = new ArrayList<>(produits);
+        ArrayList<SacADos> sacADosTraitement = new ArrayList<>(sacADos);
+
+        double caloriesDemandes = 0.0;
+        double caloriesAjoutees = 0.0;
+
+        for (Produits produit : produitsTraitement) { // Pour chaque objet sélectionné.
+            if (produit.getUtilite() == UTILITE_NOURRITURE) {
+                caloriesDemandes += produit.getNutrition();
+            }
+
+            boolean ajoute = false;
+            for (SacADos sac : sacADosTraitement) {
+                if (sac.addObjet(produit)) {
+                    ajoute = true;
+                    if (produit.getUtilite() == UTILITE_NOURRITURE) {
+                        caloriesAjoutees += produit.getNutrition();
+                    }
+                    break;
+                }
+            }
+
+            if (!ajoute && produit.getUtilite() == UTILITE_INDISPENSABLE) {
+                throw new IllegalArgumentException();
             }
         }
+
+        if (caloriesAjoutees < caloriesDemandes) {
+            throw new IllegalArgumentException();
+        }
+
+        return sacADosTraitement;
     }
 
     /**
-     * Lance l'algo
-     * @param args
+     * Version 1 du rangement du sac
+     * Permet de ranger les produits dans le sac à dos
+     * @param produits listes des produits à ranger dans les sacs
+     * @param sacADos listes des sacs à dos à compléter
+     * @return les sacs à dos
      */
-    public static void main(String[] args) {
-        init();
-        ArrayList<SacADos> listeSacTri = algoGlouton(listeObjets, listeSacADos);
-        for (SacADos sac : listeSacTri) {
-            System.out.println(sac.toString());
-        }
-    }
+    public ArrayList<SacADos> getSacADosRepartisAmeliorer(ArrayList<Produits> produits,
+                                                          ArrayList<SacADos> sacADos) {
+        final char TRI_NUTRITION = 'n';
+        final char TRI_SUPPLEMENT = 's';
 
+        ArrayList<Produits> produitsTraitement = new ArrayList<>(produits);
+        ArrayList<SacADos> sacADosTraitement = new ArrayList<>(sacADos);
+        produitsTraitement.sort(Comparator.comparingInt(Produits::getUtilite).reversed());
+        boolean ajoute;
+        List<Produits> groupe;
+        Map<Integer, List<Produits>> groupes =
+                produitsTraitement.stream().collect(Collectors.groupingBy(Produits::getUtilite));
+        for (int i = 2; i >= 0; i--) {
+            groupe = groupes.get(i);
+            if (i == 1) {
+                triRapide(groupe, 0, groupe.size() - 1, TRI_NUTRITION);
+            } else {
+                triRapide(groupe, 0, groupe.size() - 1, TRI_SUPPLEMENT);
+            }
+            for (Produits produit : groupe) {
+                ajoute = false;
+                for (int indexS = 0; !ajoute; indexS++) {
+                    if (sacADosTraitement.get(indexS).addObjet(produit)) {
+                        ajoute = true;
+                    }
+                }
+                if (!ajoute) throw new IllegalArgumentException("Impossible d'ajouter : " + produit);
+            }
+        }
+        return sacADosTraitement;
+    }
 }
+
+
+

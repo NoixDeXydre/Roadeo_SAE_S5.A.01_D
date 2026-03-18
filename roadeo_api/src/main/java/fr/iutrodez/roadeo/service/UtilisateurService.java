@@ -2,6 +2,7 @@ package fr.iutrodez.roadeo.service;
 
 import fr.iutrodez.roadeo.dao.UtilisateurInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Utilisateur;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,7 @@ public class UtilisateurService {
      * Liste les utilisateurs de la base de données
      * @return la liste des utilisateurs
      */
+    @Timed(value = "roadeo.utilisateur.getAllUtilisateurs", description = "Temps de lecture des utilisateurs")
     public List<Utilisateur> getAllUtilisateurs() {
         return repository.findAll();
     }
@@ -34,6 +36,7 @@ public class UtilisateurService {
      * @param id id de l'utilisateur à retrouver
      * @return l'utilisateur trouvé ou null si l'id n'existe pas
      */
+    @Timed(value = "roadeo.utilisateur.getUtilisateurById", description = "Temps de lecture d'un utilisateur par id")
     public Utilisateur getUtilisateurById(String id) {
 
         Optional<Utilisateur> result = repository.findById(id);
@@ -45,6 +48,7 @@ public class UtilisateurService {
      * @param adresseMail l'adresse mail de l'utilisateur à retrouver.
      * @return l'utilisateur trouvé ou null si l'adresse mail n'existe pas.
      */
+    @Timed(value = "roadeo.utilisateur.getUtilisateurByAdresseMail", description = "Temps de lecture d'un utilisateur par mail")
     public Utilisateur getUtilisateurByAdresseMail(String adresseMail) {
 
         Optional<Utilisateur> result
@@ -61,6 +65,7 @@ public class UtilisateurService {
      * @param mdp mot de passe de l'utilisateur
      * @return l'utilisateur connecté
      */
+    @Timed(value = "roadeo.utilisateur.validerConnexion", description = "Temps de validation de connexion")
     public Utilisateur validerConnexion(String email, String mdp) {
 
         var resultat = repository.findByAdresseMailAndMdp
@@ -74,6 +79,7 @@ public class UtilisateurService {
      * @return true si l'utilisateur est supprimé
      *          false sinon
      */
+    @Timed(value = "roadeo.utilisateur.supprimerUtilisateur", description = "Temps de suppression d'un utilisateur")
     public boolean supprimerUtilisateur(String id) {
         if (!repository.existsById(id)) {
             return false;
@@ -89,6 +95,7 @@ public class UtilisateurService {
      * @throws IllegalArgumentException si l'utilisateur n'existe pas
      *      ou si le parametre est null
      */
+    @Timed(value = "roadeo.utilisateur.updateUtilisateur", description = "Temps de modification d'un utilisateur")
     public Utilisateur updateUtilisateur(Utilisateur utilisateur) {
         if  (utilisateur == null || !repository.existsById(utilisateur.getId())) {
             throw new IllegalArgumentException();
@@ -102,6 +109,7 @@ public class UtilisateurService {
      * @return l'utilisateur ajouté
      * @throws IllegalArgumentException si le paramètre est null
      */
+    @Timed(value = "roadeo.utilisateur.addUtilisateur", description = "Temps d'ajout d'un utilisateur")
     public Utilisateur addUtilisateur(Utilisateur utilisateur) {
         if (utilisateur == null) {
             throw new IllegalArgumentException();

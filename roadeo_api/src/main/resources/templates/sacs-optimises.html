@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sacs optimisés</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .grid-sacs { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .sac-card { border: 1px solid #ccc; padding: 15px; border-radius: 5px; background-color: #f9f9f9; }
+        .header-sac { margin-bottom: 10px; }
+        .liste-objets { margin: 10px 0; }
+        .poids-total { font-weight: bold; margin: 10px 0; }
+        .actions { margin-top: 15px; }
+        .btn-valider { background-color: #4CAF50; color: white; padding: 8px 15px; border: none; cursor: pointer; }
+        .btn-refuser { background-color: #f44336; color: white; padding: 8px 15px; border: none; cursor: pointer; text-decoration: none; display: inline-block; }
+        .btn-valider:hover, .btn-refuser:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+<h1>Répartition optimisée des sacs</h1>
+
+<div class="grid-sacs">
+    <div class="sac-card" th:each="entry : ${sacsDistribues}">
+        <div class="header-sac">
+            <h3 th:text="'Sac à dos de ' + ${entry.key}">Sac à dos de [Nom]</h3>
+        </div>
+
+        <div class="liste-objets">
+            <strong>Contenu optimisé :</strong>
+            <ul>
+                <li th:each="obj : ${entry.value.contenu}" th:text="${obj.denomination}">Nom du produit</li>
+            </ul>
+        </div>
+
+        <div class="poids-total">
+            Poids final : <span th:text="${entry.value.poidsTotal()}">5.2</span> kg
+        </div>
+
+        <div class="actions">
+            <form th:action="@{/sac/validerAction}" method="post">
+                <input type="hidden" name="nomParticipant" th:value="${entry.key}">
+                <button type="submit" class="btn-valider">Confirmer</button>
+            </form>
+            <a th:href="@{/randonnee/{idRandonnee}/participants(idRandonnee=${randonnee.id})}" class="btn-refuser">Retour</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

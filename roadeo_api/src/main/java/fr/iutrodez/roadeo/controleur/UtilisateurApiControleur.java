@@ -50,7 +50,7 @@ public class UtilisateurApiControleur {
     /**
      * Ajoute un utilisateur
      * @param util l'utilisateur à ajouter
-     * @return l'utilisateur sauvegardée et un code
+     * @return l'utilisateur sauvegardé et un code
      * code 200 -> si l'utilisateur est ajouté
      *      403 -> si une erreur est détectée
      *      404 -> si l'utilisateur est null

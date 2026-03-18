@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter des produits</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin: 20px 0; }
+        select, input { padding: 8px; margin: 5px 0; width: 200px; }
+        button { padding: 8px 15px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+        .erreur { color: red; }
+    </style>
+</head>
+<body>
+<h1>Ajouter des produits à la randonnée</h1>
+
+<div th:if="${erreur}" class="erreur" th:text="${erreur}"></div>
+
+<form th:action="@{/randonnee/{idRandonnee}/ajouter-produits(idRandonnee=${idRandonnee})}" method="post">
+    <label for="idProduit">Produit :</label>
+    <select id="idProduit" name="idProduit" required>
+        <option value="">-- Sélectionnez un produit --</option>
+        <option th:each="produit : ${produitsDisponibles}"
+                th:value="${produit.id}"
+                th:text="${produit.denomination} + ' (Poids: ' + ${produit.masse} + 'kg, Nutrition: ' + ${produit.nutrition} + 'kcal)'">
+        </option>
+    </select>
+
+    <br>
+
+    <label for="quantite">Quantité :</label>
+    <input type="number" id="quantite" name="quantite" min="1" value="1" required>
+
+    <br>
+
+    <button type="submit">Ajouter le produit</button>
+</form>
+
+<a th:href="@{/randonnee/{idRandonnee}/participants(idRandonnee=${idRandonnee})}">Retour aux participants</a>
+</body>
+</html>

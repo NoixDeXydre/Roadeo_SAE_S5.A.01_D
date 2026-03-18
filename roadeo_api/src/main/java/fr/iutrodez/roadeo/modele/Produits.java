@@ -39,6 +39,9 @@ public class Produits {
     /** Indique si l'objet est dans un sac ou non **/
     private boolean presenceSac = false;
 
+    /** Id de la randonnee associee **/
+    private String idRandonnee;
+
 
     /**
      * Permet à MongoDB de créer un produit
@@ -149,6 +152,14 @@ public class Produits {
         this.presenceSac = presenceSac;
     }
 
+    public String getIdRandonnee() {
+        return idRandonnee;
+    }
+
+    public void setIdRandonnee(String idRandonnee) {
+        this.idRandonnee = idRandonnee;
+    }
+
     @Override
     public String toString() {
         return "Produits{" +
@@ -162,6 +173,7 @@ public class Produits {
                 ", prix=" + prix +
                 ", utilite=" + utilite +
                 ", presenceSac=" + presenceSac +
+                ", idRandonnee='" + idRandonnee + '\'' +
                 '}';
     }
 }

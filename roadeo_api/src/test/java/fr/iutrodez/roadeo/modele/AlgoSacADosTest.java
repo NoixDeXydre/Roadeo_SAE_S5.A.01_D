@@ -1,38 +1,70 @@
 package fr.iutrodez.roadeo.modele;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class AlgoSacADosTest {
 
-    private static ArrayList<Produits> listeObjets = new ArrayList<>();
-    private static ArrayList<SacADos> listeSacADos = new ArrayList<>();
+    @Test
+    @DisplayName("getSacADosRepartis repartit tous les produits quand la capacite est suffisante")
+    void testGetSacADosRepartis_ok() {
+        ArrayList<Produits> produits = new ArrayList<>(Arrays.asList(
+                new Produits("bivouac", "tente", "tente", "tente 2 places", 50.0, 3.0, 2, 0),
+                new Produits("nourriture", "pates", "repas", "pates", 3.0, 2.0, 1, 500),
+                new Produits("extra", "lampe", "lampe", "lampe frontale", 10.0, 1.0, 0, 0)
+        ));
 
-    @BeforeEach
-    void setup() {
-        Produits obj1 = new Produits("extra", "gourde d'eau", "gourde", "gourde remplit d'eau d'environ 1 litre", 2.2, 2.0,1, 0);
-        Produits obj2 = new Produits("extra", "bouteille", "Bouteille isoterme", "Bouteille qui conserve la fraicheur de la glace ou la chaleur d'un volcan", 9.2, 1.1, 1, 0);
-        Produits obj3 = new Produits("extra", "jeumelle", "Jumelles", "Permet d'observer la nature de loin. Il serait dommage de faire fuir une licorne par votre proximité.", 3.0, 1.0,1,  0);
-        Produits obj4 = new Produits("extra", "baton", "Batôn de marche", "Baton de marche pour faciliter la progression sur des sentiers battues ou pour diminuer les efforts", 8.0, 3.0,1,  0);
-        Produits obj5 = new Produits("extra", "photo", "Appareil photo", "Appareil permettant de prendre des photos de vos plus beaux voyages. Immortalisez tous les rossignols qui éternuent", 2.2, 5.0,1,  0);
-        Produits obj6 = new Produits("bivouac", "couchage", "sac de couchage", "Pour se reposer dans la c;haleur d'un cocon", 2.2, 2.2, 2, 0);
-        Produits obj7 = new Produits("bivouac", "tente", "tente pour 3", "Pour se protéger des moustiques et s'assurer une nuit protégée du froid.", 2.2, 5.0, 2, 0);
-        Produits obj8 = new Produits("bivouac", "couchage", "sac de couchage", "Pour se reposer dans la chaleur d'un cocon", 2.2, 2.2,2, 0);
-        Produits obj9 = new Produits("bivouac", "couchage", "sac de couchage", "Pour se reposer dans la chaleur d'un cocon", 2.2, 2.2, 2, 0);
-        Produits obj10 = new Produits("extra", "gourde", "gourde", "gourde remplit d'eau d'environ 1 litre", 2.2, 2.0, 5, 0);
-        Produits obj11 = new Produits("extra", "bouteille", "Bouteille isoterme", "Bouteille qui conserve la fraicheur de la glace ou la chaleur d'un volcan", 9.2, 1.1, 5, 0);
-        Produits obj12 = new Produits("extra", "Jumelles", "jumelle", "Permet d'observer la nature de loin. Il serait dommage de faire fuir une licorne par votre proximité.", 3.0, 2.0, 1, 0);
-        Produits obj13 = new Produits("extra", "baton", "Batôn de marche", "Baton de marche pour faciliter la progression sur des sentiers battues ou pour diminuer les efforts", 8.0, 3.0, 4, 0);
+        ArrayList<SacADos> sacs = new ArrayList<>(Arrays.asList(
+                new SacADos(10.0, 0),
+                new SacADos(10.0, 0)
+        ));
 
-        SacADos sportif = new SacADos(16, 0); // moyen
-        SacADos entraine = new SacADos(18, 0); // fort
-        SacADos debutant = new SacADos(7.5, 0); // leger
+        AlgoSacADos algo = new AlgoSacADos();
+        ArrayList<SacADos> repartis = algo.getSacADosRepartis(produits, sacs);
 
-        listeObjets.addAll(Arrays.asList(obj1, obj2, obj3, obj4, obj5, obj6, obj7, obj8, obj9, obj10, obj11, obj12, obj13));
-        listeSacADos.addAll(Arrays.asList(sportif, entraine, debutant));
+        int totalProduits = 0;
+        for (SacADos sac : repartis) {
+            totalProduits += sac.getContenu().size();
+        }
+
+        assertEquals(produits.size(), totalProduits);
     }
 
+    @Test
+    @DisplayName("getSacADosRepartis leve une erreur si un produit de type 2 ne passe pas")
+    void testGetSacADosRepartis_type2Impossible() {
+        ArrayList<Produits> produits = new ArrayList<>(Arrays.asList(
+                new Produits("bivouac", "tente", "tente", "tente 4 places", 50.0, 12.0, 2, 0)
+        ));
 
+        ArrayList<SacADos> sacs = new ArrayList<>(Arrays.asList(
+                new SacADos(8.0, 0),
+                new SacADos(8.0, 0)
+        ));
+
+        AlgoSacADos algo = new AlgoSacADos();
+        assertThrows(IllegalArgumentException.class, () -> algo.getSacADosRepartis(produits, sacs));
+    }
+
+    @Test
+    @DisplayName("getSacADosRepartis leve une erreur si les calories de type 1 sont insuffisantes")
+    void testGetSacADosRepartis_caloriesInsuffisantes() {
+        ArrayList<Produits> produits = new ArrayList<>(Arrays.asList(
+                new Produits("nourriture", "repas", "repas", "repas 1", 5.0, 5.0, 1, 500),
+                new Produits("nourriture", "repas", "repas", "repas 2", 5.0, 6.0, 1, 500)
+        ));
+
+        ArrayList<SacADos> sacs = new ArrayList<>(Arrays.asList(
+                new SacADos(6.0, 0)
+        ));
+
+        AlgoSacADos algo = new AlgoSacADos();
+        assertThrows(IllegalArgumentException.class, () -> algo.getSacADosRepartis(produits, sacs));
+    }
 }

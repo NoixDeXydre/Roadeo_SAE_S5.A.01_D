@@ -15,7 +15,7 @@ db.utilisateur.insertOne({
   age: 40, 
   niveauEntrainement: "Entraine", 
   morphologie: "Fort",
-  sac: []
+  sacADos: {}
 })
 
 db.utilisateur.insertOne({
@@ -28,7 +28,7 @@ db.utilisateur.insertOne({
   age: 23, 
   niveauEntrainement: "Entraine", 
   morphologie: "Moyen",
-  sac: []
+  sacADos: {}
 })
 
 db.utilisateur.insertOne({
@@ -41,7 +41,7 @@ db.utilisateur.insertOne({
   age: 39, 
   niveauEntrainement: "Debutant", 
   morphologie: "Leger",
-  sac: []
+  sacADos: {}
 })
 
 // Création de la collection randonnee
@@ -56,6 +56,7 @@ db.randonnee.insertOne({
   point_depart: {libelle: "depart", geo:[43.408308198518846, 2.4458198213038966]},
   point_arrive: {libelle: "arrive", geo:[43.424080742263676, 2.462710777901859]},
   nombre_jours: 1,
+  produits : [],
   participants: [
   {
     nom: "Le Marcheur", 
@@ -63,7 +64,7 @@ db.randonnee.insertOne({
     age: 61, 
     niveauEntrainement: "Sportif", 
     morphologie: "Moyen",
-    sac: []
+    sacADos: {}
   }, 
   {
     nom: "Tournepluie", 
@@ -71,7 +72,7 @@ db.randonnee.insertOne({
     age: 67, 
     niveauEntrainement: "Debutant", 
     morphologie: "Leger",
-    sac: []
+    sacADos: {}
   }]
 });
 
@@ -83,6 +84,7 @@ db.randonnee.insertOne({
   point_depart: {libelle: "depart", geo:[44.34974473375299, 2.5764601949018444]},
   point_arrive: {libelle: "arrive", geo:[44.34974473375299, 2.5764601949018444]},
   nombre_jours: 2,
+  produits : [],
   participants: [
     {
       nom: "Le Marcheur", 
@@ -90,7 +92,7 @@ db.randonnee.insertOne({
       age: 61, 
       niveauEntrainement: "Sportif", 
       morphologie: "Moyen",
-      sac: []
+      sacADos: {}
     }, 
     {
       nom: "Tournepluie", 
@@ -98,7 +100,7 @@ db.randonnee.insertOne({
       age: 67, 
       niveauEntrainement: "Debutant", 
       morphologie: "Leger",
-      sac: []
+      sacADos: {}
     },
     {
       nom: "L'étudiant", 
@@ -106,7 +108,7 @@ db.randonnee.insertOne({
       age: 23, 
       niveauEntrainement: "sportif", 
       morphologie: "Leger",
-      sac: []
+      sacADos: {}
     }
   ]
 });
@@ -119,6 +121,7 @@ db.randonnee.insertOne({
   point_depart: {libelle: "depart", geo:[44.360123830300076, 2.575580735324156]},
   point_arrive: {libelle: "arrive", geo:[44.360123830300076, 2.575580735324156]},
   nombre_jours: 1,
+  produits : [],
   participants: [
     {
       nom: "Le Marcheur", 
@@ -126,7 +129,7 @@ db.randonnee.insertOne({
       age: 61, 
       niveauEntrainement: "Sportif", 
       morphologie: "Moyen",
-      sac: []
+      sacADos: {}
     }, 
     {
       nom: "Tournepluie", 
@@ -134,7 +137,7 @@ db.randonnee.insertOne({
       age: 67, 
       niveauEntrainement: "Debutant", 
       morphologie: "Leger",
-      sac: []
+      sacADos: {}
     }
   ]
 });

@@ -4,6 +4,7 @@ import fr.iutrodez.roadeo.modele.Parcours;
 import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
 import fr.iutrodez.roadeo.service.RandonneeService;
+import jakarta.websocket.server.PathParam;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,6 +82,18 @@ public class RandonneeApiControleur {
     @PostMapping("/infoRando")
     public Randonnee getRandonneeParId(@RequestBody String idRando) {
         Randonnee randonnee = randonneeService.getRandonnee(idRando);
+        randonnee.setParcours(randonneeService.getParcoursByIdRando(randonnee.getId()));
+        return randonnee;
+    }
+
+    /**
+     * Renvoie une randonnée
+     * @param id id de la randonnée
+     * @return la randonnée ou null si id inconnu
+     */
+    @GetMapping("/infoRando/{id}")
+    public Randonnee getRandonneeParIdG(@PathVariable String id) {
+        Randonnee randonnee = randonneeService.getRandonnee(id);
         randonnee.setParcours(randonneeService.getParcoursByIdRando(randonnee.getId()));
         return randonnee;
     }

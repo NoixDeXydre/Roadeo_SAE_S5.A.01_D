@@ -39,6 +39,8 @@ public class Randonnee {
 
     private ArrayList<Participant> participants;
 
+    private ArrayList<Produits> produits;
+
     /**
      * Controleur vide pour mongo DB
      */
@@ -286,5 +288,17 @@ public class Randonnee {
 
     public void setArrive(PointInteret arrive) {
         this.arrive = arrive;
+    }
+
+    public ArrayList<Produits> getProduits() {
+        return produits;
+    }
+
+    public void setProduits(ArrayList<Produits> produits) {
+        this.produits = produits;
+    }
+
+    public boolean addProduits(Produits produits) {
+        return this.produits.add(produits);
     }
 }

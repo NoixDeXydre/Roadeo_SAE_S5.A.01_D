@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Participants de la randonnée</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .participant-card { border: 1px solid #ccc; padding: 10px; margin: 10px; border-radius: 5px; }
+    .actions { margin-top: 20px; }
+    .btn { padding: 8px 15px; margin-right: 10px; cursor: pointer; text-decoration: none; color: white; border: none; border-radius: 4px; }
+    .btn-ajouter { background-color: #4CAF50; }
+    .btn-distribuer { background-color: #008CBA; }
+    .btn:hover { opacity: 0.8; }
+    .erreur { color: red; }
+    .succes { color: green; }
+  </style>
+</head>
+<body>
+<h1 th:text="'Participants de la randonnée : ' + ${randonnee.libelle}"></h1>
+
+<div th:if="${succes}" class="succes" th:text="${succes}"></div>
+<div th:if="${erreur}" class="erreur" th:text="${erreur}"></div>
+
+<h2>Liste des participants</h2>
+<div th:each="participant : ${participants}" class="participant-card">
+  <h3 th:text="${participant.nom} + ' ' + ${participant.prenom}">Nom Prénom</h3>
+  <p>Âge : <span th:text="${participant.age}">25</span></p>
+  <p>Morphologie : <span th:text="${participant.morphologie}">Moyenne</span></p>
+  <p>Poids max du sac : <span th:text="${participant.poidsRando()}">10.0</span> kg</p>
+</div>
+<h2>Produits de la randonnée</h2>
+<div th:if="${randonnee.produits != null}">
+  <ul>
+    <li th:each="produit : ${randonnee.produits}">
+      <span th:text="${produit.denomination}"></span>,
+      Poids : <span th:text="${produit.masse}">0</span> kg,
+      Nutrition : <span th:text="${produit.nutrition}">0</span> kcal)
+    </li>
+  </ul>
+</div>
+<div class="actions">
+  <a th:href="@{/randonnee/{idRandonnee}/ajout-produits(idRandonnee=${randonnee.id})}" class="btn btn-ajouter">Ajouter des produits</a>
+  <form th:action="@{/randonnee/{idRandonnee}/distribuer-produits(idRandonnee=${randonnee.id})}" method="post">
+    <button type="submit" class="btn btn-distribuer">Distribuer les produits</button>
+  </form>
+</div>
+</body>
+</html>

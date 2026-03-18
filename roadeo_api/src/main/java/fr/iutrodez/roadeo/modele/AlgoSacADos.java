@@ -24,6 +24,13 @@ import java.util.stream.Collectors;
  */
 public class AlgoSacADos implements IAlgorithmeSac {
 
+    /**
+     * Algorithme de tri
+     * @param tab liste ou sous liste à trier
+     * @param premier premier élément de la liste ou sous liste
+     * @param dernier dernier élément de la liste ou sous liste
+     * @param option permet de savoir qu'elle type d'objet est trié
+     */
     public static void triRapide(List<Produits> tab, int premier, int dernier, char option) {
         int pivot;
         if (premier < dernier) {
@@ -34,10 +41,25 @@ public class AlgoSacADos implements IAlgorithmeSac {
         }
     }
 
+    /**
+     * Choisit le pivot
+     * @param dernier élément de la sous liste choisit comme pivot
+     * @return dernier
+     *
+     * Une autre version integrerait un choix de pivot aléatoirement
+     */
     private static int choix_pivot(List<Produits> tab, int premier, int dernier) {
         return dernier;
     }
 
+    /**
+     * Partionne la sous liste en s'appuyant sur le pivot
+     * @param tab liste ou sous liste à trier
+     * @param premier premier élément de la liste ou sous liste
+     * @param dernier dernier élément de la liste ou sous liste
+     * @param option permet de savoir qu'elle type d'objet est trié
+     * @return le nouveau pivot
+     */
     public static int partitionnement(List<Produits> tab, int premier, int dernier, int pivot, char option) {
         Collections.swap(tab, pivot, dernier);
         int j = premier;
@@ -45,7 +67,7 @@ public class AlgoSacADos implements IAlgorithmeSac {
         for (int i = premier; i < dernier; i++) {
             if (option == 'n') {
                 if (tab.get(i).getNutrition() <= tab.get(dernier).getNutrition()) {
-                    Collections.swap(tab, i, j);
+                    Collections.swap(tab, i, j); // Permet d'échanger deux éléments d'une liste
                     j++;
                 }
             } else {
@@ -59,6 +81,13 @@ public class AlgoSacADos implements IAlgorithmeSac {
         return j;
     }
 
+    /**
+     * Version 0 du rangement du sac
+     * Permet de ranger les produits dans le sac à dos
+     * @param produits listes des produits à ranger dans les sacs
+     * @param sacADos listes des sacs à dos à compléter
+     * @return les sacs à dos
+     */
     public ArrayList<SacADos> getSacADosRepartis(ArrayList<Produits> produits,
                                                  ArrayList<SacADos> sacADos) {
         final int UTILITE_NOURRITURE = 1;
@@ -98,6 +127,13 @@ public class AlgoSacADos implements IAlgorithmeSac {
         return sacADosTraitement;
     }
 
+    /**
+     * Version 1 du rangement du sac
+     * Permet de ranger les produits dans le sac à dos
+     * @param produits listes des produits à ranger dans les sacs
+     * @param sacADos listes des sacs à dos à compléter
+     * @return les sacs à dos
+     */
     public ArrayList<SacADos> getSacADosRepartisAmeliorer(ArrayList<Produits> produits,
                                                           ArrayList<SacADos> sacADos) {
         final char TRI_NUTRITION = 'n';
@@ -106,43 +142,28 @@ public class AlgoSacADos implements IAlgorithmeSac {
         ArrayList<Produits> produitsTraitement = new ArrayList<>(produits);
         ArrayList<SacADos> sacADosTraitement = new ArrayList<>(sacADos);
         produitsTraitement.sort(Comparator.comparingInt(Produits::getUtilite).reversed());
-
-
+        boolean ajoute;
+        List<Produits> groupe;
         Map<Integer, List<Produits>> groupes =
                 produitsTraitement.stream().collect(Collectors.groupingBy(Produits::getUtilite));
         for (int i = 2; i >= 0; i--) {
-            List<Produits> groupe = groupes.get(i);
-            if (groupe == null || groupe.isEmpty()) {
-                continue;
-            }
+            groupe = groupes.get(i);
             if (i == 1) {
                 triRapide(groupe, 0, groupe.size() - 1, TRI_NUTRITION);
             } else {
                 triRapide(groupe, 0, groupe.size() - 1, TRI_SUPPLEMENT);
             }
-            triSacADos(groupe, sacADosTraitement);
+            for (Produits produit : groupe) {
+                ajoute = false;
+                for (int indexS = 0; !ajoute; indexS++) {
+                    if (sacADosTraitement.get(indexS).addObjet(produit)) {
+                        ajoute = true;
+                    }
+                }
+                if (!ajoute) throw new IllegalArgumentException("Impossible d'ajouter : " + produit);
+            }
         }
         return sacADosTraitement;
-    }
-
-    public static void triSacADos(List<Produits> produits,
-                                  ArrayList<SacADos> sacADos) {
-        ArrayList<Produits> produitsTraitement = new ArrayList<>(produits);
-        ArrayList<SacADos> sacADosTraitement = new ArrayList<>(sacADos);
-        produitsTraitement.sort(Comparator.comparingInt(Produits::getUtilite).reversed());
-
-        for (Produits produit : produitsTraitement) {
-            boolean ajoute = false;
-            for (SacADos sac : sacADosTraitement) {
-                if (sac.addObjet(produit)) {
-                    ajoute = true;
-                    break;
-                }
-            }
-            if (!ajoute) {
-                throw new IllegalArgumentException();
-            }
-        }
     }
 }
 

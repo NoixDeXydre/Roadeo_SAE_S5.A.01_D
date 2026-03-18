@@ -5,6 +5,7 @@ import fr.iutrodez.roadeo.dao.RandoneeInterfaceMongoDB;
 import fr.iutrodez.roadeo.modele.Parcours;
 import fr.iutrodez.roadeo.modele.Participant;
 import fr.iutrodez.roadeo.modele.Randonnee;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ public class RandonneeService {
      * Liste les randonnées de la base de données
      * @return la liste des randonnées
      */
+    @Timed(value = "roadeo.randonnee.getAllRandonnees", description = "Temps de lecture des randonnées")
     public List<Randonnee> getAllRandonnees() {
         return repository.findAll();
     }
@@ -46,6 +48,7 @@ public class RandonneeService {
      * Liste les parcours de la base de données
      * @return la liste des parcours
      */
+    @Timed(value = "roadeo.randonnee.getAllParcours", description = "Temps de lecture des parcours")
     public List<Parcours> getAllParcours() {
         return parcoursRepository.findAll();
     }
@@ -55,6 +58,7 @@ public class RandonneeService {
      * @param id id du parcours
      * @return la liste de participant
      */
+    @Timed(value = "roadeo.randonnee.getParticipantRandonnee", description = "Temps de lecture des participants d'une randonnée")
     public List<Participant> getParticipantRandonnee(String id) {
         /* Récupère le résultat mongoDB */
         Optional<Randonnee> result = repository.findById(id);
@@ -71,6 +75,7 @@ public class RandonneeService {
      * @param idRando id de la randonnée
      * @return la liste des parcours d'une randonnée
      */
+    @Timed(value = "roadeo.randonnee.getParcoursByIdRando", description = "Temps de lecture des parcours par randonnee")
     public ArrayList<Parcours> getParcoursByIdRando(String idRando) {
         return parcoursRepository.findByIdRando(idRando);
     }
@@ -80,6 +85,7 @@ public class RandonneeService {
      * @param id id de la randonnée à retrouver
      * @return la randonnée trouvé ou null si l'id n'existe pas
      */
+    @Timed(value = "roadeo.randonnee.getRandonnee", description = "Temps de lecture d'une randonnée par id")
     public Randonnee getRandonnee(String id) {
         return repository.findById(id).orElse(null);
     }
@@ -90,6 +96,7 @@ public class RandonneeService {
      * @return la randonnee ajoutée
      * @throws IllegalArgumentException si le paramètre est null
      */
+    @Timed(value = "roadeo.randonnee.addRandonnee", description = "Temps d'ajout d'une randonnée")
     public Randonnee addRandonnee(Randonnee rando) {
         if (rando == null) {
             throw new IllegalArgumentException();
@@ -103,6 +110,7 @@ public class RandonneeService {
      * @param parcours parcours à ajouter
      * @return la randonnée ajouté ou null si il n'a pas pu être ajouté
      */
+    @Timed(value = "roadeo.randonnee.addParcours", description = "Temps d'ajout de parcours à une randonnée")
     public Randonnee addParcours(String id, Parcours parcours) {
         Randonnee randonnee;
         if (!repository.existsById(id)) {
@@ -125,6 +133,7 @@ public class RandonneeService {
      * @return true si la randonnée a été supprimée
      * @throws IllegalArgumentException si l'id n'existe pas
      */
+    @Timed(value = "roadeo.randonnee.deleteRandonee", description = "Temps de suppression d'une randonnée")
     public boolean deleteRandonee(String id) {
         if (!repository.existsById(id)) {
            throw new IllegalArgumentException("La randonnée n'existe pas.");
@@ -139,6 +148,7 @@ public class RandonneeService {
      * @return la randonnée sauvegardée
      * @throws IllegalArgumentException si la rando est null
      */
+    @Timed(value = "roadeo.randonnee.modifRandonnee", description = "Temps de modification d'une randonnée")
     public Randonnee modifRandonnee(Randonnee rando) {
         if (rando == null) {
             throw new IllegalArgumentException();
@@ -152,6 +162,7 @@ public class RandonneeService {
      * @return true si le parcours a été supprimé
      * @throws IllegalArgumentException si l'id n'existe pas
      */
+    @Timed(value = "roadeo.randonnee.deleteParcours", description = "Temps de suppression d'un parcours")
     public boolean deleteParcours(String id) {
         if (!parcoursRepository.existsById(id)) {
             throw new IllegalArgumentException("Le parcours n'existe pas.");
@@ -166,6 +177,7 @@ public class RandonneeService {
      * @return le parcours sauvegardé
      * @throws IllegalArgumentException si le parcours est null
      */
+    @Timed(value = "roadeo.randonnee.modifParcours", description = "Temps de modification d'un parcours")
     public Parcours modifParcours(Parcours parcours) {
         if (parcours == null) {
             throw new IllegalArgumentException();
@@ -178,6 +190,7 @@ public class RandonneeService {
      * @param parcours parcours à ajouter
      * @return la randonnée ajouté ou null si il n'a pas pu être ajouté
      */
+    @Timed(value = "roadeo.randonnee.ajoutParcours", description = "Temps d'ajout d'un parcours")
     public Parcours ajoutParcours(Parcours parcours) {
         if (parcours == null || !repository.existsById(parcours.getIdRando())) {
             throw new IllegalArgumentException();

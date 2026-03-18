@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class SacADos {
 
     /** Ensemble d'objet contenu dans le sac */
-    private ArrayList<Produits> contenu;
+    private ArrayList<Produits> contenu = new ArrayList<>();;
 
     /** Volume maximal à ne pas dépasser (TODO voir pour suppression)  */
     private double volumeMax;
@@ -37,6 +37,12 @@ public class SacADos {
         this.contenu = new ArrayList<>();
         this.poidsMax = poidsMax;
         this.valeur = valeur;
+    }
+
+    /** Crée un sac à dos avec un contenu vide */
+    public SacADos(double poidsMax) {
+        this.contenu = new ArrayList<>();
+        this.poidsMax = poidsMax;
     }
 
     /** Calcule le volume occuppe par les objets (TODO voir pour suppression) */

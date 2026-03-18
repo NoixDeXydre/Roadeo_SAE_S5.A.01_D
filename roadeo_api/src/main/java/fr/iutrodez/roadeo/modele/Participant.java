@@ -10,7 +10,7 @@ public class Participant {
     private int age;
     private String niveauEntrainement;
     private String morphologie;
-    private SacADos sacADos;
+    private SacADos sacADos = null;
 
     /**
      * Crée un participant à partir de MongoDB

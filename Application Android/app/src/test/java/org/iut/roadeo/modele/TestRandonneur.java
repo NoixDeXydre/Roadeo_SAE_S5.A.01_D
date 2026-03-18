@@ -238,7 +238,7 @@ public class TestRandonneur {
         Randonneur r =
                 new Randonneur("Marcenac", "Marcel", 30,
                         NiveauEntrainement.ENTRAINE, Morphologie.LEGER);
-        assertEquals("Patronime : Marcel Marcenac, age : 30 ans,"
+        assertEquals("Patronyme : Marcel Marcenac, age : 30 ans,"
                      +" niveau : entraine, morphologie : leger", r.toString());
     }
 }
